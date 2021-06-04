@@ -67,13 +67,12 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 		return false
 	}
 	// Init uploadFile.
-	file := uploadFilePool.Get().(*uploadFile)
+	file := uploadFilePool.Get().(*UploadFile)
 	defer uploadFilePool.Put(file)
-	file.RateLimiter.Rate = info.Rate
-	file.RateLimiter.Dur = s.RateDur
 	file.dir = s.FileDir
 	file.namespace = c.SHA1(c.Param[0])
-	file.name = c.SHA1(c.Param[1])
+	file.rate = info.Rate
+	file.dur = s.RateDur
 	// Save file.
 	reader := multipart.NewReader(c.Req.Body, params["boundary"])
 	for {
@@ -85,6 +84,7 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 			log.Error(err)
 			return false
 		}
+		file.name = c.SHA1(p.FileName())
 		_, err = file.ReadFrom(p)
 		if err != nil {
 			log.Error(err)
