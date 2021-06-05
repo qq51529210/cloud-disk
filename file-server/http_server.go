@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"mime"
 	"mime/multipart"
 	"net/http"
+	"strconv"
 
 	"github.com/qq51529210/cloud-service/util"
 	router "github.com/qq51529210/http-router"
@@ -57,19 +59,23 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 		return false
 	}
 	// Get upload information.
-	var info UploadInfo
-	err = ApiGetUploadInfo(c.Data.(string), &info)
+	info, err := ApiGetUploadInfo(c.Data.(string))
 	if err != nil {
 		log.Error(err)
-		c.WriteJSON(http.StatusBadRequest, map[string]string{
-			"error": "Content-Type must be multipart/form-data.",
+		c.WriteJSON(http.StatusInternalServerError, map[string]string{
+			"error": "Query token failed.",
 		})
 		return false
 	}
-	// Init uploadFile.
+	if info == nil {
+		c.WriteJSON(http.StatusUnauthorized, map[string]string{
+			"error": "Invalid token.",
+		})
+		return false
+	}
+	// Upload.
 	file := uploadFilePool.Get().(*UploadFile)
 	defer uploadFilePool.Put(file)
-	// Save file.
 	reader := multipart.NewReader(c.Req.Body, params["boundary"])
 	for {
 		p, err := reader.NextPart()
@@ -84,7 +90,7 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 		if name == "" {
 			name = p.FormName()
 		}
-		err = file.Save(p, s.FileDir, c.SHA1(c.Param[0]), c.SHA1(name), info.Rate, s.RateDur)
+		err = file.Upload(p, s.FileDir, c.SHA1(c.Param[0]), c.SHA1(name), info.Rate, s.RateDur)
 		if err != nil {
 			log.Error(err)
 			return false
@@ -95,7 +101,41 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 
 // Handle file download request.
 func (s *HTTPServer) GetFile(c *router.Context) bool {
-
+	// Get download information.
+	info, err := ApiGetDownloadInfo(c.Data.(string))
+	if err != nil {
+		log.Error(err)
+		c.WriteJSON(http.StatusInternalServerError, map[string]string{
+			"error": "Query token failed.",
+		})
+		return false
+	}
+	if info == nil {
+		c.WriteJSON(http.StatusUnauthorized, map[string]string{
+			"error": "Invalid token.",
+		})
+		return false
+	}
+	// Download.
+	file := downloadFilePool.Get().(*DownloadFile)
+	defer downloadFilePool.Put(file)
+	// File.
+	size, err := file.Open(s.FileDir, c.SHA1(c.Param[0]), c.SHA1(c.Param[1]))
+	if err != nil {
+		c.WriteJSON(http.StatusNotFound, map[string]string{
+			"error": fmt.Sprintf("file %s not found.", c.Param[1]),
+		})
+		return false
+	}
+	// Response header
+	c.Res.Header().Set("Content-Length", strconv.FormatInt(size, 10))
+	c.Res.Header().Set("Content-Type", mime.TypeByExtension(c.Param[1]))
+	// Response body.
+	err = file.Download(c.Res, info.Rate, s.RateDur)
+	if err != nil {
+		log.Error(err)
+		return false
+	}
 	return true
 }
 

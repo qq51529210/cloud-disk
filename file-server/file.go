@@ -35,7 +35,8 @@ func init() {
 		return p
 	}
 	downloadFilePool.New = func() interface{} {
-		p := new(downloadFile)
+		p := new(DownloadFile)
+		p.buff = make([]byte, defaultdownloadFileBuffer)
 		return p
 	}
 }
@@ -48,14 +49,14 @@ type UploadFile struct {
 }
 
 // Read data from r.
-func (f *UploadFile) Save(r io.Reader, dir, namespace, name string, rate, dur int) (err error) {
+func (f *UploadFile) Upload(r io.Reader, dir, namespace, name string, rate, dur int) (err error) {
 	// Make sure there is a directory for new file.
 	err = os.MkdirAll(dir, os.ModePerm)
 	if err != nil {
 		return
 	}
 	// Create file.
-	filePath := filepath.Join(dir, f.TempName(namespace, name))
+	filePath := filepath.Join(dir, FileTempName(namespace, name))
 	f.File, err = os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return
@@ -99,7 +100,7 @@ func (f *UploadFile) Save(r io.Reader, dir, namespace, name string, rate, dur in
 		}
 	}
 	// Create a symbolic link if not exist.
-	linkName := filepath.Join(dir, name)
+	linkName := filepath.Join(dir, FileName(namespace, name))
 	_, err = os.Stat(linkName)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -110,13 +111,22 @@ func (f *UploadFile) Save(r io.Reader, dir, namespace, name string, rate, dur in
 }
 
 // Return file temp name.
-func (f *UploadFile) TempName(namespace, name string) string {
+func FileTempName(namespace, name string) string {
 	var str strings.Builder
 	str.WriteString(namespace)
 	str.WriteByte('.')
 	str.WriteString(name)
 	str.WriteByte('.')
 	str.WriteString(time.Now().Format("20060102150405.000"))
+	return str.String()
+}
+
+// Return file name.
+func FileName(namespace, name string) string {
+	var str strings.Builder
+	str.WriteString(namespace)
+	str.WriteByte('.')
+	str.WriteString(name)
 	return str.String()
 }
 
@@ -144,9 +154,36 @@ func (f *UploadFile) Write(b []byte) (int, error) {
 }
 
 // To handle download file.
-type downloadFile struct {
+type DownloadFile struct {
+	*os.File
+	buff []byte
 }
 
-func (f *downloadFile) WriteTo(w io.Writer, dir, namespace, name string, dur int) (err error) {
-	return nil
+// Open file and return size or error.
+func (f *DownloadFile) Open(dir, namespace, name string) (int64, error) {
+	var err error
+	f.File, err = os.Open(filepath.Join(dir, FileName(namespace, name)))
+	if err != nil {
+		return 0, err
+	}
+	fi, err := f.File.Stat()
+	if err != nil {
+		f.File.Close()
+		return 0, err
+	}
+	return fi.Size(), nil
+}
+
+func (f *DownloadFile) Download(w io.Writer, rate, dur int) (err error) {
+	defer f.File.Close()
+	_, err = util.LimitRateCopy(w, f.File, f.buff, rate, dur)
+	return
+}
+
+func (f *DownloadFile) Stat(namespace, name string) (int64, bool) {
+	fi, err := os.Stat(FileName(namespace, name))
+	if err != nil {
+		return 0, false
+	}
+	return fi.Size(), true
 }
