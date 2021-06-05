@@ -57,8 +57,8 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 		return false
 	}
 	// Get upload information.
-	var info uploadInfo
-	err = apiGetUploadInfo(c.Data.(string), &info)
+	var info UploadInfo
+	err = ApiGetUploadInfo(c.Data.(string), &info)
 	if err != nil {
 		log.Error(err)
 		c.WriteJSON(http.StatusBadRequest, map[string]string{
@@ -69,10 +69,6 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 	// Init uploadFile.
 	file := uploadFilePool.Get().(*UploadFile)
 	defer uploadFilePool.Put(file)
-	file.dir = s.FileDir
-	file.namespace = c.SHA1(c.Param[0])
-	file.rate = info.Rate
-	file.dur = s.RateDur
 	// Save file.
 	reader := multipart.NewReader(c.Req.Body, params["boundary"])
 	for {
@@ -84,8 +80,11 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 			log.Error(err)
 			return false
 		}
-		file.name = c.SHA1(p.FileName())
-		_, err = file.ReadFrom(p)
+		name := p.FileName()
+		if name == "" {
+			name = p.FormName()
+		}
+		err = file.Save(p, s.FileDir, c.SHA1(c.Param[0]), c.SHA1(name), info.Rate, s.RateDur)
 		if err != nil {
 			log.Error(err)
 			return false

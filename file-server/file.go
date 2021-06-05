@@ -44,23 +44,18 @@ func init() {
 type UploadFile struct {
 	*os.File
 	hash.Hash
-	buff      []byte
-	dir       string
-	namespace string
-	name      string
-	rate      int
-	dur       int
+	buff []byte
 }
 
 // Read data from r.
-func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
+func (f *UploadFile) Save(r io.Reader, dir, namespace, name string, rate, dur int) (err error) {
 	// Make sure there is a directory for new file.
-	err = os.MkdirAll(f.dir, os.ModePerm)
+	err = os.MkdirAll(dir, os.ModePerm)
 	if err != nil {
 		return
 	}
 	// Create file.
-	filePath := filepath.Join(f.dir, f.TempName())
+	filePath := filepath.Join(dir, f.TempName(namespace, name))
 	f.File, err = os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return
@@ -76,7 +71,7 @@ func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
 	}()
 	// Save data to file.
 	f.Hash.Reset()
-	n, err = util.LimitRateCopy(f, r, f.buff, f.rate, f.dur)
+	_, err = util.LimitRateCopy(f, r, f.buff, rate, dur)
 	if err != nil {
 		f.File.Close()
 		return
@@ -86,45 +81,61 @@ func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
 		return
 	}
 	// New file name by file hex hash value.
-	newFilePath := filepath.Join(f.dir, hex.EncodeToString(f.Hash.Sum(f.buff[:0])))
+	hashFilePath := filepath.Join(dir, hex.EncodeToString(f.Hash.Sum(f.buff[:0])))
 	// Rename file temp name if not exist.
-	_, err = os.Stat(newFilePath)
+	_, err = os.Stat(hashFilePath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			err = os.Rename(filePath, newFilePath)
+			err = os.Rename(filePath, hashFilePath)
 			if err != nil {
 				return
 			}
 		}
+	} else {
+		// File extists, remove temp file.
+		err = os.Remove(filePath)
+		if err != nil {
+			return
+		}
 	}
 	// Create a symbolic link if not exist.
-	_, err = os.Stat(f.name)
+	linkName := filepath.Join(dir, name)
+	_, err = os.Stat(linkName)
 	if err != nil {
 		if os.IsNotExist(err) {
-			err = os.Symlink(newFilePath, f.name)
+			err = os.Symlink(hashFilePath, linkName)
 		}
 	}
 	return
 }
 
 // Return file temp name.
-func (f *UploadFile) TempName() string {
+func (f *UploadFile) TempName(namespace, name string) string {
 	var str strings.Builder
-	str.WriteString(f.namespace)
+	str.WriteString(namespace)
 	str.WriteByte('.')
-	str.WriteString(f.name)
+	str.WriteString(name)
 	str.WriteByte('.')
 	str.WriteString(time.Now().Format("20060102150405.000"))
 	return str.String()
 }
 
-// Return file name.
-func (f *UploadFile) Name() string {
-	var str strings.Builder
-	str.WriteString(f.namespace)
-	str.WriteByte('.')
-	str.WriteString(f.name)
-	return str.String()
+// For io.Copy
+func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
+	var m int
+	for {
+		m, err = r.Read(f.buff)
+		if err != nil {
+			if err == io.EOF {
+				f.Write(f.buff[:m])
+				n += int64(m)
+				err = nil
+				return
+			}
+		}
+		f.Write(f.buff[:m])
+		n += int64(m)
+	}
 }
 
 func (f *UploadFile) Write(b []byte) (int, error) {

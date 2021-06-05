@@ -55,6 +55,7 @@ func CopyN(w io.Writer, r io.Reader, b []byte, n int) error {
 		}
 		if err != nil {
 			if err == io.EOF {
+				p = p[m:]
 				break
 			}
 			return err

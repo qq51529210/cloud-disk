@@ -21,9 +21,9 @@ type httpConfig struct {
 	// listen address.
 	Address string `json:"address"`
 	// X509 public key certificate data.
-	X509Cert string
+	X509Cert string `json:"x509Cert"`
 	// X509 private key certificate data.
-	X509Key string
+	X509Key string `json:"x509Key"`
 	// Directory where the upload file save.
 	FileDir string `json:"fileDir"`
 	// Timer duration of rate.

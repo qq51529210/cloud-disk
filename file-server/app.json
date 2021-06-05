@@ -1,0 +1,7 @@
+{
+    "http": {
+        "address": "127.0.0.1:33966",
+        "fileDir": "/Users/linwenbin/Downloads/test",
+        "rateDur": 50
+    }
+}
