@@ -30,7 +30,7 @@ var (
 func init() {
 	uploadFilePool.New = func() interface{} {
 		p := new(UploadFile)
-		p.Hash = sha1.New()
+		p.hash = sha1.New()
 		p.buff = make([]byte, defaultuploadFileBuffer)
 		return p
 	}
@@ -41,10 +41,30 @@ func init() {
 	}
 }
 
+// Return file temp name.
+func FileTempName(namespace, name string) string {
+	var str strings.Builder
+	str.WriteString(namespace)
+	str.WriteByte('.')
+	str.WriteString(name)
+	str.WriteByte('.')
+	str.WriteString(time.Now().Format("20060102150405.000"))
+	return str.String()
+}
+
+// Return file name.
+func FileName(namespace, name string) string {
+	var str strings.Builder
+	str.WriteString(namespace)
+	str.WriteByte('.')
+	str.WriteString(name)
+	return str.String()
+}
+
 // To handle upload file.
 type UploadFile struct {
-	*os.File
-	hash.Hash
+	file *os.File
+	hash hash.Hash
 	buff []byte
 }
 
@@ -57,7 +77,7 @@ func (f *UploadFile) Upload(r io.Reader, dir, namespace, name string, rate, dur 
 	}
 	// Create file.
 	filePath := filepath.Join(dir, FileTempName(namespace, name))
-	f.File, err = os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.ModePerm)
+	f.file, err = os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return
 	}
@@ -71,18 +91,18 @@ func (f *UploadFile) Upload(r io.Reader, dir, namespace, name string, rate, dur 
 		}
 	}()
 	// Save data to file.
-	f.Hash.Reset()
+	f.hash.Reset()
 	_, err = util.LimitRateCopy(f, r, f.buff, rate, dur)
 	if err != nil {
-		f.File.Close()
+		f.file.Close()
 		return
 	}
-	err = f.File.Close()
+	err = f.file.Close()
 	if err != nil {
 		return
 	}
 	// New file name by file hex hash value.
-	hashFilePath := filepath.Join(dir, hex.EncodeToString(f.Hash.Sum(f.buff[:0])))
+	hashFilePath := filepath.Join(dir, hex.EncodeToString(f.hash.Sum(f.buff[:0])))
 	// Rename file temp name if not exist.
 	_, err = os.Stat(hashFilePath)
 	if err != nil {
@@ -110,26 +130,6 @@ func (f *UploadFile) Upload(r io.Reader, dir, namespace, name string, rate, dur 
 	return
 }
 
-// Return file temp name.
-func FileTempName(namespace, name string) string {
-	var str strings.Builder
-	str.WriteString(namespace)
-	str.WriteByte('.')
-	str.WriteString(name)
-	str.WriteByte('.')
-	str.WriteString(time.Now().Format("20060102150405.000"))
-	return str.String()
-}
-
-// Return file name.
-func FileName(namespace, name string) string {
-	var str strings.Builder
-	str.WriteString(namespace)
-	str.WriteByte('.')
-	str.WriteString(name)
-	return str.String()
-}
-
 // For io.Copy
 func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
 	var m int
@@ -149,41 +149,32 @@ func (f *UploadFile) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 func (f *UploadFile) Write(b []byte) (int, error) {
-	f.Hash.Write(b)
-	return f.File.Write(b)
+	f.hash.Write(b)
+	return f.file.Write(b)
 }
 
 // To handle download file.
 type DownloadFile struct {
-	*os.File
+	file *os.File
 	buff []byte
 }
 
 // Open file and return size or error.
 func (f *DownloadFile) Open(dir, namespace, name string) (int64, error) {
-	var err error
-	f.File, err = os.Open(filepath.Join(dir, FileName(namespace, name)))
+	filePath := filepath.Join(dir, FileName(namespace, name))
+	fi, err := os.Stat(filePath)
 	if err != nil {
 		return 0, err
 	}
-	fi, err := f.File.Stat()
+	f.file, err = os.Open(filePath)
 	if err != nil {
-		f.File.Close()
 		return 0, err
 	}
 	return fi.Size(), nil
 }
 
 func (f *DownloadFile) Download(w io.Writer, rate, dur int) (err error) {
-	defer f.File.Close()
-	_, err = util.LimitRateCopy(w, f.File, f.buff, rate, dur)
+	defer f.file.Close()
+	_, err = util.LimitRateCopy(w, f.file, f.buff, rate, dur)
 	return
-}
-
-func (f *DownloadFile) Stat(namespace, name string) (int64, bool) {
-	fi, err := os.Stat(FileName(namespace, name))
-	if err != nil {
-		return 0, false
-	}
-	return fi.Size(), true
 }

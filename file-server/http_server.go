@@ -6,6 +6,7 @@ import (
 	"mime"
 	"mime/multipart"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/qq51529210/cloud-service/util"
@@ -31,8 +32,9 @@ type HTTPServer struct {
 func (s *HTTPServer) Serve() error {
 	// Router.
 	s.router.SetNotfound(router.Notfound)
-	s.router.AddGet("/:dir/:file", s.parseFileToken, s.GetFile)
 	s.router.AddPost("/:dir", s.parseFileToken, s.PostFile)
+	s.router.AddGet("/:dir/:file", s.parseFileToken, s.GetFile)
+	s.router.AddGet("/hashes/:hash", s.parseFileToken, s.GetFile)
 	s.server.Handler = &s.router
 	// Serve.
 	listener, err := util.NewListener(s.Address, s.X509Cert, s.X509Key)
@@ -43,7 +45,25 @@ func (s *HTTPServer) Serve() error {
 	return s.server.Serve(listener)
 }
 
-// Handle file upload request.
+// Parse query param token, assign to c.Data.
+func (s *HTTPServer) parseFileToken(c *router.Context) bool {
+	err := c.Req.ParseForm()
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+	token := c.Req.Form.Get("token")
+	if token == "" {
+		c.WriteJSON(http.StatusUnauthorized, map[string]string{
+			"error": "Token is required.",
+		})
+		return false
+	}
+	c.Data = token
+	return true
+}
+
+// File upload.
 func (s *HTTPServer) PostFile(c *router.Context) bool {
 	// Parse "multipart/data".
 	mediaType, params, err := mime.ParseMediaType(c.Req.Header.Get("Content-Type"))
@@ -99,7 +119,7 @@ func (s *HTTPServer) PostFile(c *router.Context) bool {
 	return true
 }
 
-// Handle file download request.
+// File download.
 func (s *HTTPServer) GetFile(c *router.Context) bool {
 	// Get download information.
 	info, err := ApiGetDownloadInfo(c.Data.(string))
@@ -139,19 +159,14 @@ func (s *HTTPServer) GetFile(c *router.Context) bool {
 	return true
 }
 
-func (s *HTTPServer) parseFileToken(c *router.Context) bool {
-	err := c.Req.ParseForm()
+// Get file hash, response 200 if exists, 404 if not.
+func (s *HTTPServer) GetFileHash(c *router.Context) bool {
+	_, err := os.Stat(c.Param[0])
 	if err != nil {
-		log.Error(err)
-		return false
-	}
-	token := c.Req.Form.Get("token")
-	if token == "" {
-		c.WriteJSON(http.StatusUnauthorized, map[string]string{
-			"error": "Token is required.",
+		c.WriteJSON(http.StatusNotFound, map[string]string{
+			"error": fmt.Sprintf("hash %s not found", c.Param[0]),
 		})
 		return false
 	}
-	c.Data = token
 	return true
 }
