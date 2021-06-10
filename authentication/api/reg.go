@@ -13,7 +13,7 @@ var (
 	phoneSMSRegexp    *regexp.Regexp
 )
 
-func CompileRegExp() error {
+func InitRegExp() error {
 	exp, err := regexp.Compile(UsernameRegexp)
 	if err != nil {
 		return err

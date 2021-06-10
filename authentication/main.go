@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/qq51529210/cloud-service/authentication/api"
+	"github.com/qq51529210/cloud-service/authentication/db"
 	"github.com/qq51529210/cloud-service/util"
 )
 
@@ -37,6 +38,14 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+	err = cfg.Redis.Init()
+	if err != nil {
+		panic(err)
+	}
+	err = db.InitMysql(cfg.Mysql)
+	if err != nil {
+		panic(err)
+	}
 }
 
 type cfg struct {
@@ -45,6 +54,8 @@ type cfg struct {
 	X509KeyPEM  string     `json:"x509KeyPEM"`
 	Reg         *regCfg    `json:"reg"`
 	Cookie      *cookieCfg `json:"cookie"`
+	Redis       *redisCfg  `json:"redis"`
+	Mysql       string     `json:"mysql"`
 }
 
 type regCfg struct {
@@ -70,7 +81,7 @@ func (c *regCfg) Init() error {
 	if c.PhoneSMS != "" {
 		api.PhoneSMSRegexp = c.PhoneSMS
 	}
-	return nil
+	return api.InitRegExp()
 }
 
 type cookieCfg struct {
@@ -101,6 +112,18 @@ func (c *cookieCfg) Init() error {
 		api.CookieMaxAge = int(n)
 	}
 	return nil
+}
+
+type redisCfg struct {
+	TokenUrl string `json:"tokenUrl"`
+	PhoneUrl string `json:"phoneUrl"`
+}
+
+func (c *redisCfg) Init() error {
+	if c == nil {
+		return nil
+	}
+	return db.InitRedis(c.TokenUrl, c.PhoneUrl)
 }
 
 func main() {

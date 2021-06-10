@@ -1,9 +1,15 @@
+github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
+github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/qq51529210/http-router v0.0.0-20210609035309-7adf4360ac44 h1:shIDwujDQcNav76OUwqOrmbLi7JkeZLTzcJyIW2uqRs=
 github.com/qq51529210/http-router v0.0.0-20210609035309-7adf4360ac44/go.mod h1:8hNCFmBvjhuGlz0sTreQA8kngEO/3rAP/isC2HDBem0=
 github.com/qq51529210/jwt v0.0.0-20210531120038-6eb2212a7688 h1:wZSfOSJSC3IJpuTbrTs1ZaAd35/jjihUFZ5nTPyZUs0=
 github.com/qq51529210/jwt v0.0.0-20210531120038-6eb2212a7688/go.mod h1:9n6dHzwjSzRacwyuf0ZcslHtXEAm0Jln+JxKsG3POT8=
 github.com/qq51529210/log v0.0.0-20210529132539-d2d52fbd5103 h1:aeDIUMfDoaf315elakV9kJ31bkUsyS3yF3CK7kw1W1Y=
 github.com/qq51529210/log v0.0.0-20210529132539-d2d52fbd5103/go.mod h1:pB4GlQNhq0fW3bPKt6kPadmJjWKXVeYM/5awHGVRhHQ=
+github.com/qq51529210/redis v0.0.0-20210531120008-8882914264f2 h1:i57b5LcIenIHx9Fa90DWVFoU7EcajwRSIEhgRKjbrkE=
+github.com/qq51529210/redis v0.0.0-20210531120008-8882914264f2/go.mod h1:h5fsGqGToDjifLPXqH7/2e6Zjd7XHp6+YmRi1jeCBZo=
+github.com/qq51529210/redis v0.0.0-20210610092729-dbe50e9924d8 h1:t/p4wv452PylT0LND2EuwqpzheX1a/9YoSzB9ejdulw=
+github.com/qq51529210/redis v0.0.0-20210610092729-dbe50e9924d8/go.mod h1:h5fsGqGToDjifLPXqH7/2e6Zjd7XHp6+YmRi1jeCBZo=
 github.com/qq51529210/uuid v0.0.0-20210410083004-ce2b0df9936f h1:AEB4FD9gdSrx235/GvICsX0B+3PUqWlDkjagyfbNX90=
 github.com/qq51529210/uuid v0.0.0-20210410083004-ce2b0df9936f/go.mod h1:rLhoeKg/nnMBCuMzh/iqs9z1hL2PI6WPLLq16qgUVsA=
 golang.org/x/net v0.0.0-20210525063256-abc453219eb5 h1:wjuX4b5yYQnEQHzd+CBcrcC6OVR2J1CN6mUy0oSxIPo=
