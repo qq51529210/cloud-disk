@@ -7,6 +7,10 @@ type User struct {
 	State    int8
 }
 
+func (u *User) StateString() string {
+	return ""
+}
+
 func GetUserByName(name string) (*User, error) {
 	return nil, nil
 }
