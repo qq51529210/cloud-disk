@@ -1,4 +1,3 @@
-github.com/prometheus/common v0.28.0 h1:vGVfV9KrDTvWt5boZO0I19g2E3CsWfpPPKZM9dt3mEw=
 github.com/qq51529210/http-router v0.0.0-20210609035309-7adf4360ac44 h1:shIDwujDQcNav76OUwqOrmbLi7JkeZLTzcJyIW2uqRs=
 github.com/qq51529210/http-router v0.0.0-20210609035309-7adf4360ac44/go.mod h1:8hNCFmBvjhuGlz0sTreQA8kngEO/3rAP/isC2HDBem0=
 github.com/qq51529210/jwt v0.0.0-20210531120038-6eb2212a7688 h1:wZSfOSJSC3IJpuTbrTs1ZaAd35/jjihUFZ5nTPyZUs0=
@@ -7,3 +6,11 @@ github.com/qq51529210/log v0.0.0-20210529132539-d2d52fbd5103 h1:aeDIUMfDoaf315el
 github.com/qq51529210/log v0.0.0-20210529132539-d2d52fbd5103/go.mod h1:pB4GlQNhq0fW3bPKt6kPadmJjWKXVeYM/5awHGVRhHQ=
 github.com/qq51529210/uuid v0.0.0-20210410083004-ce2b0df9936f h1:AEB4FD9gdSrx235/GvICsX0B+3PUqWlDkjagyfbNX90=
 github.com/qq51529210/uuid v0.0.0-20210410083004-ce2b0df9936f/go.mod h1:rLhoeKg/nnMBCuMzh/iqs9z1hL2PI6WPLLq16qgUVsA=
+golang.org/x/net v0.0.0-20210525063256-abc453219eb5 h1:wjuX4b5yYQnEQHzd+CBcrcC6OVR2J1CN6mUy0oSxIPo=
+golang.org/x/net v0.0.0-20210525063256-abc453219eb5/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
+golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210423082822-04245dca01da/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
+golang.org/x/text v0.3.6 h1:aRYxNxv6iGQlyVaZmk6ZgYEDa+Jg18DxebPSrd6bg1M=
+golang.org/x/text v0.3.6/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
+golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=

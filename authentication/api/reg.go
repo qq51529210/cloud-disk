@@ -13,9 +13,26 @@ var (
 	phoneSMSRegexp    *regexp.Regexp
 )
 
-func CompileRegExp() {
-	usernameRegexp = regexp.MustCompile(UsernameRegexp)
-	passwordRegexp = regexp.MustCompile(PasswordRegexp)
-	phoneNumberRegexp = regexp.MustCompile(PhoneNumberRegexp)
-	phoneSMSRegexp = regexp.MustCompile(PhoneSMSRegexp)
+func CompileRegExp() error {
+	exp, err := regexp.Compile(UsernameRegexp)
+	if err != nil {
+		return err
+	}
+	usernameRegexp = exp
+	exp, err = regexp.Compile(PasswordRegexp)
+	if err != nil {
+		return err
+	}
+	passwordRegexp = exp
+	exp, err = regexp.Compile(PhoneNumberRegexp)
+	if err != nil {
+		return err
+	}
+	phoneNumberRegexp = exp
+	exp, err = regexp.Compile(PhoneSMSRegexp)
+	if err != nil {
+		return err
+	}
+	phoneSMSRegexp = exp
+	return nil
 }

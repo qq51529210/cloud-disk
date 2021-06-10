@@ -87,7 +87,7 @@ func PostSignIn(c *router.Context) bool {
 		ok = userSignIn(c)
 	default:
 		c.WriteJSON(http.StatusBadRequest, map[string]interface{}{
-			"error": fmt.Errorf("Invalid sign in type.", _type),
+			"error": fmt.Sprintf("Invalid sign in type %s.", _type),
 		})
 	}
 	// SignIn failed.
@@ -145,7 +145,7 @@ func userSignIn(c *router.Context) bool {
 	// Invalid state.
 	if user.State != 0 {
 		c.WriteJSON(http.StatusForbidden, map[string]interface{}{
-			"error": fmt.Errorf("Invalid user state.", user.StateString()),
+			"error": fmt.Sprintf("Invalid user state %s.", user.StateString()),
 		})
 		return false
 	}
@@ -197,7 +197,7 @@ func phoneSignIn(c *router.Context) bool {
 	// Invalid state.
 	if user.State != 0 {
 		c.WriteJSON(http.StatusForbidden, map[string]interface{}{
-			"error": fmt.Errorf("Invalid user state.", user.StateString()),
+			"error": fmt.Sprintf("Invalid user state %s.", user.StateString()),
 		})
 		return false
 	}
