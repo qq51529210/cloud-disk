@@ -62,7 +62,7 @@ type regCfg struct {
 	Username    string `json:"username"`
 	Password    string `json:"password"`
 	PhoneNumber string `json:"phoneNumber"`
-	PhoneSMS    string `json:"phoneSMS"`
+	PhoneCode   string `json:"phoneCode"`
 }
 
 func (c *regCfg) Init() error {
@@ -78,8 +78,8 @@ func (c *regCfg) Init() error {
 	if c.PhoneNumber != "" {
 		api.PhoneNumberRegexp = c.PhoneNumber
 	}
-	if c.PhoneSMS != "" {
-		api.PhoneSMSRegexp = c.PhoneSMS
+	if c.PhoneCode != "" {
+		api.PhoneCodeRegexp = c.PhoneCode
 	}
 	return api.InitRegExp()
 }

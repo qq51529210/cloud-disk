@@ -1,6 +1,6 @@
 package db
 
-func GetSMSNumber(phone string) (string, error) {
+func GetPhoneCode(phone string) (string, error) {
 	value, err := phoneRedis.Cmd("GET", phone)
 	if err != nil {
 		return "", err
@@ -11,7 +11,7 @@ func GetSMSNumber(phone string) (string, error) {
 	return "", nil
 }
 
-func SetSMSNumber(phone, sms string) error {
-	_, err := phoneRedis.Cmd("SET", phone, sms)
+func SetPhoneCode(phone, code string) error {
+	_, err := phoneRedis.Cmd("SET", phone, code)
 	return err
 }

@@ -6,11 +6,11 @@ var (
 	UsernameRegexp    = ``
 	PasswordRegexp    = ``
 	PhoneNumberRegexp = ``
-	PhoneSMSRegexp    = ``
+	PhoneCodeRegexp   = ``
 	usernameRegexp    *regexp.Regexp
 	passwordRegexp    *regexp.Regexp
 	phoneNumberRegexp *regexp.Regexp
-	phoneSMSRegexp    *regexp.Regexp
+	phoneCodeRegexp   *regexp.Regexp
 )
 
 func InitRegExp() error {
@@ -29,10 +29,10 @@ func InitRegExp() error {
 		return err
 	}
 	phoneNumberRegexp = exp
-	exp, err = regexp.Compile(PhoneSMSRegexp)
+	exp, err = regexp.Compile(PhoneCodeRegexp)
 	if err != nil {
 		return err
 	}
-	phoneSMSRegexp = exp
+	phoneCodeRegexp = exp
 	return nil
 }
