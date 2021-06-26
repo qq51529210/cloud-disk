@@ -3,85 +3,71 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/qq51529210/cloud-service/authentication/api"
 	"github.com/qq51529210/cloud-service/authentication/db"
+	"github.com/qq51529210/cloud-service/authentication/reg"
 	"github.com/qq51529210/cloud-service/util"
 )
 
-var (
-	httpSer                 http.Server
-	x509CertPEM, x509KeyPEM []byte
-)
-
-func init() {
-	// Load configure.
-	data, err := util.ReadConfig()
-	if err != nil {
-		panic(err)
-	}
-	var cfg cfg
-	err = json.Unmarshal(data, &cfg)
-	if err != nil {
-		panic(err)
-	}
-	// Init.
-	httpSer.Addr = cfg.Address
-	x509CertPEM = []byte(cfg.X509CertPEM)
-	x509KeyPEM = []byte(cfg.X509KeyPEM)
-	err = cfg.Reg.Init()
-	if err != nil {
-		panic(err)
-	}
-	err = cfg.Cookie.Init()
-	if err != nil {
-		panic(err)
-	}
-	err = cfg.Redis.Init()
-	if err != nil {
-		panic(err)
-	}
-	err = db.InitMysql(cfg.Mysql)
-	if err != nil {
-		panic(err)
-	}
-}
-
 type cfg struct {
 	Address     string     `json:"address"`
-	X509CertPEM string     `json:"x509CertPEM"`
-	X509KeyPEM  string     `json:"x509KeyPEM"`
-	Reg         *regCfg    `json:"reg"`
+	X509CertPEM []string   `json:"x509CertPEM"`
+	X509KeyPEM  []string   `json:"x509KeyPEM"`
+	PageDir     string     `json:"pageDir"`
 	Cookie      *cookieCfg `json:"cookie"`
-	Redis       *redisCfg  `json:"redis"`
-	Mysql       string     `json:"mysql"`
+	Reg         *regCfg    `json:"reg"`
+	DB          *dbCfg     `json:"db"`
+}
+
+func (c *cfg) Init() error {
+	err := c.Reg.Init()
+	if err != nil {
+		return err
+	}
+	err = c.Cookie.Init()
+	if err != nil {
+		return err
+	}
+	err = c.DB.Init()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 type regCfg struct {
-	Username    string `json:"username"`
+	Account     string `json:"account"`
 	Password    string `json:"password"`
 	PhoneNumber string `json:"phoneNumber"`
-	PhoneCode   string `json:"phoneCode"`
+	PhoneCode   string `json:"phoneVerificationCode"`
 }
 
 func (c *regCfg) Init() error {
 	if c == nil {
 		return nil
 	}
-	if c.Username != "" {
-		api.UsernameRegexp = c.Username
+	err := reg.Account.Compile(c.Account)
+	if err != nil {
+		return err
 	}
-	if c.Password != "" {
-		api.PasswordRegexp = c.Password
+	err = reg.Password.Compile(c.Password)
+	if err != nil {
+		return err
 	}
-	if c.PhoneNumber != "" {
-		api.PhoneNumberRegexp = c.PhoneNumber
+	err = reg.PhoneNumber.Compile(c.PhoneNumber)
+	if err != nil {
+		return err
 	}
-	if c.PhoneCode != "" {
-		api.PhoneCodeRegexp = c.PhoneCode
+	err = reg.PhoneVerificationCode.Compile(c.PhoneCode)
+	if err != nil {
+		return err
 	}
-	return api.InitRegExp()
+	return nil
 }
 
 type cookieCfg struct {
@@ -95,15 +81,9 @@ func (c *cookieCfg) Init() error {
 	if c == nil {
 		return nil
 	}
-	if c.Name != "" {
-		api.CookieName = c.Name
-	}
-	if c.Domain != "" {
-		api.CookieDomain = c.Domain
-	}
-	if c.Path != "" {
-		api.CookiePath = c.Path
-	}
+	api.CookieName = c.Name
+	api.CookieDomain = c.Domain
+	api.CookiePath = c.Path
 	if c.MaxAge != "" {
 		n, err := strconv.ParseInt(c.MaxAge, 10, 64)
 		if err != nil {
@@ -114,24 +94,74 @@ func (c *cookieCfg) Init() error {
 	return nil
 }
 
-type redisCfg struct {
+type dbCfg struct {
 	TokenUrl string `json:"tokenUrl"`
 	PhoneUrl string `json:"phoneUrl"`
+	MysqlUrl string `json:"mysqlUrl"`
 }
 
-func (c *redisCfg) Init() error {
+func (c *dbCfg) Init() error {
 	if c == nil {
 		return nil
 	}
-	return db.InitRedis(c.TokenUrl, c.PhoneUrl)
+	err := db.InitTokenRedis(c.TokenUrl)
+	if err != nil {
+		return err
+	}
+	err = db.InitPhoneNumberRedis(c.PhoneUrl)
+	if err != nil {
+		return err
+	}
+	err = db.InitMysql(c.MysqlUrl)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func main() {
-	listener, err := util.NewListener(httpSer.Addr, x509CertPEM, x509KeyPEM)
+func initServer() *util.Server {
+	// Load configure.
+	data, err := util.ReadConfig()
 	if err != nil {
 		panic(err)
 	}
-	err = httpSer.Serve(listener)
+	var cfg cfg
+	err = json.Unmarshal(data, &cfg)
+	if err != nil {
+		panic(err)
+	}
+	// Init.
+	err = cfg.Init()
+	if err != nil {
+		panic(err)
+	}
+	// Server.
+	var ser util.Server
+	ser.HTTP.Addr = cfg.Address
+	ser.X509CertPEM = []byte(strings.Join(cfg.X509CertPEM, ""))
+	ser.X509KeyPEM = []byte(strings.Join(cfg.X509KeyPEM, ""))
+	ser.GRPG = api.InitGRPG()
+	// HTTP router.
+	pageDir := cfg.PageDir
+	if pageDir == "" {
+		pageDir = filepath.Join(filepath.Dir(os.Args[0]), "page")
+	}
+	// Cache all pages.
+	err = ser.Router.AddStatic(http.MethodGet, "/", pageDir, true)
+	if err != nil {
+		panic(err)
+	}
+	for k, v := range api.Handlers {
+		_, err = ser.Router.AddPost(k, v...)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return &ser
+}
+
+func main() {
+	err := initServer().Serve()
 	if err != nil {
 		panic(err)
 	}

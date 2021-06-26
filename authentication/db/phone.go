@@ -11,7 +11,11 @@ func GetPhoneCode(phone string) (string, error) {
 	return "", nil
 }
 
-func SetPhoneCode(phone, code string) error {
+func SetPhoneCode(phone, code string, expire int64) error {
 	_, err := phoneRedis.Cmd("SET", phone, code)
+	if err != nil {
+		return err
+	}
+	_, err = phoneRedis.Cmd("EXPIRE", phone, expire)
 	return err
 }
