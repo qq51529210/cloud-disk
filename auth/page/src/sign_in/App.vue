@@ -1,77 +1,81 @@
 <template>
   <div style="width:350px; height: 350px;">
-    <a-tabs :tabBarStyle="{ textAlign: 'center' }" size="large">
-      <a-tab-pane key="1" :tab="$t('tabAccount')">
-        <a-form
+    <Tabs :tabBarStyle="{ textAlign: 'center' }" size="large">
+      <TabPane key="1" :tab="$t('tabAccount')">
+        <Form
           ref="accountForm"
           :model="accountFormData"
           :rules="accountFormRules"
         >
-          <a-form-item name="account">
-            <a-input
+          <FormItem name="account">
+            <Input
               v-model:value="accountFormData.account"
               :placeholder="$t('account')"
-            >
-            </a-input>
-          </a-form-item>
-          <a-form-item name="passwrod" style="margin-bottom:10px;">
-            <a-input
+            />
+          </FormItem>
+          <FormItem name="passwrod" style="margin-bottom:10px;">
+            <Input
               v-model:value="accountFormData.password"
               :placeholder="$t('password')"
               :type="showPassword ? 'text' : 'password'"
             />
-          </a-form-item>
-          <a-form-item style="margin-bottom:10px;">
-            <a-row type="flex" justify="space-between">
-              <a-checkbox v-model:checked="showPassword">显示密码</a-checkbox>
+          </FormItem>
+          <FormItem style="margin-bottom:10px;">
+            <Row type="flex" justify="space-between" align="middle">
+              <Checkbox v-model:checked="showPassword" style="height:23px;">{{
+                $t("showPassword")
+              }}</Checkbox>
               <div>
-                <a href="#">{{ $t("forgetPassword") }}</a>
-                <a-divider type="vertical" style="border-color: #7cb305" />
-                <a href="#">{{ $t("newAccount") }}</a>
+                <Button type="link" @click="handleForgetPassword">{{
+                  $t("forgetPassword")
+                }}</Button>
+                <Divider type="vertical" style="border-color: #7cb305" />
+                <Button type="link" @click="handleNewAccount">{{
+                  $t("newAccount")
+                }}</Button>
               </div>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-button size="large" style="width:100%" type="primary">
+            </Row>
+          </FormItem>
+          <FormItem>
+            <Button size="large" style="width:100%" type="primary">
               {{ $t("signIn") }}
-            </a-button>
-          </a-form-item>
-        </a-form>
-      </a-tab-pane>
-      <a-tab-pane key="2" :tab="$t('tabSMS')">
-        <a-form ref="phoneForm" :model="phoneFormData" :rules="phoneFormRules">
-          <a-form-item name="phone">
-            <a-input
+            </Button>
+          </FormItem>
+        </Form>
+      </TabPane>
+      <TabPane key="2" :tab="$t('tabSMS')">
+        <Form ref="phoneForm" :model="phoneFormData" :rules="phoneFormRules">
+          <FormItem name="phone">
+            <Input
               v-model:value="phoneFormData.phone"
               :placeholder="$t('phone')"
-            >
-            </a-input>
-          </a-form-item>
-          <a-form-item name="code">
-            <a-row type="flex">
-              <a-input-search
+            />
+          </FormItem>
+          <FormItem name="code">
+            <Row type="flex">
+              <InputSearch
                 v-model:value="phoneFormData.code"
                 :placeholder="$t('smsCode')"
               >
                 <template #enterButton>
-                  <a-button size="small">{{ $t("getSMSCode") }}</a-button>
+                  <Button size="small">{{ $t("getSMSCode") }}</Button>
                 </template>
-              </a-input-search>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-button size="large" style="width:100%" type="primary">
+              </InputSearch>
+            </Row>
+          </FormItem>
+          <FormItem>
+            <Button size="large" style="width:100%" type="primary">
               {{ $t("signIn") }}
-            </a-button>
-          </a-form-item>
-        </a-form>
-      </a-tab-pane>
-    </a-tabs>
-    <a-divider style="font-weight: 300; font-size: 13px;">
+            </Button>
+          </FormItem>
+        </Form>
+      </TabPane>
+    </Tabs>
+    <Divider style="font-weight: 300; font-size: 13px;">
       {{ $t("otherAccount") }}
-    </a-divider>
-    <a-row type="flex" justify="center">
-      <a-button size="large" shape="circle" ghost href="#">
+    </Divider>
+    <Row type="flex" justify="center" align="middle">
+      <Button size="large" shape="circle" ghost href="#">
         <template #icon>
           <svg
             t="1627891398373"
@@ -100,8 +104,8 @@
             ></path>
           </svg>
         </template>
-      </a-button>
-      <a-button size="large" shape="circle" ghost href="#">
+      </Button>
+      <Button size="large" shape="circle" ghost href="#">
         <template #icon>
           <svg
             t="1627891432037"
@@ -165,22 +169,28 @@
             ></path>
           </svg>
         </template>
-      </a-button>
-    </a-row>
+      </Button>
+    </Row>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from "@vue/reactivity";
-// ui
-import "ant-design-vue/lib/tabs";
+// ant-design ui
+import Tabs, { TabPane } from "ant-design-vue/lib/tabs";
 import "ant-design-vue/lib/tabs/style/css";
-import "ant-design-vue/lib/row";
+import Form, { FormItem } from "ant-design-vue/lib/form";
+import "ant-design-vue/lib/form/style/css";
+import Input, { InputSearch } from "ant-design-vue/lib/input";
+import "ant-design-vue/lib/input/style/css";
+import Checkbox from "ant-design-vue/lib/checkbox";
+import "ant-design-vue/lib/checkbox/style/css";
+import Button from "ant-design-vue/lib/button";
+import "ant-design-vue/lib/button/style/css";
+import Row from "ant-design-vue/lib/row";
 import "ant-design-vue/lib/row/style/css";
-import "ant-design-vue/lib/divider";
+import Divider from "ant-design-vue/lib/divider";
 import "ant-design-vue/lib/divider/style/css";
-import "ant-design-vue/lib/icon";
-import "ant-design-vue/lib/icon/style/css";
 // i18n
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -206,9 +216,20 @@ const phoneFormRules = {
   phone: [],
   code: []
 };
+//
+const handleForgetPassword = () => {
+  window.location.pathname = "forget_password";
+};
+const handleNewAccount = () => {
+  window.location.pathname = "sign_up";
+};
 </script>
 
 <style>
+html,
+body {
+  margin: 0;
+}
 #app {
   width: 100%;
   height: 100%;

@@ -11,6 +11,7 @@ const i18n = createI18n({
             tabSMS: '短信登录',
             account: '账号',
             password: '密码',
+            showPassword: '显示密码',
             forgetPassword: '忘记密码',
             newAccount: '注册新账号',
             phone: '手机号',
@@ -18,9 +19,6 @@ const i18n = createI18n({
             getSMSCode: '获取验证码',
             signIn: '登录',
             otherAccount: '其他账号登录',
-            ok: 'OK',
-            confirm: '确定',
-            cancel: '取消',
         },
         'en-US': {
             htmlTitle: 'Sign In',
@@ -28,6 +26,7 @@ const i18n = createI18n({
             tabSMS: 'SMS Sign In',
             account: 'Account',
             password: 'Password',
+            showPassword: 'Show Password',
             phone: 'Cellular Phone',
             smsCode: 'SMS Verification Code',
             getSMSCode: 'Verification Code',
@@ -35,9 +34,6 @@ const i18n = createI18n({
             newAccount: 'New Account',
             signIn: 'Sign In',
             otherAccount: 'Other Account Sign In',
-            ok: 'OK',
-            confirm: 'Confirm',
-            cancel: 'Cancel',
         }
     }
 })
