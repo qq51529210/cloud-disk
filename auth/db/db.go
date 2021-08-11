@@ -7,65 +7,48 @@ import (
 	"github.com/qq51529210/redis"
 )
 
-const (
-	DefaultRedisTokenUrl = "redis://127.0.0.1:6379?db=1&max_conn=10&read_time=1000&write_time=1000"
-	DefaultPhoneTokenUrl = "redis://127.0.0.1:6379?db=2&max_conn=10&read_time=1000&write_time=1000"
-	DefaultMysqlUrl      = "root:123456@tcp(127.0.0.1:3306)/anthentication"
-)
-
 var (
-	tokenRedis *redis.Client
-	phoneRedis *redis.Client
-	mysqlDB    *sql.DB
+	session *redis.Client
+	code    *redis.Client
+	mysqlDB *sql.DB
 )
 
-func InitTokenRedis(url string) error {
-	if url == "" {
-		url = DefaultRedisTokenUrl
-	}
-	rds, err := redis.NewClient(nil, url)
-	if err != nil {
-		return err
-	}
-	if tokenRedis != nil {
-		tokenRedis.Close()
-	}
-	tokenRedis = rds
-	return nil
+type Config struct {
+	Session  string `json:"session"`
+	VeriCode string `json:"verificationCode"`
+	Mysql    string `json:"mysq"`
 }
 
-func InitPhoneNumberRedis(url string) error {
-	if url == "" {
-		url = DefaultPhoneTokenUrl
+func Init(c *Config) {
+	var err error
+	// Session redis
+	if c.Session == "" {
+		session, err = redis.NewClient(nil, "redis://127.0.0.1:6379?db=0&max_conn=10&read_time=1000&write_time=1000")
+	} else {
+		session, err = redis.NewClient(nil, c.Session)
 	}
-	rds, err := redis.NewClient(nil, url)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	if phoneRedis != nil {
-		phoneRedis.Close()
+	// Verification Code redis
+	if c.VeriCode == "" {
+		code, err = redis.NewClient(nil, "redis://127.0.0.1:6379?db=1&max_conn=10&read_time=1000&write_time=1000")
+	} else {
+		code, err = redis.NewClient(nil, c.Session)
 	}
-	phoneRedis = rds
-	return nil
-}
-
-func InitMysql(url string) error {
-	if url == "" {
-		url = DefaultMysqlUrl
-	}
-	db, err := sql.Open("mysql", url)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	err = initUserStmt(db)
+	// Mysql
+	if c.Mysql == "" {
+		mysqlDB, err = sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/auth")
+	} else {
+		mysqlDB, err = sql.Open("mysql", c.Mysql)
+	}
 	if err != nil {
-		return err
+		panic(err)
 	}
-	if mysqlDB != nil {
-		mysqlDB.Close()
-	}
-	mysqlDB = db
-	return nil
+	initUserStmt(mysqlDB)
 }
 
 func IsExistedError(err error) bool {

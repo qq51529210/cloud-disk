@@ -36,3 +36,26 @@ func ReadConfig() ([]byte, error) {
 	// uri is a local file path.
 	return ioutil.ReadFile(uri)
 }
+
+type Config struct {
+	Address  string   `json:"address"`  // Server listen address.
+	X509Cert []string `json:"x509Cert"` // Pem format.
+	X509Key  []string `json:"x509Key"`  // Pem format.
+	RootDir  string   `json:"rootDir"`
+}
+
+func (c *Config) Check() {
+	if c.Address == "" {
+		c.Address = ":0"
+	}
+	if c.RootDir == "" {
+		c.RootDir = filepath.Dir(os.Args[0])
+	}
+}
+
+type CookieConfig struct {
+	Name   string `json:"name"`
+	Domain string `json:"domain"`
+	Path   string `json:"path"`
+	MaxAge int64  `json:"maxAge"`
+}

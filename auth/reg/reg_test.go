@@ -1,32 +1,35 @@
 package reg
 
-import "testing"
+import (
+	"regexp"
+	"testing"
+)
 
-func test(t *testing.T, r Regexp, ok string, fail []string) {
-	if ret := r.Match(ok); ret != nil {
+func init() {
+	Init(&Config{})
+}
+
+func test(t *testing.T, r *regexp.Regexp, ok string, fail []string) {
+	if !r.MatchString(ok) {
 		t.FailNow()
 	}
 	for _, s := range fail {
-		if ret := r.Match(s); ret == nil {
+		if r.MatchString(s) {
 			t.FailNow()
 		}
 	}
-}
-
-func Test_Account(t *testing.T) {
-	test(t, Account, "sdf_123", []string{"", "123_abc", "123-abc", "sdf_123+|:'"})
 }
 
 func Test_Password(t *testing.T) {
 	test(t, Password, "sdf_:'xc13$5", []string{"", "1123"})
 }
 
-func Test_PhoneNumber(t *testing.T) {
-	test(t, PhoneNumber, "18912341234", []string{"", "1891234123489", "123456", "123abcdcf456", "123.123"})
+func Test_Phone(t *testing.T) {
+	test(t, Phone, "+86-18912341234", []string{"", "18912341234", "+86-123456", "+86-123abcdcf456", "+86-123.123"})
 }
 
-func Test_PhoneVerificationCode(t *testing.T) {
-	test(t, PhoneVerificationCode, "123123", []string{"", "12345", "abcdfds", "123.123"})
+func Test_VerificationCode(t *testing.T) {
+	test(t, VerificationCode, "123123", []string{"", "12345", "abcdfds", "123.123"})
 }
 
 func Test_Email(t *testing.T) {

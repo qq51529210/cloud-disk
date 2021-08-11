@@ -44,10 +44,6 @@ type Server struct {
 }
 
 func (s *Server) Serve() error {
-	// Should init grpc server first
-	if s.GRPG == nil {
-		return Error("must init grpc server first")
-	}
 	// Load x509.
 	cert, err := tls.X509KeyPair(s.X509CertPEM, s.X509KeyPEM)
 	if err != nil {
@@ -62,14 +58,18 @@ func (s *Server) Serve() error {
 		return err
 	}
 	// ServeHTTP
-	s.HTTP.Handler = http.HandlerFunc(func(rs http.ResponseWriter, rq *http.Request) {
-		if rq.ProtoMajor == 2 && strings.Contains(rq.Header.Get("Content-Type"), "application/grpc") {
-			// Handle http2 grpc
-			s.GRPG.ServeHTTP(rs, rq)
-			return
-		}
-		// Handle http
-		s.Router.ServeHTTP(rs, rq)
-	})
+	if s.GRPG == nil {
+		s.HTTP.Handler = &s.Router
+	} else {
+		s.HTTP.Handler = http.HandlerFunc(func(rs http.ResponseWriter, rq *http.Request) {
+			if rq.ProtoMajor == 2 && strings.Contains(rq.Header.Get("Content-Type"), "application/grpc") {
+				// Handle http2 grpc
+				s.GRPG.ServeHTTP(rs, rq)
+				return
+			}
+			// Handle http
+			s.Router.ServeHTTP(rs, rq)
+		})
+	}
 	return s.HTTP.Serve(listener)
 }

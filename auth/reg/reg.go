@@ -1,78 +1,44 @@
 package reg
 
-import (
-	"encoding/json"
-	"fmt"
-	"regexp"
-)
+import "regexp"
 
 var (
-	Account = &_Regexp{
-		name: "account",
-		expr: `^[a-zA-Z]\w{5,31}$`,
-	}
-	Password = &_Regexp{
-		name: "password",
-		expr: `^\S{6,}$`,
-	}
-	PhoneNumber = &_Regexp{
-		name: "phone number",
-		expr: `^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$`,
-	}
-	PhoneVerificationCode = &_Regexp{
-		name: "phone verification code",
-		expr: `^\d{6}$`,
-	}
-	Email = &_Regexp{
-		name: "email",
-		expr: `[\w]+(\.[\w]+)*@[\w]+(\.[\w])+`,
-	}
+	Phone            *regexp.Regexp
+	Email            *regexp.Regexp
+	VerificationCode *regexp.Regexp
+	Password         *regexp.Regexp
 )
 
-func init() {
-	err := Account.Compile("")
-	if err != nil {
-		panic(err)
-	}
-	Password.Compile("")
-	PhoneNumber.Compile("")
-	PhoneVerificationCode.Compile("")
-	Email.Compile("")
+type Config struct {
+	Phone            string `json:"phone,omitempty"`
+	Email            string `json:"email,omitempty"`
+	Password         string `json:"password,omitempty"`
+	VerificationCode string `json:"verificationCode,omitempty"`
 }
 
-type Regexp interface {
-	Compile(string) error
-	Match(s string) []byte
-}
-
-type _Regexp struct {
-	*regexp.Regexp
-	name string
-	expr string
-	json []byte
-}
-
-func (r *_Regexp) Compile(s string) (err error) {
-	if s == "" {
-		s = r.expr
+func Init(c *Config) {
+	// Phone
+	if c.Phone == "" {
+		Phone = regexp.MustCompile(`^\+86-1[3-8]\d{9}$`)
+	} else {
+		Phone = regexp.MustCompile(c.Phone)
 	}
-	r.Regexp, err = regexp.Compile(s)
-	if err != nil {
-		return err
+	// Email
+	if c.Email == "" {
+		Email = regexp.MustCompile(`^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+$`)
+	} else {
+		Email = regexp.MustCompile(c.Email)
 	}
-	r.json, err = json.Marshal(map[string]interface{}{
-		"error":  fmt.Sprintf("Invalid %s format.", r.name),
-		"regexp": r.Regexp.String(),
-	})
-	if err != nil {
-		return err
+	// VerificationCode
+	if c.VerificationCode == "" {
+		VerificationCode = regexp.MustCompile(`^\d{6}$`)
+	} else {
+		VerificationCode = regexp.MustCompile(c.VerificationCode)
 	}
-	return nil
-}
-
-func (r *_Regexp) Match(s string) []byte {
-	if r.Regexp.MatchString(s) {
-		return nil
+	// Password
+	if c.VerificationCode == "" {
+		Password = regexp.MustCompile(`^.{6,}$`)
+	} else {
+		Password = regexp.MustCompile(c.VerificationCode)
 	}
-	return r.json
 }

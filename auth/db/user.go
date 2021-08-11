@@ -1,65 +1,44 @@
 package db
 
-import (
-	"database/sql"
-)
+import "database/sql"
 
 var (
-	stmtUserInsertPhonePassword        *sql.Stmt
-	stmtUserInsertAccountPasswordEmail *sql.Stmt
-	stmtUserSelectByAccountOrEmail     *sql.Stmt
-	stmtUserSelectIdByPhone            *sql.Stmt
+	stmtUserSelect *sql.Stmt
+	stmtUserInsert *sql.Stmt
+	stmtUserDelete *sql.Stmt
 )
 
-func initUserStmt(db *sql.DB) error {
+func initUserStmt(db *sql.DB) {
 	var err error
-	stmtUserInsertPhonePassword, err = db.Prepare(`insert into user(password,phone) values(?,?)`)
+	stmtUserSelect, err = db.Prepare(`select id,password,name from user where account=?`)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	stmtUserInsertAccountPasswordEmail, err = db.Prepare(`insert into user(account,password,email) values(?,?,?)`)
+	stmtUserDelete, err = db.Prepare(`delete from user where id=?`)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	stmtUserSelectIdByPhone, err = db.Prepare(`select id from user where phone=?`)
+	stmtUserInsert, err = db.Prepare(`insert into user(account,password,name) values(?,?,?)`)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	stmtUserSelectByAccountOrEmail, err = db.Prepare(`select id,account,password,phone,name from user where account=? or email=?`)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 type User struct {
 	Id       int64
-	Account  sql.NullString
-	Password sql.NullString
-	Phone    sql.NullString
-	Email    sql.NullString
-	Name     sql.NullString
+	Account  string
+	Password string
+	Name     string
 }
 
-func (u *User) InsertPhonePassword() (sql.Result, error) {
-	return stmtUserInsertPhonePassword.Exec(
-		u.Password.String,
-		u.Phone.String,
-	)
+func (m *User) Select() error {
+	return stmtUserSelect.QueryRow(m.Account).Scan(&m.Id, &m.Password, &m.Name)
 }
 
-func (u *User) InsertAccountPasswordEmail() (sql.Result, error) {
-	return stmtUserInsertAccountPasswordEmail.Exec(
-		u.Account.String,
-		u.Password.String,
-		u.Email.String,
-	)
+func (m *User) Delete() (sql.Result, error) {
+	return stmtUserDelete.Exec(m.Id)
 }
 
-func (u *User) SelectIdByPhone() error {
-	return stmtUserSelectIdByPhone.QueryRow(u.Phone.String).Scan(&u.Id)
-}
-
-func (u *User) SelectIdByAccountOrEmail() error {
-	return stmtUserSelectByAccountOrEmail.QueryRow(u.Account.String, u.Email.String).Scan(&u.Id)
+func (m *User) Insert() (sql.Result, error) {
+	return stmtUserInsert.Exec(m.Account, m.Password, m.Name)
 }

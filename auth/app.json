@@ -1,7 +1,8 @@
 {
     "address": "127.0.0.1:3390",
-    "x509CertPEM": [
-        "-----BEGIN CERTIFICATE-----",
+    "rootDir": "",
+    "x509Cert": [
+        "-----BEGIN CERTIFICATE-----\n",
         "MIIDazCCAlOgAwIBAgIEYMdrijANBgkqhkiG9w0BAQsFADBLMRwwDAYDVQQKEwV0",
         "ZXN0MTAMBgNVBAoTBXRlc3QyMRwwDAYDVQQLEwV0ZXN0MTAMBgNVBAsTBXRlc3Qy",
         "MQ0wCwYDVQQDEwR0ZXN0MB4XDTIxMDYxNDE0NDUzMFoXDTIyMDYxNDE0NDUzMFow",
@@ -20,11 +21,11 @@
         "GJMlrCnPGBpuHxU4R/G/iyQVT/0mdt0koR6l+Syrv6Rn7O3Veu+7l7arTuP+l1jz",
         "uNBFlkA47mI/9fT5XAdioKVuFTbfO3D10q7vXGWKflAK2OirZp9YxQKQvWCbaRKY",
         "4d8QdCcUhsARVU2nCqr5NCxi1YDKgZ449qMjsG3KIjoZZJKwMizG0G0U8E819+Ly",
-        "QL11RIqLEFriJ6BY2JNP",
+        "QL11RIqLEFriJ6BY2JNP\n",
         "-----END CERTIFICATE-----"
     ],
-    "x509KeyPEM": [
-        "-----BEGIN PRIVATE KEY-----",
+    "x509Key": [
+        "-----BEGIN PRIVATE KEY-----\n",
         "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDCauH7vapDq0dp",
         "wNzn8eUvLvDI17/4PsY22+wf+r/t2eLj6qgaGsQdrPhCRmOWLPx54FsFVkXYudzs",
         "IDfUyMGKy095XGULPJRJU99xCfej9qGGl6OClMTHcrVCBMCe0c5G1cL2pPvYMYWn",
@@ -50,25 +51,33 @@
         "Qdq9cO4eaqFpt2WFZbrpJu0oPG9d2VXAnpjrL3C9AoGAcSCeffCEsGLp/05VqfVz",
         "BJygBRMh+ySd648vNRXeXZSOzNB/Z1c0afrqzUkpnM/rlRetcqmOiVvKWyxr/GUj",
         "x9v1KTy5U7B356gB7i5yxvYNpb75up2a7hWxU501IndjjgqQbS+i1VvBJY6NGpmq",
-        "flpTMXnTBHY/lVY20/AGFIM=",
+        "flpTMXnTBHY/lVY20/AGFIM=\n",
         "-----END PRIVATE KEY-----"
     ],
-    "pageDir": "",
-    "reg": {
-        "username": "^[a-zA-Z]\\w{6,32}$",
-        "password": "^.{5,17}$",
-        "phoneNumber": "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$",
-        "phoneCode": "^[0-9]{6}$"
+    "uuid": {
+        "snowflakeGroupID": 0,
+        "snowflakeMechineID": 0,
+        "v1Node": "000000"
     },
-    "cookie": {
-        "name": "sid",
-        "domain": "authentication.net",
-        "path": "/",
-        "maxAge": "3600"
+    "reg": {
+        "username": "",
+        "password": "",
+        "phoneNumber": "",
+        "phoneCode": ""
+    },
+    "api": {
+        "cookie": {
+            "name": "session_id",
+            "domain": "auth.net",
+            "path": "/",
+            "maxAge": 3600
+        },
+        "verificationCodeLength": 0,
+        "verificationCodeExpired": 0
     },
     "db": {
-        "tokenUrl": "redis://127.0.0.1:6379?db=1",
-        "phoneUrl": "redis://127.0.0.1:6379?db=2",
-        "mysql": "root:123123@tcp(127.0.0.1:3306)/authentication"
+        "session": "redis://127.0.0.1:6379",
+        "veriCode": "redis://127.0.0.1:6379?db=1",
+        "mysql": "root:123123@tcp(127.0.0.1:3306)/auth"
     }
 }

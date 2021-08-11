@@ -1,7 +1,7 @@
 package db
 
 func HasToken(token string) (bool, error) {
-	value, err := tokenRedis.Cmd("EXISTS", token)
+	value, err := session.Cmd("EXISTS", token)
 	if err != nil {
 		return false, err
 	}
@@ -12,6 +12,6 @@ func HasToken(token string) (bool, error) {
 }
 
 func SetToken(token string) error {
-	_, err := tokenRedis.Cmd("SET", token, "1")
+	_, err := session.Cmd("SET", token, "1")
 	return err
 }
