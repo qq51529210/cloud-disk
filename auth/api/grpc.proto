@@ -17,5 +17,4 @@ message AddUserRes {
 service Api {
   rpc AddUser (AddUserReq) returns (AddUserRes) {}
 }
-// protoc --go_out=./ --go_opt=paths=source_relative ./gprc.proto
 // protoc --go_out=./ --go_opt=paths=source_relative --go-grpc_out=./ ./grpc.proto
