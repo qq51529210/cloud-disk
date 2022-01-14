@@ -13,7 +13,9 @@ export default (props: any) => {
           <Typography.Title>{props.title}</Typography.Title>
         </Typography>
       </Divider>
-      <Row justify="center">{props.children}</Row>
+      <Row justify="center">
+        <div style={{ width: 330 }}>{props.children}</div>
+      </Row>
     </>
   );
 };

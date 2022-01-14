@@ -1,32 +1,9 @@
 import styles from './index.less';
 import Layout from '../layout';
-import {
-  LoginForm,
-  ProFormText,
-  ProFormCaptcha,
-  ProFormSelect,
-  ProFormCheckbox,
-} from '@ant-design/pro-form';
-import { useIntl, FormattedMessage, Link, history } from 'umi';
-import {
-  LockOutlined,
-  MobileOutlined,
-  MessageOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import {
-  Row,
-  Typography,
-  Alert,
-  Tabs,
-  Space,
-  Button,
-  Divider,
-  Col,
-  Form,
-  Input,
-} from 'antd';
-import { useState } from 'react';
+import { ProFormText } from '@ant-design/pro-form';
+import { useIntl, FormattedMessage, Link } from 'umi';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Row, Button, Form } from 'antd';
 import PhoneNumberForm from '@/components/PhoneNumberForm';
 
 export default () => {
@@ -34,14 +11,13 @@ export default () => {
   const onFinish = async (values: any) => {
     console.log(values);
   };
-  const width = 350;
   return (
     <Layout
       title={intl.formatMessage({
         id: 'pages.signup',
       })}
     >
-      <Form style={{ width: width }} onFinish={onFinish}>
+      <Form onFinish={onFinish}>
         <ProFormText
           name="account"
           fieldProps={{
@@ -78,7 +54,7 @@ export default () => {
             },
           ]}
         />
-        <PhoneNumberForm width={width} />
+        <PhoneNumberForm />
         <Form.Item>
           <Button block type="primary" htmlType="submit" size="large">
             {intl.formatMessage({

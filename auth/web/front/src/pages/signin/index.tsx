@@ -27,7 +27,6 @@ export default function IndexPage() {
   const signinError = false;
   const onFinish = async (values: any) => {};
   const getVerificationCode = async (number: string) => {};
-  const width = 360;
   useEffect(() => {
     if (type === 'qrcode') {
       let qrcodeContainer = document.getElementById('qrcode');
@@ -50,13 +49,7 @@ export default function IndexPage() {
         id: 'pages.signin',
       })}
     >
-      <Tabs
-        size="large"
-        type="card"
-        centered
-        style={{ width: width }}
-        onChange={setType}
-      >
+      <Tabs size="large" type="card" centered onChange={setType}>
         <Tabs.TabPane
           key="account"
           tab={intl.formatMessage({
@@ -83,7 +76,7 @@ export default function IndexPage() {
                       <FormattedMessage id="pages.signin.signup" />
                     </Link>
                     <Divider type="vertical" />
-                    <Link to="/forgotPassword">
+                    <Link to="/forgot_password">
                       <FormattedMessage id="pages.signin.forgotPassword" />
                     </Link>
                   </Row>
@@ -148,7 +141,7 @@ export default function IndexPage() {
           })}
         >
           <Form onFinish={onFinish}>
-            <PhoneNumberForm width={width} />
+            <PhoneNumberForm />
             <Form.Item>
               <Button block type="primary" htmlType="submit" size="large">
                 {intl.formatMessage({

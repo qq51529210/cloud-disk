@@ -12,18 +12,16 @@ export default {
   'pages.signup.getVerifyCode': 'Send Verify Code',
 
   'pages.signin': 'Sign In',
-  'pages.signin.tab.account': 'Account',
-  'pages.signin.tab.qrcode': 'QR Code',
   'pages.signin.signup': 'New Account',
+  'pages.signin.tab.account': 'Account',
+  'pages.signin.tab.phone': 'SMS',
+  'pages.signin.tab.qrcode': 'QR Code',
   'pages.signin.errorMessage': 'Incorrect account or password',
   'pages.signin.forgotPassword': 'Forgot Password',
   'pages.signin.placeholder.account': 'Account/Phone number',
   'pages.signin.placeholder.password': 'Password',
-  'pages.signin.placeholder.number': 'Phone number',
-  'pages.signin.placeholder.code': 'Verify Code',
   'pages.signin.required.account': 'Account required',
   'pages.signin.required.password': 'Password required',
-  'pages.signin.getVerifyCode': 'Send Verify Code',
 
   'components.phoneNumber.placeholder': 'Phone number',
   'components.phoneNumber.required': 'Phone number required',
@@ -33,4 +31,8 @@ export default {
   'components.verifyCode.text': 'Send Verify Code',
   'components.verifyCode.required': 'Verify code required',
   'components.verifyCode.error': 'Incorrect verify code',
+
+  'pages.forgotPassword': 'Forgot Password',
+  'pages.forgotPassword.new': 'New password',
+  'pages.forgotPassword.confirm': 'Confirm',
 };

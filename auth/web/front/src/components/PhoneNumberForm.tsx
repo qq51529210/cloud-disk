@@ -8,16 +8,12 @@ import styles from './PhoneNumberForm.less';
 import { useIntl } from 'umi';
 import { Row, Col } from 'antd';
 
-interface Props {
-  width?: number;
-}
-
-export default (props: Props) => {
+export default () => {
   const intl = useIntl();
   const getVerifyCode = async (number: string) => {};
   return (
     <>
-      <Row gutter={80} style={{ minWidth: props.width }}>
+      <Row gutter={16 + 8 * 10}>
         <Col span={6}>
           <ProFormSelect
             name="from"
@@ -47,6 +43,7 @@ export default (props: Props) => {
                 }),
               },
             ]}
+            // style={{ flex: '1 1 0%' }}
           />
         </Col>
       </Row>

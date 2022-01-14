@@ -18,14 +18,18 @@ export default defineConfig({
       title: 'Sign Up',
       component: '@/pages/signup',
     },
+    {
+      exact: true,
+      path: '/forgot_password',
+      title: 'Forgot Password',
+      component: '@/pages/forgot-password',
+    },
   ],
   fastRefresh: {},
   locale: {
-    // default zh-CN
     default: 'zh-CN',
     antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
   },
-  musf: {},
+  mfsu: {},
 });
