@@ -10,7 +10,7 @@ const props = defineProps(['title']);
         <h2>{{ props.title }}</h2>
     </n-divider>
     <div style="display: flex; justify-content: center;">
-        <n-card style="width: 360px;" :bordered="false">
+        <n-card style="width: 400px;" :bordered="true">
             <slot />
         </n-card>
     </div>

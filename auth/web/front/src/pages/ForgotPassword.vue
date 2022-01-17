@@ -1,98 +1,35 @@
 <script setup>
+import { reactive } from 'vue'
 import LayoutVue from '../components/Layout.vue';
-import { NCard, NTabs, NTabPane, NForm, NFormItem, NInput, NInputNumber, NButton, NInputGroup } from 'naive-ui'
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import QRCodeVue3 from 'qrcode-vue3'
+import VerifyCodeVue from '../components/VerifyCode.vue'
+import LinkVue from '../components/Link.vue';
+import LinksVue from '../components/Links.vue';
+import FormVue from '../components/Form.vue';
+import PasswordVue from '../components/Password.vue';
 
-const router = useRouter()
-const sendingSMS = ref(0)
-const steps = ref(0)
-
-const sendSMSBtnTitle = computed(() => {
-    if (sendingSMS.value) {
-        return `${sendingSMS.value}秒`
-    }
-    return `验证码`
+const model = reactive({
+    number: null,
+    code: null,
+    password: ''
 })
 
-const onSendSMS = () => {
-    if (sendingSMS.value) {
-        return
-    }
-    sendingSMS.value = 10
-    let timer = setInterval(() => {
-        sendingSMS.value--
-        if (!sendingSMS.value) {
-            clearInterval(timer)
-        }
-    }, 1000);
-}
-
-const onStep1 = () => {
-    steps.value = 1
+const onSubmit = async () => {
+    console.log(model)
 }
 
 </script>
 
 <template>
     <LayoutVue title="找回密码">
-        <div v-if="steps === 0">
-            <n-form size="large" :show-label="false">
-                <n-form-item>
-                    <n-input-number
-                        placeholder="手机号码"
-                        clearable
-                        :show-button="false"
-                        style="width:100%;"
-                    />
-                </n-form-item>
-                <n-form-item>
-                    <n-input-group>
-                        <n-input-number
-                            clearable
-                            placeholder="验证码"
-                            :show-button="false"
-                            style="width:100%;"
-                        />
-                        <n-button
-                            :loading="sendingSMS"
-                            @click="onSendSMS"
-                        >{{ sendSMSBtnTitle }}</n-button>
-                    </n-input-group>
-                </n-form-item>
-            </n-form>
-            <n-button size="large" type="primary" block @click="onStep1">下一步</n-button>
-        </div>
-        <div v-else>
-            <n-form size="large" :show-label="false">
-                <n-form-item>
-                    <n-input
-                        type="password"
-                        show-password-on="click"
-                        clearable
-                        placeholder="新密码"
-                    />
-                </n-form-item>
-                <n-form-item>
-                    <n-input
-                        type="password"
-                        show-password-on="click"
-                        clearable
-                        placeholder="确认密码"
-                    />
-                </n-form-item>
-            </n-form>
-            <n-button size="large" type="primary" block>修改</n-button>
-        </div>
+        <FormVue button="修改" @submit="onSubmit">
+            <VerifyCodeVue
+                v-model:number="model.number"
+                v-model:code="model.code"
+            />
+            <PasswordVue v-model="model.password" />
+        </FormVue>
+        <LinksVue justify="flex-end">
+            <LinkVue title="返回登录" to="/sign_in" />
+        </LinksVue>
     </LayoutVue>
 </template>
-
-<style scoped>
-.link {
-    margin-top: 14px;
-    display: flex;
-    justify-content: flex-end;
-    align-content: center;
-}
-</style>
