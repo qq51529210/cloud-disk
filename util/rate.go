@@ -17,7 +17,9 @@ func LimitRateCopy(w io.Writer, r io.Reader, b []byte, rate int, dur int) (n int
 	if len(b) < 1 {
 		return 0, io.ErrShortBuffer
 	}
-	dur = MaxInt(dur, 1)
+	if dur < 1 {
+		dur = 1
+	}
 	// Copy n bytes per dur millisecond.
 	nPerDur := int(float64(rate)/float64(1000)) * dur
 	// Timer.

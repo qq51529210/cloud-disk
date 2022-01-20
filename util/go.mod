@@ -1,4 +1,4 @@
-module github.com/qq51529210/cloud-service/util
+module github.com/qq51529210/micro-service/util
 
 go 1.15
 

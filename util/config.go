@@ -1,6 +1,7 @@
 package util
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -8,54 +9,73 @@ import (
 	"strings"
 )
 
-// If app has not args, read from file "app_dir/app.json",
-// otherwise read from os.Args[1], which can be a http url, a local file.
-func ReadConfig() ([]byte, error) {
-	var uri string
+// 使用命令行第一个参数作为路径(本地磁盘/http资源)，解析JSON 到参数a。
+// 如果没有参数，则尝试加载当前目录下的名为"{app-name}.json"的文件。
+func ReadJSONConf(a interface{}) error {
+	var path string
 	if len(os.Args) < 2 {
-		// No arg.
 		dir, file := filepath.Split(os.Args[0])
 		ext := filepath.Ext(file)
 		if ext != "" {
 			file = file[:len(file)-len(ext)]
 		}
-		uri = filepath.Join(dir, file+".json")
+		path = filepath.Join(dir, file+".json")
 	} else {
-		// Use first arg.
-		uri = os.Args[1]
+		path = os.Args[1]
 	}
-	// uri is a http url.
-	if strings.HasPrefix(uri, "http") || strings.HasPrefix(uri, "https") {
-		res, err := http.Get(uri)
+	var data []byte
+	var err error
+	if strings.HasPrefix(path, "http") || strings.HasPrefix(path, "https") {
+		res, err := http.Get(path)
 		if err != nil {
-			return nil, err
+			return err
 		}
-		defer res.Body.Close()
-		return ioutil.ReadAll(res.Body)
+		data, err = ioutil.ReadAll(res.Body)
+		res.Body.Close()
+	} else {
+		data, err = ioutil.ReadFile(path)
 	}
-	// uri is a local file path.
-	return ioutil.ReadFile(uri)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(data, a)
 }
 
-type Config struct {
-	Address  string   `json:"address"`  // Server listen address.
-	X509Cert []string `json:"x509Cert"` // Pem format.
-	X509Key  []string `json:"x509Key"`  // Pem format.
-	RootDir  string   `json:"rootDir"`
+type Conf struct {
+	Listen      string        `json:"listen"`
+	X509CertPEM []string      `json:"x509CertPEM"`
+	X509KeyPEM  []string      `json:"x509KeyPEM"`
+	RootDir     string        `json:"rootDir"`
+	Cookie      *CookieConf   `json:"cookie"`
+	UUID        *UUIDConf     `json:"uuid"`
+	Database    *DatabaseConf `json:"database"`
+	Cache       *CacheConf    `json:"cache"`
+	Custom      interface{}   `json:"custom"`
 }
 
-func (c *Config) Check() {
-	if c.Address == "" {
-		c.Address = ":0"
-	}
-	if c.RootDir == "" {
-		c.RootDir = filepath.Dir(os.Args[0])
-	}
-}
-
-type CookieConfig struct {
+type CookieConf struct {
 	Name   string `json:"name"`
 	Domain string `json:"domain"`
 	Path   string `json:"path"`
 	MaxAge int64  `json:"maxAge"`
+}
+
+type UUIDConf struct {
+	GroupID   byte   `json:"groupID"`
+	MechineID byte   `json:"mechineID"`
+	Node      string `json:"node"`
+}
+
+type CacheConf struct {
+	Host     string `json:"host"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Schema   string `json:"schema"`
+}
+
+type DatabaseConf struct {
+	Host     string `json:"host"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Schema   string `json:"schema"`
 }
