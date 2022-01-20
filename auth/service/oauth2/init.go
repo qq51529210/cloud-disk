@@ -6,5 +6,6 @@ import (
 
 func Init(r router.Router) {
 	r.GET("authentication", parseAuthenticationQuery, getAuthentication)
+	r.GET("authentication", postAuthentication)
 	r.GET("authorization", getAuthorization)
 }

@@ -1,16 +1,17 @@
 package store
 
 var (
-	_Store Store
+	_UserStroe UserStroe
 )
 
 type Store interface {
+	UserStroe() UserStroe
 }
 
-func SetStore(st Store) {
-	_Store = st
+func SetUserStroe(st UserStroe) {
+	_UserStroe = st
 }
 
-func GetStore() Store {
-	return _Store
+func GetUserStroe() UserStroe {
+	return _UserStroe
 }
