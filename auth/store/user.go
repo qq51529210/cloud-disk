@@ -7,6 +7,6 @@ type UserModel struct {
 	Phone    string
 }
 
-type UserStroe interface {
+type UserStore interface {
 	Get(account string) (*UserModel, error)
 }

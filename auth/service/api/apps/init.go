@@ -1,4 +1,4 @@
-package oauth2
+package apps
 
 import (
 	"github.com/qq51529210/web/router"
