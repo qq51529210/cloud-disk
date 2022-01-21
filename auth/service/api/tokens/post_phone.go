@@ -17,7 +17,7 @@ type phoneModel struct {
 	Code   string `json:"code"`
 }
 
-func postMobile(ctx *router.Context) {
+func postPhone(ctx *router.Context) {
 	// 解析JSON
 	var m1 phoneModel
 	err := json.NewDecoder(ctx.Request.Body).Decode(&m1)
@@ -52,5 +52,5 @@ func postMobile(ctx *router.Context) {
 	ctx.JSON(http.StatusCreated, map[string]string{
 		"token": token,
 	})
-	log.Infof("postMobile: <%s> <%s> <%s>", m1.Number, m1.Code, token)
+	log.Infof("postPhone: <%s> <%s> <%s>", m1.Number, m1.Code, token)
 }

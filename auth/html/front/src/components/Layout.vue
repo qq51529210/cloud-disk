@@ -1,6 +1,7 @@
 <script setup>
-import { NDivider, NCard } from 'naive-ui'
-const props = defineProps(['title']);
+import { NDivider, NSpace, NSpin, NCard } from 'naive-ui'
+import ErrorVue from '../components/Error.vue';
+const props = defineProps(['title', 'loading', 'error']);
 
 </script>
 
@@ -10,8 +11,13 @@ const props = defineProps(['title']);
         <h2>{{ props.title }}</h2>
     </n-divider>
     <div style="display: flex; justify-content: center;">
-        <n-card style="width: 330px;" :bordered="true">
-            <slot />
-        </n-card>
+        <n-space vertical>
+            <ErrorVue :text="props.error" />
+            <n-spin :show="props.loading">
+                <n-card style="width: 330px;" :bordered="true">
+                    <slot />
+                </n-card>
+            </n-spin>
+        </n-space>
     </div>
 </template>

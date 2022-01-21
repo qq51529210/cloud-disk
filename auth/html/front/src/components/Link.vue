@@ -6,7 +6,7 @@ const props = defineProps(['title', 'to'])
 const router = useRouter()
 
 const onSubmit = () => {
-    router.push(props.to)
+    router.push(props.to + location.search)
 }
 
 </script>

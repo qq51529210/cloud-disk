@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { NTabs, NTabPane } from 'naive-ui'
 import LayoutVue from '../components/Layout.vue';
 import VerifyCodeVue from '../components/VerifyCode.vue'
@@ -9,6 +9,10 @@ import FormVue from '../components/Form.vue';
 import TextVue from '../components/Text.vue';
 import PasswordVue from '../components/Password.vue';
 import QRCodeVue from '../components/QRCode.vue';
+import * as service from '../service'
+
+const loading = ref(false)
+const errorText = ref('')
 
 const accountModel = reactive({
     account: '',
@@ -20,18 +24,29 @@ const phoneModel = reactive({
     code: null,
 })
 
-const onAccountSubmit = () => {
-
+const onAccountSubmit = async () => {
+    submit(service.signInAccount(accountModel))
 }
 
-const onPhoneSubmit = () => {
+const onPhoneSubmit = async () => {
+    submit(service.signInPhone(phoneModel))
+}
 
+const submit = async (sumbit) => {
+    loading.value = true
+    errorText.value = ''
+    let res = await sumbit
+    loading.value = false
+    if (res.error) {
+        errorText.value = res.error
+        return
+    }
 }
 
 </script>
 
 <template>
-    <LayoutVue title="登录">
+    <LayoutVue title="登录" :loading="loading" :error="errorText">
         <n-tabs
             default-value="account"
             justify-content="space-evenly"
@@ -44,6 +59,7 @@ const onPhoneSubmit = () => {
                 </FormVue>
             </n-tab-pane>
             <n-tab-pane name="sms" tab="验证码">
+                s
                 <FormVue button="登录" @submit="onPhoneSubmit">
                     <VerifyCodeVue
                         v-model:number="phoneModel.number"

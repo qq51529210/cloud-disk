@@ -10,8 +10,8 @@ func post(ctx *router.Context) {
 	switch _type {
 	case "password", "":
 		postPassword(ctx)
-	case "mobile":
-		postMobile(ctx)
+	case "phone":
+		postPhone(ctx)
 	default:
 		service.FormValueError(ctx, "type", _type)
 	}

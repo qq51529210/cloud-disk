@@ -980,673 +980,6 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@material/animation@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/animation/download/@material/animation-13.0.0.tgz#42ec7aee6548ba27edb49063c7a7ae431e4ef450"
-  integrity sha1-Qux67mVIuifttJBjx6euQx5O9FA=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/auto-init@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/auto-init/download/@material/auto-init-13.0.0.tgz#892e4856ab630a5c9fea3a5fe3fb7205861a4d52"
-  integrity sha1-iS5IVqtjClyf6jpf4/tyBYYaTVI=
-  dependencies:
-    "@material/base" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/banner@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/banner/download/@material/banner-13.0.0.tgz#853e01977433ca7f0d991d198bc91e1b54adedac"
-  integrity sha1-hT4Bl3Qzyn8NmR0Zi8keG1St7aw=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/button" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/base@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/base/download/@material/base-13.0.0.tgz#18f7f5ac112bf67e66c1ade6ab543ea9df9d3836"
-  integrity sha1-GPf1rBEr9n5mwa3mq1Q+qd+dODY=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/button@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/button/download/@material/button-13.0.0.tgz#0870da4069fb92dd5c3dbbaf1b58bcb62bb9dbed"
-  integrity sha1-CHDaQGn7kt1cPbuvG1i8tiu52+0=
-  dependencies:
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/card@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/card/download/@material/card-13.0.0.tgz#875d60b398898b6f3a6ff115717f0c144b681bf3"
-  integrity sha1-h11gs5iJi286b/EVcX8MFEtoG/M=
-  dependencies:
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/checkbox@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/checkbox/download/@material/checkbox-13.0.0.tgz#ee7ca7930586102a748998239672f62724a90ad9"
-  integrity sha1-7nynkwWGECp0iZgjlnL2JySpCtk=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/chips@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/chips/download/@material/chips-13.0.0.tgz#0681beaf61636805ddfd98b45bf7bf3b81dcb238"
-  integrity sha1-BoG+r2FjaAXd/Zi0W/e/O4Hcsjg=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/checkbox" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/circular-progress@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/circular-progress/download/@material/circular-progress-13.0.0.tgz#ad90b88d1e88d522f7492ded4eaaac56376ce2aa"
-  integrity sha1-rZC4jR6I1SL3SS3tTqqsVjds4qo=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/progress-indicator" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/data-table@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/data-table/download/@material/data-table-13.0.0.tgz#b305cdb31eec7722df6a94a78ea3a838b0f0389b"
-  integrity sha1-swXNsx7sdyLfapSnjqOoOLDwOJs=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/checkbox" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/icon-button" "^13.0.0"
-    "@material/linear-progress" "^13.0.0"
-    "@material/list" "^13.0.0"
-    "@material/menu" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/select" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/density@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/density/download/@material/density-13.0.0.tgz#5ae2fdec0418775014fed24e7ccdd5ba5d005d54"
-  integrity sha1-WuL97AQYd1AU/tJOfM3Vul0AXVQ=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/dialog@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/dialog/download/@material/dialog-13.0.0.tgz#59b8b7295bfdfea9ea72af9afa7c99efb7744d55"
-  integrity sha1-Wbi3KVv9/qnqcq+a+nyZ77d0TVU=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/button" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/icon-button" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/dom@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/dom/download/@material/dom-13.0.0.tgz#3f3cc935f6e59fa99e3dafe118d3e48091118c0e"
-  integrity sha1-PzzJNfbln6mePa/hGNPkgJERjA4=
-  dependencies:
-    "@material/feature-targeting" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/drawer@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/drawer/download/@material/drawer-13.0.0.tgz#35bb370f44ac860ca38ce722144869edc86da9f9"
-  integrity sha1-Nbs3D0SshgyjjOciFEhp7chtqfk=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/list" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/elevation@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/elevation/download/@material/elevation-13.0.0.tgz#ae3eabc20e864240144fdf5c16b09a1e7a52852c"
-  integrity sha1-rj6rwg6GQkAUT99cFrCaHnpShSw=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/fab@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/fab/download/@material/fab-13.0.0.tgz#fa8cf548b7c90a592760569385aff3a816c59d2d"
-  integrity sha1-+oz1SLfJClknYFaTha/zqBbFnS0=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/feature-targeting@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/feature-targeting/download/@material/feature-targeting-13.0.0.tgz#7bc7840b40930b6831101a22882acdd0329591c0"
-  integrity sha1-e8eEC0CTC2gxEBoiiCrN0DKVkcA=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/floating-label@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/floating-label/download/@material/floating-label-13.0.0.tgz#d441461591101de7821a06c595cbc2ca0ede2be2"
-  integrity sha1-1EFGFZEQHeeCGgbFlcvCyg7eK+I=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/form-field@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/form-field/download/@material/form-field-13.0.0.tgz#59f50b342bc20562fa2c78c17ac4385236f89c99"
-  integrity sha1-WfULNCvCBWL6LHjBesQ4Ujb4nJk=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/icon-button@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/icon-button/download/@material/icon-button-13.0.0.tgz#e2d3fb5dcd2b944883f8241420b82f0f3ce2ebf2"
-  integrity sha1-4tP7Xc0rlEiD+CQUILgvDzzi6/I=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/image-list@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/image-list/download/@material/image-list-13.0.0.tgz#8a1da68ebd53ff0123f071c49691ffde4c369fca"
-  integrity sha1-ih2mjr1T/wEj8HHElpH/3kw2n8o=
-  dependencies:
-    "@material/feature-targeting" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/layout-grid@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/layout-grid/download/@material/layout-grid-13.0.0.tgz#8c7534b1c1b78978cd2beabee32a9e2e37dc9522"
-  integrity sha1-jHU0scG3iXjNK+q+4yqeLjfclSI=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/line-ripple@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/line-ripple/download/@material/line-ripple-13.0.0.tgz#9754af8f80eac582d6a9b2ec704852d394266c31"
-  integrity sha1-l1Svj4DqxYLWqbLscEhS05QmbDE=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/linear-progress@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/linear-progress/download/@material/linear-progress-13.0.0.tgz#a1c12140c2074018029425365d121013a70f3ec6"
-  integrity sha1-ocEhQMIHQBgClCU2XRIQE6cPPsY=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/progress-indicator" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/list@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/list/download/@material/list-13.0.0.tgz#57a77aeff4d177da76f9d849f9e1db0d17027c9c"
-  integrity sha1-V6d67/TRd9p2+dhJ+eHbDRcCfJw=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/menu-surface@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/menu-surface/download/@material/menu-surface-13.0.0.tgz#b4c6c799e714cba6465513dbf1020ba2fcaee588"
-  integrity sha1-tMbHmecUy6ZGVRPb8QILovyu5Yg=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/menu@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/menu/download/@material/menu-13.0.0.tgz#60fdca3f3a8457dfee83938adaf6288789ad0ac1"
-  integrity sha1-YP3KPzqEV9/ug5OK2vYoh4mtCsE=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/list" "^13.0.0"
-    "@material/menu-surface" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/notched-outline@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/notched-outline/download/@material/notched-outline-13.0.0.tgz#0a043cb87fc9aa19b00a1a9b7c010eab8250b820"
-  integrity sha1-CgQ8uH/JqhmwChqbfAEOq4JQuCA=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/floating-label" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/progress-indicator@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/progress-indicator/download/@material/progress-indicator-13.0.0.tgz#8097208c5fa3dd6753d8b7bf141c28beb0938c23"
-  integrity sha1-gJcgjF+j3WdT2Le/FBwovrCTjCM=
-  dependencies:
-    tslib "^2.1.0"
-
-"@material/radio@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/radio/download/@material/radio-13.0.0.tgz#4f3f4c3c56ed3686d7bf69b9a611249cfa6db71c"
-  integrity sha1-Tz9MPFbtNobXv2m5phEknPpttxw=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/ripple@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/ripple/download/@material/ripple-13.0.0.tgz#fc6a56ccd33c1edf3f049d9e79294f496c2d72df"
-  integrity sha1-/GpWzNM8Ht8/BJ2eeSlPSWwtct8=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/rtl@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/rtl/download/@material/rtl-13.0.0.tgz#c8dbdc2b63d122450ff456572d08a9f5639704ab"
-  integrity sha1-yNvcK2PRIkUP9FZXLQip9WOXBKs=
-  dependencies:
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/segmented-button@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/segmented-button/download/@material/segmented-button-13.0.0.tgz#92ca6541087a2b45a32aec8e4dfe7f2881341629"
-  integrity sha1-ksplQQh6K0WjKuyOTf5/KIE0Fik=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/select@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/select/download/@material/select-13.0.0.tgz#0bd1933c983ec86440bd5a5540e25aeba3918868"
-  integrity sha1-C9GTPJg+yGRAvVpVQOJa66ORiGg=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/floating-label" "^13.0.0"
-    "@material/line-ripple" "^13.0.0"
-    "@material/list" "^13.0.0"
-    "@material/menu" "^13.0.0"
-    "@material/menu-surface" "^13.0.0"
-    "@material/notched-outline" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/shape@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/shape/download/@material/shape-13.0.0.tgz#42751ceb4c709c87026f14340aed1831106fdfda"
-  integrity sha1-QnUc60xwnIcCbxQ0Cu0YMRBv39o=
-  dependencies:
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/slider@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/slider/download/@material/slider-13.0.0.tgz#21575e99bc9700b56d44bb5ee1b63b4a0545e412"
-  integrity sha1-IVdembyXALVtRLte4bY7SgVF5BI=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/snackbar@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/snackbar/download/@material/snackbar-13.0.0.tgz#63798b832c6931ecb99350c9ef99ac23a7e47f18"
-  integrity sha1-Y3mLgyxpMey5k1DJ75msI6fkfxg=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/button" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/icon-button" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/switch@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/switch/download/@material/switch-13.0.0.tgz#9f25a6fc2a45344ecdc86f6545e95359f5f0c770"
-  integrity sha1-nyWm/CpFNE7NyG9lRelTWfXwx3A=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/tab-bar@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tab-bar/download/@material/tab-bar-13.0.0.tgz#e0ba597b507a5b62aac91837d96458dd250cee14"
-  integrity sha1-4LpZe1B6W2KqyRg32WRY3SUM7hQ=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/tab" "^13.0.0"
-    "@material/tab-indicator" "^13.0.0"
-    "@material/tab-scroller" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/tab-indicator@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tab-indicator/download/@material/tab-indicator-13.0.0.tgz#e79d06b888ac8c625dabc6c9288eb3ced70adaa5"
-  integrity sha1-550GuIisjGJdq8bJKI6zztcK2qU=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/tab-scroller@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tab-scroller/download/@material/tab-scroller-13.0.0.tgz#0bbe9e77cebb3a0d6607e86216de69df2e7fddc7"
-  integrity sha1-C76ed867Og1mB+hiFt5p3y5/3cc=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/tab" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/tab@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tab/download/@material/tab-13.0.0.tgz#3b616e1f1679977a943f8aba81c02746299a6028"
-  integrity sha1-O2FuHxZ5l3qUP4q6gcAnRimaYCg=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/tab-indicator" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/textfield@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/textfield/download/@material/textfield-13.0.0.tgz#64cd2677ed954a0287b6e5b7b07dbdbf07328ef0"
-  integrity sha1-ZM0md+2VSgKHtuW3sH29vwcyjvA=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/floating-label" "^13.0.0"
-    "@material/line-ripple" "^13.0.0"
-    "@material/notched-outline" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/theme@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/theme/download/@material/theme-13.0.0.tgz#dad25ca7c3427d5d35f074343c7f7957cbc1eb8c"
-  integrity sha1-2tJcp8NCfV018HQ0PH95V8vB64w=
-  dependencies:
-    "@material/feature-targeting" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/tokens@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tokens/download/@material/tokens-13.0.0.tgz#dbd85201dca575b79fe03788479e77b913d20f9c"
-  integrity sha1-29hSAdyldbef4DeIR553uRPSD5w=
-  dependencies:
-    "@material/elevation" "^13.0.0"
-
-"@material/tooltip@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/tooltip/download/@material/tooltip-13.0.0.tgz#2a4360b1d9b07b7573d69e2a85d5522dec00b97d"
-  integrity sha1-KkNgsdmwe3Vz1p4qhdVSLewAuX0=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/top-app-bar@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/top-app-bar/download/@material/top-app-bar-13.0.0.tgz#c4f8af665ed25b5db35083bf5253bb6bd161cae5"
-  integrity sha1-xPivZl7SW12zUIO/UlO7a9FhyuU=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/typography" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/touch-target@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/touch-target/download/@material/touch-target-13.0.0.tgz#330d0b03988f65916cce3a97f38c5b9d74104a27"
-  integrity sha1-Mw0LA5iPZZFszjqX84xbnXQQSic=
-  dependencies:
-    "@material/base" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    tslib "^2.1.0"
-
-"@material/typography@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/@material/typography/download/@material/typography-13.0.0.tgz#da40615bddea8c56496a89b3a6f8f71c1fccce96"
-  integrity sha1-2kBhW93qjFZJaomzpvj3HB/MzpY=
-  dependencies:
-    "@material/feature-targeting" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    tslib "^2.1.0"
-
-"@mdi/font@5.9.55":
-  version "5.9.55"
-  resolved "https://registry.npmmirror.com/@mdi/font/download/@mdi/font-5.9.55.tgz#41acd50b88073ded7095fc3029d8712b6e12f38e"
-  integrity sha1-QazVC4gHPe1wlfwwKdhxK24S844=
-
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.nlark.com/@nodelib/fs.scandir/download/@nodelib/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1905,16 +1238,6 @@
   integrity sha512-NOn5eIcgWLOo6qW8AcuLZ7G8PycXu0xTxxkS6Q18VWFxgPUSOwV0pBj2a/4viNZVu25i7RIB7GttdkAIUUXOOg==
   dependencies:
     "@types/node" "*"
-
-"@vicons/ionicons5@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.nlark.com/@vicons/ionicons5/download/@vicons/ionicons5-0.11.0.tgz#54185bfa572a09df70094db1954f28bfbf1363ed"
-  integrity sha1-VBhb+lcqCd9wCU2xlU8ov78TY+0=
-
-"@vicons/material@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.npmmirror.com/@vicons/material/download/@vicons/material-0.11.0.tgz#2c209121f3ff6a46450f4968397df6c3008df8d1"
-  integrity sha1-LCCRIfP/akZFD0loOX32wwCN+NE=
 
 "@vitejs/plugin-vue-jsx@^1.3.3":
   version "1.3.3"
@@ -2175,16 +1498,6 @@
     estree-walker "^2.0.2"
     source-map "^0.6.1"
 
-"@vue/compiler-core@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/compiler-core/download/@vue/compiler-core-3.2.27.tgz#01bd5e5071f58f43e4184ba7fa810226799a5383"
-  integrity sha512-JyxAglSM/pb9paG5ZNuKrf5IUpzLzQA3khjWGF9oESELCLQlt6O3YyPMR2A69wIpYWrf5mScZ8YY8TJKOI/1kQ==
-  dependencies:
-    "@babel/parser" "^7.16.4"
-    "@vue/shared" "3.2.27"
-    estree-walker "^2.0.2"
-    source-map "^0.6.1"
-
 "@vue/compiler-dom@3.2.26":
   version "3.2.26"
   resolved "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.26.tgz"
@@ -2192,14 +1505,6 @@
   dependencies:
     "@vue/compiler-core" "3.2.26"
     "@vue/shared" "3.2.26"
-
-"@vue/compiler-dom@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.27.tgz#a12163e3f3f1d5ff1969253eba4b4ea3e67bbd0f"
-  integrity sha512-NyQ7nEbopUBPUMHM4c3FPCbFbnQwptoPjW5Y5qfJ7hfiCNhOuhQsDNqi5JYKBxfpxiFNwjcN9F8t1AsnLrDloQ==
-  dependencies:
-    "@vue/compiler-core" "3.2.27"
-    "@vue/shared" "3.2.27"
 
 "@vue/compiler-sfc@3.2.26":
   version "3.2.26"
@@ -2217,22 +1522,6 @@
     postcss "^8.1.10"
     source-map "^0.6.1"
 
-"@vue/compiler-sfc@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.27.tgz#43bf23fe24feacba334636fa7a332f9d8a532c8c"
-  integrity sha512-WyecUhLN5UAQAr2QlmG2nA56OEnhZJaBnSw0G1tazb9rwDuK0V9tnbIXbQgmQlx+x4sJxgg61yWGcIXfilTl3A==
-  dependencies:
-    "@babel/parser" "^7.16.4"
-    "@vue/compiler-core" "3.2.27"
-    "@vue/compiler-dom" "3.2.27"
-    "@vue/compiler-ssr" "3.2.27"
-    "@vue/reactivity-transform" "3.2.27"
-    "@vue/shared" "3.2.27"
-    estree-walker "^2.0.2"
-    magic-string "^0.25.7"
-    postcss "^8.1.10"
-    source-map "^0.6.1"
-
 "@vue/compiler-ssr@3.2.26":
   version "3.2.26"
   resolved "https://registry.npmmirror.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.2.26.tgz"
@@ -2240,14 +1529,6 @@
   dependencies:
     "@vue/compiler-dom" "3.2.26"
     "@vue/shared" "3.2.26"
-
-"@vue/compiler-ssr@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.2.27.tgz#49aa3afd1602275aba3c3e331764984111a460bf"
-  integrity sha512-+l09t319iV7HVSrXfBw9OLwMZIPOFTXmHjZ61Bc5ZcwKqOYAR4uTurKpoXAfcSc5qs/q6WdE9jY3nrP0LUEMQQ==
-  dependencies:
-    "@vue/compiler-dom" "3.2.27"
-    "@vue/shared" "3.2.27"
 
 "@vue/component-compiler-utils@^3.1.0", "@vue/component-compiler-utils@^3.1.2":
   version "3.3.0"
@@ -2281,30 +1562,12 @@
     estree-walker "^2.0.2"
     magic-string "^0.25.7"
 
-"@vue/reactivity-transform@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/reactivity-transform/download/@vue/reactivity-transform-3.2.27.tgz#610b6df174cdceba6de1376f3218736c3b0e753d"
-  integrity sha512-67//61ObGxGnVrPhjygocb24eYUh+TFMhkm7szm8v5XdKXjkNl7qgIOflwGvUnwuIRJmr9nZ7+PvY0fL+H2upA==
-  dependencies:
-    "@babel/parser" "^7.16.4"
-    "@vue/compiler-core" "3.2.27"
-    "@vue/shared" "3.2.27"
-    estree-walker "^2.0.2"
-    magic-string "^0.25.7"
-
 "@vue/reactivity@3.2.26":
   version "3.2.26"
   resolved "https://registry.npmmirror.com/@vue/reactivity/download/@vue/reactivity-3.2.26.tgz"
   integrity sha512-h38bxCZLW6oFJVDlCcAiUKFnXI8xP8d+eO0pcDxx+7dQfSPje2AO6M9S9QO6MrxQB7fGP0DH0dYQ8ksf6hrXKQ==
   dependencies:
     "@vue/shared" "3.2.26"
-
-"@vue/reactivity@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/reactivity/download/@vue/reactivity-3.2.27.tgz#db7c4eefded938a8974e768b7b8f9ff4fad34a62"
-  integrity sha512-QPfIQEJidRGIu/mPexhcB4csp1LEg2Nr+/QE72MnXs/OYDtFErhC9FxIyymkxp/xvAgL5wsnSOuDD6zWF42vRQ==
-  dependencies:
-    "@vue/shared" "3.2.27"
 
 "@vue/runtime-core@3.2.26":
   version "3.2.26"
@@ -2313,14 +1576,6 @@
   dependencies:
     "@vue/reactivity" "3.2.26"
     "@vue/shared" "3.2.26"
-
-"@vue/runtime-core@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/runtime-core/download/@vue/runtime-core-3.2.27.tgz#1ea8acd30071f44bcf3915b088ff5d993a9d3154"
-  integrity sha512-NJrjuViHJyrT4bwIocbE4XDaDlA1Pj61pQlneZZdFEvgdMLlhzCCiJ4WZnWcohYQeisUAZjEFKK8GjQieDPFbw==
-  dependencies:
-    "@vue/reactivity" "3.2.27"
-    "@vue/shared" "3.2.27"
 
 "@vue/runtime-dom@3.2.26":
   version "3.2.26"
@@ -2331,15 +1586,6 @@
     "@vue/shared" "3.2.26"
     csstype "^2.6.8"
 
-"@vue/runtime-dom@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/runtime-dom/download/@vue/runtime-dom-3.2.27.tgz#d13f9f5f27815041f5e9f493d77121955e3f7166"
-  integrity sha512-tlnKkvBSkV7MPUp/wRFsYcv67U1rUeZTPfpPzq5Kpmw5NNGkY6J075fFBH2k0MNxDucXS+qfStNrxAyGTUMkSA==
-  dependencies:
-    "@vue/runtime-core" "3.2.27"
-    "@vue/shared" "3.2.27"
-    csstype "^2.6.8"
-
 "@vue/server-renderer@3.2.26":
   version "3.2.26"
   resolved "https://registry.npmmirror.com/@vue/server-renderer/download/@vue/server-renderer-3.2.26.tgz"
@@ -2348,23 +1594,10 @@
     "@vue/compiler-ssr" "3.2.26"
     "@vue/shared" "3.2.26"
 
-"@vue/server-renderer@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/server-renderer/download/@vue/server-renderer-3.2.27.tgz#a0caee0f7571fa741e4efaa72951a1cd70d61551"
-  integrity sha512-dZnzkFCDe6A/GIe/F1LcG6lWpprHVh62DjTv8wubtkHwfJWOmOeHp+KvPDRrswL/L3ghsm+E31xY+pvkgM3pbQ==
-  dependencies:
-    "@vue/compiler-ssr" "3.2.27"
-    "@vue/shared" "3.2.27"
-
 "@vue/shared@3.2.26":
   version "3.2.26"
   resolved "https://registry.npmmirror.com/@vue/shared/download/@vue/shared-3.2.26.tgz"
   integrity sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA==
-
-"@vue/shared@3.2.27":
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/@vue/shared/download/@vue/shared-3.2.27.tgz#d5c6e574ee1afd55043470bf70b15772da4e19a2"
-  integrity sha512-rpAn9k6O08Lvo7ekBIAnkOukX/4EsEQLPrRJBKhIEasMsOI5eX0f6mq1sDUSY7cgAqWw2d7QtP74CWxdXoyKxA==
 
 "@vue/vue-loader-v15@npm:vue-loader@^15.9.7":
   version "15.9.8"
@@ -2528,20 +1761,6 @@
   version "4.2.2"
   resolved "https://registry.npmmirror.com/@xtuc/long/download/@xtuc/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha1-0pHGpOl5ibXGHZrPOWrk/hM6cY0=
-
-"@zxing/library@^0.18.4":
-  version "0.18.6"
-  resolved "https://registry.npmmirror.com/@zxing/library/download/@zxing/library-0.18.6.tgz#717af8c6c1fd982865e21051afdd7b470ae6674c"
-  integrity sha1-cXr4xsH9mChl4hBRr917RwrmZ0w=
-  dependencies:
-    ts-custom-error "^3.0.0"
-  optionalDependencies:
-    "@zxing/text-encoding" "~0.9.0"
-
-"@zxing/text-encoding@~0.9.0":
-  version "0.9.0"
-  resolved "https://registry.nlark.com/@zxing/text-encoding/download/@zxing/text-encoding-0.9.0.tgz#fb50ffabc6c7c66a0c96b4c03e3d9be74864b70b"
-  integrity sha1-+1D/q8bHxmoMlrTAPj2b50hktws=
 
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
@@ -2729,6 +1948,13 @@ autoprefixer@^10.2.4:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.npmmirror.com/axios/download/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
+
 babel-loader@^8.2.2:
   version "8.2.3"
   resolved "https://registry.npmmirror.com/babel-loader/download/babel-loader-8.2.3.tgz#8986b40f1a64cacfcb4b8429320085ef68b1342d"
@@ -2774,24 +2000,6 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.nlark.com/balanced-match/download/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha1-6D46fj8wCzTLnYf2FfoMvzV2kO4=
-
-balm-ui@^9.40.0:
-  version "9.40.0"
-  resolved "https://registry.npmmirror.com/balm-ui/download/balm-ui-9.40.0.tgz#439b89837ed247a7184f96e47c1cf4101c8c9306"
-  integrity sha512-8TynX96rGrVrfxYiB7H3MDswXiUbJkn1K9adwnQjyf9ntBXUwjxkXp8ViK/FBOxn+iNCEue+zXSzx/WLqin9Uw==
-  dependencies:
-    deepmerge "^4.2.2"
-    flatpickr "^4.6.9"
-    material-components-web "^13.0.0"
-    quill "^1.3.7"
-
-barcode-detector@^0.7:
-  version "0.7.0"
-  resolved "https://registry.nlark.com/barcode-detector/download/barcode-detector-0.7.0.tgz#c84a3cd54002e12102684a7ed08bd75071587837"
-  integrity sha1-yEo81UAC4SECaEp+0IvXUHFYeDc=
-  dependencies:
-    "@zxing/library" "^0.18.4"
-    jsqr "^1.3.1"
 
 base64-js@^1.3.1:
   version "1.5.1"
@@ -2939,16 +2147,6 @@ call-bind@^1.0.0, call-bind@^1.0.2:
     function-bind "^1.1.1"
     get-intrinsic "^1.0.2"
 
-callforth@^0.4:
-  version "0.4.0"
-  resolved "https://registry.nlark.com/callforth/download/callforth-0.4.0.tgz#ffca46dceb3db82ef943acbeebfef688474d408b"
-  integrity sha1-/8pG3Os9uC75Q6y+6/72iEdNQIs=
-
-callsite@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.nlark.com/callsite/download/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
-  integrity sha1-KAOY5dZkvXQDi28JBRU+borxvCA=
-
 callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.nlark.com/callsites/download/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
@@ -3022,7 +2220,7 @@ chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-"chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.2:
+chokidar@^3.5.2:
   version "3.5.2"
   resolved "https://registry.npmmirror.com/chokidar/download/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
   integrity sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==
@@ -3125,11 +2323,6 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.nlark.com/clone/download/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
-
-clone@^2.1.1:
-  version "2.1.2"
-  resolved "https://registry.nlark.com/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
-  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -3271,7 +2464,7 @@ core-js-compat@^3.20.0, core-js-compat@^3.20.2, core-js-compat@^3.8.3:
     browserslist "^4.19.1"
     semver "7.0.0"
 
-core-js@^3, core-js@^3.8.3:
+core-js@^3.8.3:
   version "3.20.3"
   resolved "https://registry.npmmirror.com/core-js/download/core-js-3.20.3.tgz#c710d0a676e684522f3db4ee84e5e18a9d11d69a"
   integrity sha512-vVl8j8ph6tRS3B8qir40H7yw7voy17xL0piAjlbBUsH7WIfzoedL/ZOr1OV9FyZQLWXsayOJyV4tnRyXR85/ag==
@@ -3482,13 +2675,6 @@ debug@^4.1.0, debug@^4.1.1, debug@^4.3.3:
   dependencies:
     ms "2.1.2"
 
-decache@^4.6.0:
-  version "4.6.1"
-  resolved "https://registry.npmmirror.com/decache/download/decache-4.6.1.tgz#5928bfab97a6fcf22a65047a3d07999af36efaf0"
-  integrity sha512-ohApBM8u9ygepJCjgBrEZSSxPjc0T/PJkD+uNyxXPkqudyUpdXpwJYp0VISm2WrPVzASU6DZyIi6BWdyw7uJ2Q==
-  dependencies:
-    callsite "^1.0.0"
-
 decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmmirror.com/decamelize/download/decamelize-1.2.0.tgz?cache=0&sync_timestamp=1633055961056&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fdecamelize%2Fdownload%2Fdecamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -3510,11 +2696,6 @@ deepmerge@^1.5.2:
   version "1.5.2"
   resolved "https://registry.npmmirror.com/deepmerge/download/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
   integrity sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==
-
-deepmerge@^4.2.2:
-  version "4.2.2"
-  resolved "https://registry.npmmirror.com/deepmerge/download/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
-  integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
 
 default-gateway@^6.0.3:
   version "6.0.3"
@@ -3910,11 +3091,6 @@ event-pubsub@4.3.0:
   resolved "https://registry.nlark.com/event-pubsub/download/event-pubsub-4.3.0.tgz#f68d816bc29f1ec02c539dc58c8dd40ce72cb36e"
   integrity sha1-9o2Ba8KfHsAsU53FjI3UDOcss24=
 
-eventemitter3@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npmmirror.com/eventemitter3/download/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
-  integrity sha512-jLN68Dx5kyFHaePoXWPsCGW5qdyZQtLYHkxkg02/Mz6g0kYpDx4FyP6XfArhQdlOC4b8Mv+EMxPo/8La7Tzghg==
-
 eventemitter3@^4.0.0:
   version "4.0.7"
   resolved "https://registry.npmmirror.com/eventemitter3/download/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
@@ -3994,20 +3170,10 @@ express@^4.17.1:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-extend@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.nlark.com/extend/download/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
-  integrity sha1-+LETa0Bx+9jrFAr/hYsQGewpFfo=
-
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.nlark.com/fast-deep-equal/download/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=
-
-fast-diff@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.nlark.com/fast-diff/download/fast-diff-1.1.2.tgz#4b62c42b8e03de3f848460b639079920695d0154"
-  integrity sha1-S2LEK44D3j+EhGC2OQeZIGldAVQ=
 
 fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.11"
@@ -4046,14 +3212,6 @@ figures@^2.0.0:
   dependencies:
     escape-string-regexp "^1.0.5"
 
-file-loader@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.npmmirror.com/file-loader/download/file-loader-6.2.0.tgz#baef7cf8e1840df325e4390b4484879480eebe4d"
-  integrity sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.nlark.com/fill-range/download/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
@@ -4091,12 +3249,7 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-flatpickr@^4.6.9:
-  version "4.6.9"
-  resolved "https://registry.nlark.com/flatpickr/download/flatpickr-4.6.9.tgz#9a13383e8a6814bda5d232eae3fcdccb97dc1499"
-  integrity sha1-mhM4PopoFL2l0jLq4/zcy5fcFJk=
-
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.7:
   version "1.14.7"
   resolved "https://registry.npmmirror.com/follow-redirects/download/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
@@ -4196,7 +3349,7 @@ glob-to-regexp@^0.4.1:
   resolved "https://registry.nlark.com/glob-to-regexp/download/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
   integrity sha1-x1KXCHyFG5pXi9IX3VmpL1n+VG4=
 
-glob@^7.0.0, glob@^7.1.3:
+glob@^7.1.3:
   version "7.2.0"
   resolved "https://registry.npmmirror.com/glob/download/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
@@ -4438,11 +3591,6 @@ ignore@^5.2.0:
   resolved "https://registry.npmmirror.com/ignore/download/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
-immutable@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/immutable/download/immutable-4.0.0.tgz#b86f78de6adef3608395efb269a91462797e2c23"
-  integrity sha512-zIE9hX70qew5qTUjSS7wi1iwj/l7+m54KWU247nhM3v806UdGj1yDndXj+IOYxxtW9zyLI+xqFNZjTuDaLUqFw==
-
 import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.nlark.com/import-fresh/download/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -4473,11 +3621,6 @@ inherits@2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/inherits/download/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
-
-interpret@^1.0.0:
-  version "1.4.0"
-  resolved "https://registry.nlark.com/interpret/download/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
-  integrity sha1-Zlq4vE2iendKQFhOgS4+D6RbGh4=
 
 ip@^1.1.0:
   version "1.1.5"
@@ -4749,17 +3892,12 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsqr@^1.3.1:
-  version "1.4.0"
-  resolved "https://registry.npmmirror.com/jsqr/download/jsqr-1.4.0.tgz#8efb8d0a7cc6863cb6d95116b9069123ce9eb2d1"
-  integrity sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==
-
 kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npm.taobao.org/kind-of/download/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha1-B8BQNKbDSfoG4k+jWqdttFgM5N0=
 
-klona@^2.0.4, klona@^2.0.5:
+klona@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npmmirror.com/klona/download/klona-2.0.5.tgz?cache=0&sync_timestamp=1635385749251&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fklona%2Fdownload%2Fklona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha1-0WZXTZAHY5XZljqnqSj6u412r7w=
@@ -4911,60 +4049,6 @@ make-dir@^3.0.2, make-dir@^3.1.0:
   integrity sha1-QV6WcEazp/HRhSd9hKpYIDcmoT8=
   dependencies:
     semver "^6.0.0"
-
-material-components-web@^13.0.0:
-  version "13.0.0"
-  resolved "https://registry.npmmirror.com/material-components-web/download/material-components-web-13.0.0.tgz#186e563667e404c25dfe66695a0b3a6ec4de7345"
-  integrity sha1-GG5WNmfkBMJd/mZpWgs6bsTec0U=
-  dependencies:
-    "@material/animation" "^13.0.0"
-    "@material/auto-init" "^13.0.0"
-    "@material/banner" "^13.0.0"
-    "@material/base" "^13.0.0"
-    "@material/button" "^13.0.0"
-    "@material/card" "^13.0.0"
-    "@material/checkbox" "^13.0.0"
-    "@material/chips" "^13.0.0"
-    "@material/circular-progress" "^13.0.0"
-    "@material/data-table" "^13.0.0"
-    "@material/density" "^13.0.0"
-    "@material/dialog" "^13.0.0"
-    "@material/dom" "^13.0.0"
-    "@material/drawer" "^13.0.0"
-    "@material/elevation" "^13.0.0"
-    "@material/fab" "^13.0.0"
-    "@material/feature-targeting" "^13.0.0"
-    "@material/floating-label" "^13.0.0"
-    "@material/form-field" "^13.0.0"
-    "@material/icon-button" "^13.0.0"
-    "@material/image-list" "^13.0.0"
-    "@material/layout-grid" "^13.0.0"
-    "@material/line-ripple" "^13.0.0"
-    "@material/linear-progress" "^13.0.0"
-    "@material/list" "^13.0.0"
-    "@material/menu" "^13.0.0"
-    "@material/menu-surface" "^13.0.0"
-    "@material/notched-outline" "^13.0.0"
-    "@material/radio" "^13.0.0"
-    "@material/ripple" "^13.0.0"
-    "@material/rtl" "^13.0.0"
-    "@material/segmented-button" "^13.0.0"
-    "@material/select" "^13.0.0"
-    "@material/shape" "^13.0.0"
-    "@material/slider" "^13.0.0"
-    "@material/snackbar" "^13.0.0"
-    "@material/switch" "^13.0.0"
-    "@material/tab" "^13.0.0"
-    "@material/tab-bar" "^13.0.0"
-    "@material/tab-indicator" "^13.0.0"
-    "@material/tab-scroller" "^13.0.0"
-    "@material/textfield" "^13.0.0"
-    "@material/theme" "^13.0.0"
-    "@material/tokens" "^13.0.0"
-    "@material/tooltip" "^13.0.0"
-    "@material/top-app-bar" "^13.0.0"
-    "@material/touch-target" "^13.0.0"
-    "@material/typography" "^13.0.0"
 
 mdn-data@2.0.14:
   version "2.0.14"
@@ -5256,14 +4340,6 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-null-loader@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.nlark.com/null-loader/download/null-loader-4.0.1.tgz#8e63bd3a2dd3c64236a4679428632edd0a6dbc6a"
-  integrity sha1-jmO9Oi3TxkI2pGeUKGMu3QptvGo=
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-
 object-assign@^4.0.1:
   version "4.1.1"
   resolved "https://registry.nlark.com/object-assign/download/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -5405,11 +4481,6 @@ param-case@^3.0.4:
   dependencies:
     dot-case "^3.0.4"
     tslib "^2.0.3"
-
-parchment@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.npmmirror.com/parchment/download/parchment-1.1.4.tgz#aeded7ab938fe921d4c34bc339ce1168bc2ffde5"
-  integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -5862,17 +4933,6 @@ qrcode-generator@^1.4.3:
   resolved "https://registry.nlark.com/qrcode-generator/download/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha1-Y/dxIkhUdZMpqZBIgGpT7SeHQOc=
 
-qrcode-reader-vue3@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmmirror.com/qrcode-reader-vue3/download/qrcode-reader-vue3-3.1.2.tgz#5957dd58e24a027ab66416e0eb96fdc39d3e55ae"
-  integrity sha1-WVfdWOJKAnq2ZBbg65b9w50+Va4=
-  dependencies:
-    barcode-detector "^0.7"
-    callforth "^0.4"
-    core-js "^3"
-    vue "^3"
-    webrtc-adapter "^7"
-
 qrcode-vue3@^1.4.17:
   version "1.4.17"
   resolved "https://registry.npmmirror.com/qrcode-vue3/download/qrcode-vue3-1.4.17.tgz#5c381d8913ac87d10f9b7e5451746bbb10077d53"
@@ -5896,36 +4956,10 @@ qs@6.9.6:
   resolved "https://registry.npmmirror.com/qs/download/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
   integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
-querystring@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmmirror.com/querystring/download/querystring-0.2.1.tgz#40d77615bb09d16902a85c3e38aa8b5ed761c2dd"
-  integrity sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==
-
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.nlark.com/queue-microtask/download/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha1-SSkii7xyTfrEPg77BYyve2z7YkM=
-
-quill-delta@^3.6.2:
-  version "3.6.3"
-  resolved "https://registry.nlark.com/quill-delta/download/quill-delta-3.6.3.tgz#b19fd2b89412301c60e1ff213d8d860eac0f1032"
-  integrity sha1-sZ/SuJQSMBxg4f8hPY2GDqwPEDI=
-  dependencies:
-    deep-equal "^1.0.1"
-    extend "^3.0.2"
-    fast-diff "1.1.2"
-
-quill@^1.3.7:
-  version "1.3.7"
-  resolved "https://registry.npmmirror.com/quill/download/quill-1.3.7.tgz#da5b2f3a2c470e932340cdbf3668c9f21f9286e8"
-  integrity sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g==
-  dependencies:
-    clone "^2.1.1"
-    deep-equal "^1.0.1"
-    eventemitter3 "^2.0.3"
-    extend "^3.0.2"
-    parchment "^1.1.4"
-    quill-delta "^3.6.2"
 
 randombytes@^2.1.0:
   version "2.1.0"
@@ -6001,13 +5035,6 @@ readdirp@~3.6.0:
   integrity sha1-dKNwvYVxFuJFspzJc0DNQxoCpsc=
   dependencies:
     picomatch "^2.2.1"
-
-rechoir@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.nlark.com/rechoir/download/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
-  integrity sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q=
-  dependencies:
-    resolve "^1.1.6"
 
 regenerate-unicode-properties@^9.0.0:
   version "9.0.0"
@@ -6111,7 +5138,7 @@ resolve-from@^4.0.0:
   resolved "https://registry.nlark.com/resolve-from/download/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
   integrity sha1-SrzYUq0y3Xuqv+m0DgCjbbXzkuY=
 
-resolve@^1.1.6, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0:
+resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0:
   version "1.21.0"
   resolved "https://registry.npmmirror.com/resolve/download/resolve-1.21.0.tgz#b51adc97f3472e6a5cf4444d34bc9d6b9037591f"
   integrity sha512-3wCbTpk5WJlyE4mSOtDLhqQmGFi0/TD9VPwmiolnk8U0wRgMEktqCXd3vy5buTO3tljvalNvKrjHEfrd2WpEKA==
@@ -6153,24 +5180,12 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-roboto-fontface@*:
-  version "0.10.0"
-  resolved "https://registry.nlark.com/roboto-fontface/download/roboto-fontface-0.10.0.tgz#7eee40cfa18b1f7e4e605eaf1a2740afb6fd71b0"
-  integrity sha1-fu5Az6GLH35OYF6vGidAr7b9cbA=
-
 rollup@^2.59.0:
   version "2.64.0"
   resolved "https://registry.npmmirror.com/rollup/download/rollup-2.64.0.tgz"
   integrity sha512-+c+lbw1lexBKSMb1yxGDVfJ+vchJH3qLbmavR+awDinTDA2C5Ug9u7lkOzj62SCu0PKUExsW36tpgW7Fmpn3yQ==
   optionalDependencies:
     fsevents "~2.3.2"
-
-rtcpeerconnection-shim@^1.2.15:
-  version "1.2.15"
-  resolved "https://registry.nlark.com/rtcpeerconnection-shim/download/rtcpeerconnection-shim-1.2.15.tgz#e7cc189a81b435324c4949aa3dfb51888684b243"
-  integrity sha1-58wYmoG0NTJMSUmqPftRiIaEskM=
-  dependencies:
-    sdp "^2.6.0"
 
 run-parallel@^1.1.9:
   version "1.2.0"
@@ -6193,23 +5208,6 @@ safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, 
   version "2.1.2"
   resolved "https://registry.nlark.com/safer-buffer/download/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo=
-
-sass-loader@^12.4.0:
-  version "12.4.0"
-  resolved "https://registry.npmmirror.com/sass-loader/download/sass-loader-12.4.0.tgz#260b0d51a8a373bb8e88efc11f6ba5583fea0bcf"
-  integrity sha512-7xN+8khDIzym1oL9XyS6zP6Ges+Bo2B2xbPrjdMHEYyV3AQYhd/wXeru++3ODHF0zMjYmVadblSKrPrjEkL8mg==
-  dependencies:
-    klona "^2.0.4"
-    neo-async "^2.6.2"
-
-sass@^1.48.0:
-  version "1.48.0"
-  resolved "https://registry.npmmirror.com/sass/download/sass-1.48.0.tgz#b53cfccc1b8ab4be375cc54f306fda9d4711162c"
-  integrity sha512-hQi5g4DcfjcipotoHZ80l7GNJHGqQS5LwMBjVYB/TaT0vcSSpbgM8Ad7cgfsB2M0MinbkEQQPO9+sjjSiwxqmw==
-  dependencies:
-    chokidar ">=3.0.0 <4.0.0"
-    immutable "^4.0.0"
-    source-map-js ">=0.6.2 <2.0.0"
 
 schema-utils@^2.0.0, schema-utils@^2.6.5:
   version "2.7.1"
@@ -6238,11 +5236,6 @@ schema-utils@^4.0.0:
     ajv "^8.8.0"
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
-
-sdp@^2.12.0, sdp@^2.6.0:
-  version "2.12.0"
-  resolved "https://registry.nlark.com/sdp/download/sdp-2.12.0.tgz#338a106af7560c86e4523f858349680350d53b22"
-  integrity sha1-M4oQavdWDIbkUj+Fg0loA1DVOyI=
 
 seemly@^0.3.1, seemly@^0.3.3:
   version "0.3.3"
@@ -6278,7 +5271,7 @@ semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.3.0:
   resolved "https://registry.nlark.com/semver/download/semver-6.3.0.tgz?cache=0&sync_timestamp=1622685835879&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsemver%2Fdownload%2Fsemver-6.3.0.tgz"
   integrity sha1-7gpkyK9ejO6mdoexM3YeG+y9HT0=
 
-semver@^7.1.2, semver@^7.3.4, semver@^7.3.5:
+semver@^7.3.4, semver@^7.3.5:
   version "7.3.5"
   resolved "https://registry.nlark.com/semver/download/semver-7.3.5.tgz?cache=0&sync_timestamp=1622685835879&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
   integrity sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc=
@@ -6385,15 +5378,6 @@ shell-quote@^1.6.1:
   resolved "https://registry.npmmirror.com/shell-quote/download/shell-quote-1.7.3.tgz?cache=0&sync_timestamp=1634798903024&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fshell-quote%2Fdownload%2Fshell-quote-1.7.3.tgz#aa40edac170445b9a431e17bb62c0b881b9c4123"
   integrity sha1-qkDtrBcERbmkMeF7tiwLiBucQSM=
 
-shelljs@^0.8.3:
-  version "0.8.5"
-  resolved "https://registry.npmmirror.com/shelljs/download/shelljs-0.8.5.tgz#de055408d8361bed66c669d2f000538ced8ee20c"
-  integrity sha512-TiwcRcrkhHvbrZbnRcFYMLl30Dfov3HKqzp5tO5b4pt6G/SezKcYhmDg15zXVBswHmctSAQKznqNW2LO5tTDow==
-  dependencies:
-    glob "^7.0.0"
-    interpret "^1.0.0"
-    rechoir "^0.6.2"
-
 signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
   version "3.0.6"
   resolved "https://registry.npmmirror.com/signal-exit/download/signal-exit-3.0.6.tgz#24e630c4b0f03fea446a2bd299e62b4a6ca8d0af"
@@ -6427,7 +5411,7 @@ source-list-map@^2.0.0:
   resolved "https://registry.npmmirror.com/source-list-map/download/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
   integrity sha1-OZO9hzv8SEecyp6jpUeDXHwVSzQ=
 
-"source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1:
+source-map-js@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/source-map-js/download/source-map-js-1.0.1.tgz?cache=0&sync_timestamp=1636400794827&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map-js%2Fdownload%2Fsource-map-js-1.0.1.tgz"
   integrity sha512-4+TN2b3tqOCd/kaGRJ/sTYA0tR0mdXx26ipdolxcwtJVqEnqNYvlCAt1q3ypy4QMlYus+Zh34RNtYLoq2oQ4IA==
@@ -6737,12 +5721,7 @@ treemate@^0.3.9:
   resolved "https://registry.npmmirror.com/treemate/download/treemate-0.3.10.tgz#df40ce4c0c1251729b1431c9866134a34949fca5"
   integrity sha512-uxN98H84/zXAkn02rEeip9SNnOR889QIBXfpZnwjaanp8JRElxjdmDaKmVULclrn54J8RcJVCqfeQZsdeMjwow==
 
-ts-custom-error@^3.0.0:
-  version "3.2.0"
-  resolved "https://registry.nlark.com/ts-custom-error/download/ts-custom-error-3.2.0.tgz#ff8f80a3812bab9dc448536312da52dce1b720fb"
-  integrity sha1-/4+Ao4Erq53ESFNjEtpS3OG3IPs=
-
-tslib@^2.0.3, tslib@^2.1.0:
+tslib@^2.0.3:
   version "2.3.1"
   resolved "https://registry.npmmirror.com/tslib/download/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
@@ -6874,15 +5853,6 @@ vooks@^0.2.12, vooks@^0.2.4:
   dependencies:
     evtd "^0.2.2"
 
-vue-cli-plugin-vuetify@~2.4.5:
-  version "2.4.5"
-  resolved "https://registry.npmmirror.com/vue-cli-plugin-vuetify/download/vue-cli-plugin-vuetify-2.4.5.tgz#5dfae4d78c717c400530731f0b75c0350c3b6add"
-  integrity sha512-CnCVzG6iZAsMMqTkijZ0gRkPB6s4zHPWyFX1VpBBKVyxZESayQhUoMCZRZUOZNjvvZpq1LPgviq+8zcliSu73g==
-  dependencies:
-    null-loader "^4.0.1"
-    semver "^7.1.2"
-    shelljs "^0.8.3"
-
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.nlark.com/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
@@ -6917,17 +5887,6 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.nlark.com/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@^3:
-  version "3.2.27"
-  resolved "https://registry.npmmirror.com/vue/download/vue-3.2.27.tgz#dc898b3cf7393a620ed5e4a91e5fa8c1ed1ba67a"
-  integrity sha512-p1cH8Q6eaPwvANCjFQj497a914cxXKKwOG3Lg9USddTOrn4/zFMKjn9dnovkx+L8VtFaNgbVqW8mLJS/eTA6xw==
-  dependencies:
-    "@vue/compiler-dom" "3.2.27"
-    "@vue/compiler-sfc" "3.2.27"
-    "@vue/runtime-dom" "3.2.27"
-    "@vue/server-renderer" "3.2.27"
-    "@vue/shared" "3.2.27"
-
 vue@^3.2.25:
   version "3.2.26"
   resolved "https://registry.npmmirror.com/vue/download/vue-3.2.26.tgz"
@@ -6938,25 +5897,6 @@ vue@^3.2.25:
     "@vue/runtime-dom" "3.2.26"
     "@vue/server-renderer" "3.2.26"
     "@vue/shared" "3.2.26"
-
-vuetify-loader@^2.0.0-alpha.0:
-  version "2.0.0-alpha.9"
-  resolved "https://registry.npmmirror.com/vuetify-loader/download/vuetify-loader-2.0.0-alpha.9.tgz#0a108b1ac11fc8af63046b16321505b444c04746"
-  integrity sha512-M4u2XX9coe1U51jLKek54eJTo7wnroNfglh6sQplRTslhQRKQM3k84oh87D0VHqTzoTzlKPHP0sIWdpklwaEEQ==
-  dependencies:
-    "@vuetify/loader-shared" "^1.3.0"
-    decache "^4.6.0"
-    file-loader "^6.2.0"
-    find-cache-dir "^3.3.2"
-    loader-utils "^2.0.0"
-    null-loader "^4.0.1"
-    querystring "^0.2.1"
-    upath "^2.0.1"
-
-vuetify@^3.0.0-alpha.0:
-  version "3.0.0-alpha.12"
-  resolved "https://registry.npmmirror.com/vuetify/download/vuetify-3.0.0-alpha.12.tgz#c781ebf16a9bb89dd8dfd27c1848efd534545336"
-  integrity sha512-F9TwV3Xk6J/bSH422kATrKeIiumGRkzGJPsvM0/8vPwYF0HWh7dHRhhYsIKkfhl5UJl/LYdeGNm1L8+jtldA0w==
 
 vueuc@^0.4.21:
   version "0.4.23"
@@ -6991,11 +5931,6 @@ wcwidth@^1.0.1:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
-
-webfontloader@^1.0.0:
-  version "1.6.28"
-  resolved "https://registry.nlark.com/webfontloader/download/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
-  integrity sha1-23hhKSU8tujq5UwvsF+HCvZnW64=
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
@@ -7126,14 +6061,6 @@ webpack@^5.22.0:
     terser-webpack-plugin "^5.1.3"
     watchpack "^2.3.1"
     webpack-sources "^3.2.2"
-
-webrtc-adapter@^7:
-  version "7.7.1"
-  resolved "https://registry.npmmirror.com/webrtc-adapter/download/webrtc-adapter-7.7.1.tgz#b2c227a6144983b35057df67bd984a7d4bfd17f1"
-  integrity sha1-ssInphRJg7NQV99nvZhKfUv9F/E=
-  dependencies:
-    rtcpeerconnection-shim "^1.2.15"
-    sdp "^2.12.0"
 
 websocket-driver@>=0.5.1, websocket-driver@^0.7.4:
   version "0.7.4"
