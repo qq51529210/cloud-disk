@@ -1,17 +1,16 @@
 package store
 
 var (
-	_Store Store
+	_User User
 )
 
-type Store interface {
-	UserStore() UserStore
+func Init(_type string, data map[string]interface{}) {
+	switch _type {
+	case "", "mongodb":
+
+	}
 }
 
-func SetStore(st Store) {
-	_Store = st
-}
-
-func GetStore() Store {
-	return _Store
+func GetUser() User {
+	return _User
 }

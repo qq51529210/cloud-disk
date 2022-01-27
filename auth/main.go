@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -11,19 +10,12 @@ import (
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/micro-services/auth/cache"
-	"github.com/qq51529210/micro-services/auth/cache/redis"
 	"github.com/qq51529210/micro-services/auth/service/api/apps"
 	"github.com/qq51529210/micro-services/auth/service/api/tokens"
 	"github.com/qq51529210/micro-services/auth/service/oauth2"
 	"github.com/qq51529210/micro-services/auth/store"
-	"github.com/qq51529210/micro-services/auth/store/mongodb"
 	"github.com/qq51529210/web"
 	"github.com/qq51529210/web/router"
-)
-
-var (
-	caches = make(map[string]func(map[string]interface{}) cache.Cache)
-	stores = make(map[string]func(map[string]interface{}) store.Store)
 )
 
 type config struct {
@@ -53,14 +45,6 @@ type uuidConfig struct {
 type storeConfig struct {
 	Type   string                 `json:"type"`
 	Config map[string]interface{} `json:"config"`
-}
-
-func init() {
-	caches[""] = redis.New
-	caches["redis"] = caches[""]
-	//
-	stores[""] = mongodb.New
-	stores["mongodb"] = stores[""]
 }
 
 func loadConfig() *config {
@@ -119,17 +103,9 @@ func initServer() web.Server {
 	// 加载启动配置
 	conf := loadConfig()
 	// 缓存
-	newCache := caches[conf.Cache.Type]
-	if newCache == nil {
-		panic(fmt.Errorf("config.cache.type: unsupported cache <%s>", conf.Cache.Type))
-	}
-	cache.SetCache(newCache(conf.Cache.Config))
+	cache.Init(conf.Cache.Type, conf.Cache.Config)
 	// 数据库
-	newStore := stores[conf.Store.Type]
-	if newStore == nil {
-		panic(fmt.Errorf("config.cache.type: unsupported store <%s>", conf.Store.Type))
-	}
-	store.SetStore(newStore(conf.Store.Config))
+	store.Init(conf.Store.Type, conf.Store.Config)
 	// http路由和handler
 	router := initRouter(conf)
 	// 服务

@@ -2,13 +2,10 @@ package tokens
 
 import (
 	"encoding/json"
-	"net/http"
 
 	"github.com/qq51529210/log"
-	"github.com/qq51529210/micro-services/auth/cache"
 	"github.com/qq51529210/micro-services/auth/service"
 	"github.com/qq51529210/micro-services/auth/store"
-	"github.com/qq51529210/uuid"
 	"github.com/qq51529210/web/router"
 	"github.com/qq51529210/web/util"
 )
@@ -27,7 +24,7 @@ func postPassword(ctx *router.Context) {
 		return
 	}
 	// 查询数据库
-	m2, err := store.GetStore().UserStore().Get(m1.Account)
+	m2, err := store.GetUser().Get(m1.Account)
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return
@@ -39,15 +36,8 @@ func postPassword(ctx *router.Context) {
 		return
 	}
 	// 创建token
-	token := uuid.LowerV1WithoutHyphen()
-	err = cache.Set(token, m2, service.TokenExpire)
-	if err != nil {
-		service.QueryDataError(ctx, err)
-		return
+	token := createToken(ctx, m2)
+	if token != "" {
+		log.Infof("<%s> <%s> <%s>", m1.Account, m1.Password, token)
 	}
-	// 返回
-	ctx.JSON(http.StatusCreated, map[string]string{
-		"token": token,
-	})
-	log.Infof("postPassword: <%s> <%s> <%s>", m1.Account, m1.Password, token)
 }

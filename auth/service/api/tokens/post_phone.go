@@ -2,13 +2,11 @@ package tokens
 
 import (
 	"encoding/json"
-	"net/http"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/micro-services/auth/cache"
 	"github.com/qq51529210/micro-services/auth/service"
 	"github.com/qq51529210/micro-services/auth/store"
-	"github.com/qq51529210/uuid"
 	"github.com/qq51529210/web/router"
 )
 
@@ -26,7 +24,7 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 检查验证码
-	code, err := cache.Get(m1.Number)
+	code, err := cache.GetPhoneCode().Get(m1.Number)
 	if err != nil {
 		service.ParseJSONError(ctx, err)
 		return
@@ -36,21 +34,14 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 查询数据库
-	m2, err := store.GetStore().UserStore().Get(m1.Number)
+	m2, err := store.GetUser().Get(m1.Number)
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return
 	}
 	// 创建token
-	token := uuid.LowerV1WithoutHyphen()
-	err = cache.Set(token, m2, service.TokenExpire)
-	if err != nil {
-		service.QueryDataError(ctx, err)
-		return
+	token := createToken(ctx, m2)
+	if token != "" {
+		log.Infof("<%s> <%s> <%s>", m1.Number, m1.Code, token)
 	}
-	// 返回
-	ctx.JSON(http.StatusCreated, map[string]string{
-		"token": token,
-	})
-	log.Infof("postPhone: <%s> <%s> <%s>", m1.Number, m1.Code, token)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/micro-services/auth/cache"
 	"github.com/qq51529210/micro-services/auth/service"
-	"github.com/qq51529210/uuid"
+	"github.com/qq51529210/micro-services/auth/util"
 	"github.com/qq51529210/web/router"
 )
 
@@ -24,13 +24,17 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 生成验证码
-	code := uuid.LowerV1WithoutHyphen()
-	err = cache.Set(m1.Number, code, int(_Config.PhoneCodeExpire))
+	code, err := cache.GetPhoneCode().New(m1.Number)
 	if err != nil {
 		service.ParseJSONError(ctx, err)
 		return
 	}
+	// 发送
+	err = util.SenSMS(m1.Number, code)
+	if err != nil {
+		log.Error(err)
+	}
 	// 返回
 	ctx.ResponseWriter.WriteHeader(http.StatusCreated)
-	log.Infof("codes.postPhone: <%s> <%s>", m1.Number, code)
+	log.Infof("<%s> <%s>", m1.Number, code)
 }
