@@ -1,42 +1,23 @@
 package cache
 
-import (
-	"fmt"
-
-	"github.com/qq51529210/micro-services/auth/cache/redis"
-)
-
 var (
-	_Token     Token
-	_PhoneCode PhoneCode
+	_Cache Cache
 )
 
-func Init(_type string, data map[string]interface{}) {
-	switch _type {
-	case "", "redis":
-		_Token, _PhoneCode = redis.Init()
-	default:
-		panic(fmt.Errorf("config.cache.type: unsupported cache <%s>", _type))
-	}
+type Cache interface {
+	NewToken(value string) (string, error)
+	SetToken(token, value string) error
+	HasToken(token string) (bool, error)
+	GetToken(token string) (string, error)
+	DelToken(token string) error
+	NewPhoneCode(number string) (string, error)
+	GetPhoneCode(number string) (string, error)
 }
 
-type Token interface {
-	New(value string) (string, error)
-	Set(token, value string) error
-	Has(token string) (bool, error)
-	Get(token string) (string, error)
-	Del(token string) error
+func SetCache(cache Cache) {
+	_Cache = cache
 }
 
-type PhoneCode interface {
-	New(number string) (string, error)
-	Get(number string) (string, error)
-}
-
-func GetToken() Token {
-	return _Token
-}
-
-func GetPhoneCode() PhoneCode {
-	return _PhoneCode
+func GetCache() Cache {
+	return _Cache
 }

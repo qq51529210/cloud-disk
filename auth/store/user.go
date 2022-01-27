@@ -6,7 +6,3 @@ type UserModel struct {
 	Password string
 	Phone    string
 }
-
-type User interface {
-	Get(account string) (*UserModel, error)
-}

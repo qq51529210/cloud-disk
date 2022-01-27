@@ -24,7 +24,7 @@ func postPassword(ctx *router.Context) {
 		return
 	}
 	// 查询数据库
-	m2, err := store.GetUser().Get(m1.Account)
+	m2, err := store.GetStore().GetUser(m1.Account)
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return

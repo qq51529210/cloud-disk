@@ -1,12 +1,7 @@
 package mongodb
 
-type UserModel struct {
-	ID       string
-	Account  string
-	Password string
-	Phone    string
-}
+import "github.com/qq51529210/micro-services/auth/store"
 
-type User interface {
-	Get(account string) (*UserModel, error)
+func (s *Store) GetUser(account string) (*store.UserModel, error) {
+	return nil, nil
 }

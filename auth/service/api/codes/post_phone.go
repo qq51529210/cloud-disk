@@ -24,7 +24,7 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 生成验证码
-	code, err := cache.GetPhoneCode().New(m1.Number)
+	code, err := cache.GetCache().NewPhoneCode(m1.Number)
 	if err != nil {
 		service.ParseJSONError(ctx, err)
 		return

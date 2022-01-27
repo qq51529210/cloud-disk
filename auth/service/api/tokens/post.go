@@ -27,7 +27,7 @@ func createToken(ctx *router.Context, model *store.UserModel) string {
 	// 创建token
 	var str strings.Builder
 	json.NewEncoder(&str).Encode(model)
-	token, err := cache.GetToken().New(str.String())
+	token, err := cache.GetCache().NewToken(str.String())
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return ""

@@ -24,7 +24,7 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 检查验证码
-	code, err := cache.GetPhoneCode().Get(m1.Number)
+	code, err := cache.GetCache().GetPhoneCode(m1.Number)
 	if err != nil {
 		service.ParseJSONError(ctx, err)
 		return
@@ -34,7 +34,7 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 查询数据库
-	m2, err := store.GetUser().Get(m1.Number)
+	m2, err := store.GetStore().GetUser(m1.Number)
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return
