@@ -10,6 +10,7 @@ import TextVue from '../components/Text.vue';
 import PasswordVue from '../components/Password.vue';
 import QRCodeVue from '../components/QRCode.vue';
 import * as service from '../service'
+import { parseUrlQuery } from '../util/parse-url-query'
 
 const loading = ref(false)
 const errorText = ref('')
@@ -39,7 +40,12 @@ const submit = async (sumbit) => {
     loading.value = false
     if (res.error) {
         errorText.value = res.error
-        return
+        // return
+    }
+    // oauth2
+    if (location.pathname === '/oauth2') {
+        let queries = parseUrlQuery(location.search)
+        console.log(queries)
     }
 }
 

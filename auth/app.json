@@ -66,5 +66,12 @@
       "phoneNumber": "",
       "phoneCode": ""
     }
+  },
+  "cache": {
+    "type": "redis",
+    "config": {
+      "masterHost": "localhost:6379",
+      "password": "master-password"
+    }
   }
 }

@@ -60,5 +60,5 @@ func parseAuthenticationQuery(ctx *router.Context) {
 
 // /authentication?app_id=xx&redirect_uri=xx&response_type=token&scope=xx&state=xx
 func getAuthentication(ctx *router.Context) {
-	query := ctx.TempData.(*authenticationQuery)
+	// query := ctx.TempData.(*authenticationQuery)
 }

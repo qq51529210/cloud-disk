@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Test from "../pages/test/App.vue";
+import Test from "../pages/Test.vue";
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
 import ForgotPassword from "../pages/ForgotPassword.vue";
@@ -17,6 +17,10 @@ const router = createRouter({
     },
     {
       path: "/sign_in",
+      component: SignIn,
+    },
+    {
+      path: "/oauth2",
       component: SignIn,
     },
     {

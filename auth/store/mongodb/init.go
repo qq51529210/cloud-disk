@@ -3,9 +3,13 @@ package mongodb
 import "github.com/qq51529210/micro-services/auth/store"
 
 func New(cfg map[string]interface{}) store.Store {
-	st := new(_Store)
+	st := new(Store)
 	return st
 }
 
-type _Store struct {
+type Store struct {
+}
+
+func (s *Store) UserStore() store.UserStore {
+	return nil
 }

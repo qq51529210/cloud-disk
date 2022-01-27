@@ -57,10 +57,10 @@ type storeConfig struct {
 
 func init() {
 	caches[""] = redis.New
-	caches["redis"] = redis.New
+	caches["redis"] = caches[""]
 	//
 	stores[""] = mongodb.New
-	stores["mongodb"] = mongodb.New
+	stores["mongodb"] = stores[""]
 }
 
 func loadConfig() *config {
@@ -125,7 +125,7 @@ func initServer() web.Server {
 	}
 	cache.SetCache(newCache(conf.Cache.Config))
 	// 数据库
-	newStore := caches[conf.Store.Type]
+	newStore := stores[conf.Store.Type]
 	if newStore == nil {
 		panic(fmt.Errorf("config.cache.type: unsupported store <%s>", conf.Store.Type))
 	}

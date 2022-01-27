@@ -52,3 +52,5 @@ export const signInAccount = model => post("/api/tokens?type=account", model);
 export const signInPhone = model => post("/api/tokens?type=phone", model);
 
 export const signUp = model => post("/users", model);
+
+export const getPhoneCode = number => post("/");
