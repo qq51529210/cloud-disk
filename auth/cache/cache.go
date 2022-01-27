@@ -9,7 +9,8 @@ type Cache interface {
 	SetToken(token, value string) error
 	HasToken(token string) (bool, error)
 	GetToken(token string) (string, error)
-	DelToken(token string) error
+	UpdateToken(token string) error
+	DeleteToken(token string) error
 	NewPhoneCode(number string) (string, error)
 	GetPhoneCode(number string) (string, error)
 }

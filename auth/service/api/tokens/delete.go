@@ -10,7 +10,7 @@ import (
 )
 
 func delete(ctx *router.Context) {
-	err := cache.GetCache().DelToken(ctx.Param[0])
+	err := cache.GetCache().DeleteToken(ctx.Param[0])
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return
