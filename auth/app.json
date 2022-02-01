@@ -59,19 +59,21 @@
     "mechineID": 0,
     "node": "000000"
   },
-  "custom": {
-    "reg": {
-      "username": "",
-      "password": "",
-      "phoneNumber": "",
-      "phoneCode": ""
-    }
-  },
   "cache": {
     "type": "redis",
     "config": {
       "masterHost": "localhost:6379",
       "password": "master-password"
+    }
+  },
+  "store": {
+    "type": "mongodb",
+    "config": {
+      "uri": "mongodb://localhost:27017",
+      "databaseName": "micro-service-auth",
+      "username": "",
+      "password": "",
+      "queryTimeout": 1000
     }
   }
 }

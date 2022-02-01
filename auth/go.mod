@@ -7,7 +7,7 @@ require (
 	github.com/qq51529210/redis v0.0.0
 	github.com/qq51529210/uuid v0.0.0
 	github.com/qq51529210/web v0.0.0
-	go.mongodb.org/mongo-driver v1.8.2 // indirect
+	go.mongodb.org/mongo-driver v1.8.2
 )
 
 replace (

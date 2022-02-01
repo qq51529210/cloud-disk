@@ -12,9 +12,7 @@ import (
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/micro-services/auth/cache"
 	"github.com/qq51529210/micro-services/auth/cache/redis"
-	"github.com/qq51529210/micro-services/auth/service/api/apps"
-	"github.com/qq51529210/micro-services/auth/service/api/tokens"
-	"github.com/qq51529210/micro-services/auth/service/oauth2"
+	"github.com/qq51529210/micro-services/auth/service/api"
 	"github.com/qq51529210/micro-services/auth/store"
 	"github.com/qq51529210/micro-services/auth/store/mongodb"
 	"github.com/qq51529210/web"
@@ -95,9 +93,7 @@ func initRouter(cfg *config) router.RootRouter {
 	// 静态
 	root.Static("static", cfg.RootDir, 1024*1024)
 	//
-	oauth2.Init(root.SubRouter("oauth2"))
-	apps.Init(root.SubRouter("api/apps"))
-	tokens.Init(root.SubRouter("api/tokens"))
+	api.Init(root.SubRouter("api"))
 	//
 	return root
 }
