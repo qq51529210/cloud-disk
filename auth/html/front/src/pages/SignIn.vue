@@ -14,10 +14,13 @@ import { parseUrlQuery } from '../util/parse-url-query'
 
 const loading = ref(false)
 const errorText = ref('')
+const verifyCode = ref()
 
 const accountModel = reactive({
     account: '',
     password: '',
+    accountFeedback: '',
+    passwordFeedback: '',
 })
 
 const phoneModel = reactive({
@@ -25,12 +28,28 @@ const phoneModel = reactive({
     code: null,
 })
 
-const onAccountSubmit = async () => {
+const onAccountSubmit = () => {
+    if (!accountModel.account) {
+        accountModel.accountFeedback = '不能为空'
+        return
+    }
+    accountModel.accountFeedback = ''
+    if (!accountModel.password) {
+        accountModel.passwordFeedback = '不能为空'
+        return
+    }
+    accountModel.passwordFeedback = ''
     submit(service.signInAccount(accountModel))
 }
 
-const onPhoneSubmit = async () => {
-    submit(service.signInPhone(phoneModel))
+const onPhoneSubmit = () => {
+    if (!verifyCode.value.validate()) {
+        return
+    }
+    submit(service.signInPhone({
+        number: phoneModel.number + '',
+        code: phoneModel.code + '',
+    }))
 }
 
 const submit = async (sumbit) => {
@@ -60,14 +79,21 @@ const submit = async (sumbit) => {
         >
             <n-tab-pane name="account" tab="账号">
                 <FormVue button="登录" @submit="onAccountSubmit">
-                    <TextVue v-model="accountModel.account" placeholder="账号" />
-                    <PasswordVue v-model="accountModel.password" />
+                    <TextVue
+                        v-model="accountModel.account"
+                        placeholder="账号/手机号码"
+                        :feedback="accountModel.accountFeedback"
+                    />
+                    <PasswordVue
+                        v-model="accountModel.password"
+                        :feedback="accountModel.passwordFeedback"
+                    />
                 </FormVue>
             </n-tab-pane>
             <n-tab-pane name="sms" tab="验证码">
-                s
                 <FormVue button="登录" @submit="onPhoneSubmit">
                     <VerifyCodeVue
+                        ref="verifyCode"
                         v-model:number="phoneModel.number"
                         v-model:code="phoneModel.code"
                     />

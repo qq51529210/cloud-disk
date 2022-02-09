@@ -6,6 +6,7 @@ import (
 	"github.com/qq51529210/micro-services/auth/store"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -22,7 +23,7 @@ func (s *Store) AddUser(model *store.UserModel) (string, error) {
 		return "", err
 	}
 	_id := res.InsertedID.(primitive.ObjectID)
-	return string(_id[0:]), nil
+	return string(_id.Hex()), nil
 }
 
 func (s *Store) DeleteUser(_id string) (int64, error) {
@@ -48,18 +49,24 @@ func (s *Store) UpdateUserPassword(model *store.UserModel) (int64, error) {
 }
 
 func (s *Store) GetUser(account string) (*store.UserModel, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), queryTimeout)
-	defer cancel()
-	//
-	res := s.userCollection.FindOne(ctx, bson.M{
+	res := s.userCollection.FindOne(context.Background(), bson.M{
+		// "$OR": bson.D{
+		// 	bson.E{Key: "account", Value: account},
+		// 	bson.E{Key: "phone", Value: account},
+		// },
 		"$or": bson.A{
-			bson.E{Key: "account", Value: account},
-			bson.E{Key: "phone", Value: account},
+			bson.M{"account": "1"},
+			bson.M{"phone": "2"},
 		},
+	}, &options.FindOneOptions{
+		MaxTime: &queryTimeout,
 	})
 	var model store.UserModel
 	err := res.Decode(&model)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return &model, nil

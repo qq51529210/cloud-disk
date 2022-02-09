@@ -29,6 +29,10 @@ func postPassword(ctx *router.Context) {
 		service.QueryDataError(ctx, err)
 		return
 	}
+	if m2 == nil {
+		service.UnauthorizedError(ctx)
+		return
+	}
 	// 比较密码
 	m1.Password = util.SHA1String(m1.Password)
 	if m1.Password != m2.Password {

@@ -9,6 +9,7 @@ func post(ctx *router.Context) {
 	_type := ctx.Request.FormValue("type")
 	switch _type {
 	case "phone":
+		postPhone(ctx)
 	default:
 		service.FormValueError(ctx, "type", _type)
 	}

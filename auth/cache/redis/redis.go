@@ -109,7 +109,7 @@ func (c *Cache) DeleteToken(token string) error {
 
 func (c *Cache) NewPhoneCode(number string) (string, error) {
 	code := util.RandomNumber(phoneCodeLength)
-	_, err := c.cmd(phoneCodeDatabase, "SET", number, code, phoneCodeExpire)
+	_, err := c.cmd(phoneCodeDatabase, "SET", number, code, "EX", phoneCodeExpire)
 	if err != nil {
 		return "", err
 	}

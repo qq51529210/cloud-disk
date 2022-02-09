@@ -5,18 +5,6 @@ import (
 	"github.com/qq51529210/web/router"
 )
 
-type Config struct {
-	PhoneCodeExpire int
-}
-
-var (
-	_Config Config
-)
-
-func Init(r router.Router, cfg *Config) {
-	_Config = *cfg
-	if _Config.PhoneCodeExpire < 1 {
-		_Config.PhoneCodeExpire = 60
-	}
+func Init(r router.Router) {
 	r.POST("", middleware.ParseForm, post)
 }

@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/qq51529210/micro-services/auth/store"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -35,14 +36,14 @@ func Init(cfg map[string]interface{}) store.Store {
 	opt := options.Client()
 	opt.ApplyURI(uri)
 	opt.SetAppName(databaseName)
-	cred := options.Credential{}
-	if v, ok := cfg["username"].(string); ok {
-		cred.Username = v
+	username := cfg["username"].(string)
+	password := cfg["password"].(string)
+	if username != "" && password != "" {
+		opt.SetAuth(options.Credential{
+			Username: username,
+			Password: password,
+		})
 	}
-	if v, ok := cfg["password"].(string); ok {
-		cred.Password = v
-	}
-	opt.SetAuth(cred)
 	client, err := mongo.Connect(context.Background(), opt)
 	if err != nil {
 		panic(err)
@@ -51,6 +52,21 @@ func Init(cfg map[string]interface{}) store.Store {
 	s.client = client
 	database := s.client.Database(databaseName)
 	s.userCollection = database.Collection("user")
+	idx := s.userCollection.Indexes()
+	ctx, cancel := context.WithTimeout(context.Background(), queryTimeout)
+	defer cancel()
+	_, err = idx.CreateOne(ctx, mongo.IndexModel{
+		Keys: bson.D{bson.E{Key: "account", Value: 1}},
+	})
+	if err != nil {
+		panic(err)
+	}
+	_, err = idx.CreateOne(ctx, mongo.IndexModel{
+		Keys: bson.D{bson.E{Key: "phone", Value: 1}},
+	})
+	if err != nil {
+		panic(err)
+	}
 	return s
 }
 

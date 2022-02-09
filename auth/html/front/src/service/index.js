@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:3390",
+  // baseURL: "http://127.0.0.1:3390",
+  // baseURL: "/api",
   timeout: 3000,
 });
 
@@ -47,10 +48,10 @@ const post = (url, model) => {
     .catch(onReject);
 };
 
-export const signInAccount = model => post("/api/tokens?type=account", model);
+export const signInAccount = model => post("/api/tokens?type=password", model);
 
 export const signInPhone = model => post("/api/tokens?type=phone", model);
 
-export const signUp = model => post("/users", model);
+export const signUp = model => post("/api/users", model);
 
-export const getPhoneCode = number => post("/");
+export const getPhoneCode = model => post("/api/codes?type=phone", model);

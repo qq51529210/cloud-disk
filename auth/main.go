@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/micro-services/auth/cache"
@@ -92,6 +93,12 @@ func initRouter(cfg *config) router.RootRouter {
 	root := router.NewRootRouter()
 	// 静态
 	root.Static("static", cfg.RootDir, 1024*1024)
+	// 全局
+	root.Intercept(func(ctx *router.Context) {
+		t := time.Now()
+		ctx.Handle()
+		log.Debugf("%s %s %s %v", ctx.RemoteAddr, ctx.Method, ctx.URL.RawPath, time.Since(t))
+	})
 	//
 	api.Init(root.SubRouter("api"))
 	//
@@ -111,7 +118,7 @@ func initServer() web.Server {
 	// 数据库
 	switch conf.Store.Type {
 	case "", "mongodb":
-		store.SetStore(mongodb.Init(conf.Cache.Config))
+		store.SetStore(mongodb.Init(conf.Store.Config))
 	default:
 		panic(fmt.Errorf("config.store.type: unsupported store <%s>", conf.Store.Type))
 	}
@@ -126,6 +133,7 @@ func initServer() web.Server {
 	} else {
 		ser = web.NewServer(conf.Listen, router)
 	}
+	log.Infof("service %s", conf.Listen)
 	return ser
 }
 

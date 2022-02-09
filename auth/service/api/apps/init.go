@@ -5,5 +5,5 @@ import (
 )
 
 func Init(r router.Router) {
-	r.POST("/code")
+
 }

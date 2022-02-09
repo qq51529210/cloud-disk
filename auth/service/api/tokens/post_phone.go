@@ -34,10 +34,23 @@ func postPhone(ctx *router.Context) {
 		return
 	}
 	// 查询数据库
-	m2, err := store.GetStore().GetUser(m1.Number)
+	_store := store.GetStore()
+	m2, err := _store.GetUser(m1.Number)
 	if err != nil {
 		service.QueryDataError(ctx, err)
 		return
+	}
+	// 直接用手机号码注册
+	if m2 == nil {
+		m2 = &store.UserModel{
+			Account: m1.Number,
+			Phone:   m1.Number,
+		}
+		m2.ID, err = _store.AddUser(m2)
+		if err != nil {
+			service.QueryDataError(ctx, err)
+			return
+		}
 	}
 	// 创建token
 	token := createToken(ctx, m2)
