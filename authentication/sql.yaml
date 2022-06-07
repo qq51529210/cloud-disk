@@ -1,9 +1,9 @@
 # 数据库连接字符串，mysql:// 不能少
 dsn: mysql://root:123123@127.0.0.1:3306/authentication
 # 代码包名
-pkg: storage
+pkg: store
 # 代码生成目录
-dir: ./storage
+dir: ./store
 # 生成结构名称，去掉表名的前缀，比如 tb_user 生成 User
 tablePrefix: tb_
 # 是否默认生成以单字段唯一的代码
