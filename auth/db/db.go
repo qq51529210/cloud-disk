@@ -1,7 +1,7 @@
 package db
 
 import (
-	"authentication/cfg"
+	"auth/cfg"
 
 	"github.com/qq51529210/util"
 	"gorm.io/gorm"

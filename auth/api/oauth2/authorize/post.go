@@ -1,8 +1,8 @@
 package authorize
 
 import (
-	"authentication/api/internal"
-	"authentication/db"
+	"auth/api/internal"
+	"auth/db"
 
 	"github.com/gin-gonic/gin"
 )

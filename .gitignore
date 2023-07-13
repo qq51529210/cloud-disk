@@ -1,3 +1,4 @@
 .DS_Store
 .vscode
-authentication/go.sum
+.DS_Store
+auth/go.sum

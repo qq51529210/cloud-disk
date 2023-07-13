@@ -1,9 +1,9 @@
 package main
 
 import (
-	"authentication/api"
-	"authentication/cfg"
-	"authentication/db"
+	"auth/api"
+	"auth/cfg"
+	"auth/db"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/util"

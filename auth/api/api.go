@@ -1,9 +1,9 @@
 package api
 
 import (
-	"authentication/api/apps"
-	"authentication/api/users"
-	"authentication/cfg"
+	"auth/api/apps"
+	"auth/api/users"
+	"auth/cfg"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

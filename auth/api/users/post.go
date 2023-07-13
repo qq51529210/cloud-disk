@@ -1,8 +1,8 @@
 package users
 
 import (
-	"authentication/api/internal"
-	"authentication/db"
+	"auth/api/internal"
+	"auth/db"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

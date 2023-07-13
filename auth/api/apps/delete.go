@@ -1,9 +1,9 @@
 package apps
 
 import (
-	"authentication/api/internal"
-	"authentication/api/internal/middleware"
-	"authentication/db"
+	"auth/api/internal"
+	"auth/api/internal/middleware"
+	"auth/db"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

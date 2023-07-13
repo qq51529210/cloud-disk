@@ -1,7 +1,7 @@
 package authorize
 
 import (
-	"authentication/api/internal/middleware"
+	"auth/api/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
