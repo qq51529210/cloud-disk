@@ -20,20 +20,37 @@ type App struct {
 
 // GetApp 查询单个
 func GetApp(id string) (*App, error) {
-	return nil, nil
+	m := new(App)
+	err := _db.
+		Where("`ID` = ?", id).
+		First(m).Error
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // AddApp 添加单个
-func AddApp(model *App) (int64, error) {
-	return 0, nil
+func AddApp(m *App) (int64, error) {
+	db := _db.Create(m)
+	return db.RowsAffected, db.Error
 }
 
 // UpdateApp 修改单个
-func UpdateApp(model *App, userID string) (int64, error) {
-	return 0, nil
+func UpdateApp(m *App, userID string) (int64, error) {
+	db := _db.
+		Where("`ID` = ?", m.ID).
+		Where("`UserID` = ?", userID).
+		Updates(m)
+	return db.RowsAffected, db.Error
 }
 
 // DeleteApp 删除单个
 func DeleteApp(id, userID string) (int64, error) {
-	return 0, nil
+	db := _db.
+		Where("`UserID` = ?", userID).
+		Delete(&App{
+			ID: id,
+		})
+	return db.RowsAffected, db.Error
 }

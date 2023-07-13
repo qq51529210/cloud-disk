@@ -11,20 +11,35 @@ type User struct {
 
 // GetUser 查询单个
 func GetUser(id string) (*User, error) {
-	return nil, nil
+	m := new(User)
+	err := _db.
+		Where("`ID` = ?", id).
+		First(m).Error
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // AddUser 添加单个
-func AddUser(model *User) (int64, error) {
-	return 0, nil
+func AddUser(m *User) (int64, error) {
+	db := _db.Create(m)
+	return db.RowsAffected, db.Error
 }
 
 // UpdateUser 修改单个
-func UpdateUser(model *User) (int64, error) {
-	return 0, nil
+func UpdateUser(m *User) (int64, error) {
+	db := _db.
+		Where("`ID` = ?", m.ID).
+		Updates(m)
+	return db.RowsAffected, db.Error
 }
 
 // DeleteUser 删除单个
 func DeleteUser(id string) (int64, error) {
-	return 0, nil
+	db := _db.
+		Delete(&App{
+			ID: id,
+		})
+	return db.RowsAffected, db.Error
 }
