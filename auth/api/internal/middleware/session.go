@@ -11,10 +11,10 @@ import (
 const (
 	// CookieName 表示 cookie 的名称
 	CookieName = "sid"
-	// AuthenticationURL 表示用户认证的 url
-	authenticationURL = "/oauth2/authentication"
 	// SessionContextKey 表示 session 上下文数据的 key
 	SessionContextKey = "sck"
+	// 登录 url
+	loginURL = "/oauth2/login"
 )
 
 // CheckSession 使用 cookie 检查用户登录
@@ -22,7 +22,7 @@ func CheckSession(ctx *gin.Context) {
 	// 提取 cookie
 	sid, err := ctx.Cookie(CookieName)
 	if err == http.ErrNoCookie {
-		ctx.Redirect(http.StatusFound, authenticationURL)
+		ctx.Redirect(http.StatusFound, loginURL)
 		return
 	}
 	// 查询 session
@@ -33,7 +33,7 @@ func CheckSession(ctx *gin.Context) {
 	}
 	// 没有
 	if sess == nil {
-		ctx.Redirect(http.StatusFound, authenticationURL)
+		ctx.Redirect(http.StatusFound, loginURL)
 		return
 	}
 	// 设置上下文

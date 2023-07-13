@@ -21,6 +21,18 @@ func GetUser(id string) (*User, error) {
 	return m, nil
 }
 
+// GetUserByAccount 查询单个
+func GetUserByAccount(account string) (*User, error) {
+	m := new(User)
+	err := _db.
+		Where("`Account` = ?", account).
+		First(m).Error
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // AddUser 添加单个
 func AddUser(m *User) (int64, error) {
 	db := _db.Create(m)
