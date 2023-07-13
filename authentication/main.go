@@ -1,28 +1,35 @@
 package main
 
 import (
+	"authentication/api"
+	"authentication/cfg"
+	"authentication/db"
+
 	"github.com/qq51529210/log"
-	"github.com/qq51529210/micro-service/authentication/api"
-	"github.com/qq51529210/micro-service/authentication/config"
-	"github.com/qq51529210/web"
+	"github.com/qq51529210/util"
 )
 
+// @Title   接口文档
+// @version 1.0.0
 func main() {
 	defer func() {
 		log.Recover(recover())
 	}()
-	log.Info("", "app start")
-	// 启动配置参数
-	cfg := config.Load()
-	// 路由
-	handler := api.New()
-	// 初始化服务
-	var ser web.Server
-	if cfg.HTTP.CertPEM != "" && cfg.HTTP.KeyPEM != "" {
-		ser = web.NewTLSServerWithKeyPair(cfg.HTTP.Address, []byte(cfg.HTTP.CertPEM), []byte(cfg.HTTP.KeyPEM), handler)
-	} else {
-		ser = web.NewServer(cfg.HTTP.Address, handler)
+	// 配置
+	err := cfg.Load()
+	if err != nil {
+		panic(err)
 	}
-	// 监听
-	ser.Serve()
+	// 日志
+	err = util.InitLog(&cfg.Cfg.Log)
+	if err != nil {
+		panic(err)
+	}
+	// 数据库
+	err = db.Init()
+	if err != nil {
+		panic(err)
+	}
+	// 服务
+	api.Serve()
 }
