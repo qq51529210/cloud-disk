@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/qq51529210/log v0.0.0-20230615091426-6d64dbedda04
-	github.com/qq51529210/util v0.0.0-20230718062552-e00488e18d7e
+	github.com/qq51529210/util v0.0.0-20230718072636-0c875c8cdc2d
 	github.com/qq51529210/uuid v0.0.0-20230116075911-debb68a3e58d
 	gorm.io/gorm v1.25.1
 )
