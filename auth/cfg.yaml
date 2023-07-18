@@ -1,11 +1,12 @@
-name: authentication-service-1
+name: oauth2-service-1
 addr: :10001
+test: :10002
 log:
- rootDir: log
+ rootDir: ./log/
  maxFileSize: 10M
  maxKeepDay: 2
  syncInterval: 3000
  std: out
  disableLevel: []
 db:
- url: mysql://root:mysql123_aa@tcp(192.168.31.177:3306)/authentication?charset=utf8mb4&parseTime=True&loc=Local
+ url: mysql://root:mysql123_aa@tcp(192.168.31.177:3306)/oauth2?charset=utf8mb4&parseTime=True&loc=Local

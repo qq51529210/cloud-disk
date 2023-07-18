@@ -4,10 +4,14 @@ import (
 	"auth/api"
 	"auth/cfg"
 	"auth/db"
+	"embed"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/util"
 )
+
+//go:embed html/dist
+var staticDir embed.FS
 
 // @Title   接口文档
 // @version 1.0.0
@@ -31,5 +35,5 @@ func main() {
 		panic(err)
 	}
 	// 服务
-	api.Serve()
+	api.Serve(staticDir)
 }

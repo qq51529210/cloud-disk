@@ -4,6 +4,7 @@ import (
 	"auth/api/internal"
 	"auth/db"
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +15,9 @@ const (
 	// SessionContextKey 表示 session 上下文数据的 key
 	SessionContextKey = "sck"
 	// 登录 url
-	loginURL = "/oauth2/login"
+	loginURL = "/login"
+	// QueryRedirectURL 重定向，查询参数名称
+	QueryRedirectURL = "redirect_url"
 )
 
 // CheckSession 使用 cookie 检查用户登录
@@ -22,7 +25,7 @@ func CheckSession(ctx *gin.Context) {
 	// 提取 cookie
 	sid, err := ctx.Cookie(CookieName)
 	if err == http.ErrNoCookie {
-		ctx.Redirect(http.StatusFound, loginURL)
+		redirectLogin(ctx)
 		return
 	}
 	// 查询 session
@@ -33,11 +36,19 @@ func CheckSession(ctx *gin.Context) {
 	}
 	// 没有
 	if sess == nil {
-		ctx.Redirect(http.StatusFound, loginURL)
+		redirectLogin(ctx)
 		return
 	}
 	// 设置上下文
 	ctx.Set(SessionContextKey, sess)
 	//
 	ctx.Next()
+}
+
+// redirectLogin 重定向到 /login
+func redirectLogin(ctx *gin.Context) {
+	query := make(url.Values)
+	query.Set(QueryRedirectURL, ctx.Request.URL.RawQuery)
+	redirectURL := loginURL + "?" + query.Encode()
+	ctx.Redirect(http.StatusFound, redirectURL)
 }

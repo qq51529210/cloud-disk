@@ -11,6 +11,12 @@ var (
 	_db *gorm.DB
 )
 
+// 用于取地址
+var (
+	True  int8 = 1
+	False int8 = 0
+)
+
 // Init 初始化数据库
 func Init() error {
 	var err error

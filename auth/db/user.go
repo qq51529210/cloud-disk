@@ -7,6 +7,8 @@ type User struct {
 	Account string `gorm:"type:varchar(40);uniqueIndex;not null"`
 	// 密码，SHA1 格式
 	Password *string `gorm:"type:varchar(40);not null"`
+	// 是否启用，0/1
+	Enable *int8 `gorm:"not null;default:0"`
 }
 
 // GetUser 查询单个

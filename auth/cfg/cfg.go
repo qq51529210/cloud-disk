@@ -3,7 +3,7 @@ package cfg
 import (
 	"os"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/qq51529210/util"
 )
 
@@ -15,9 +15,11 @@ var (
 // Config 表示程序启动配置
 type Config struct {
 	// 服务名称，日志使用
-	Name string `json:"name" yaml:"log" validate:"required,max=32"`
+	Name string `json:"name" yaml:"name" validate:"required,max=32"`
 	// 监听地址
 	Addr string `json:"addr" yaml:"addr" validate:"required"`
+	// 测试地址
+	Test string `json:"test" yaml:"test"`
 	// 日志配置
 	Log util.LogCfg `json:"log" yaml:"log"`
 	// 数据库配置

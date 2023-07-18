@@ -32,6 +32,14 @@ func SubmitEmpty400(ctx *gin.Context) {
 	ctx.Abort()
 }
 
+// Data404 表示数据不存在
+func Data404(ctx *gin.Context) {
+	ctx.JSON(http.StatusNotFound, &Error{
+		Phrase: "data not found",
+	})
+	ctx.Abort()
+}
+
 // DB500 表示数据库操作错误
 func DB500(ctx *gin.Context, err error) {
 	log.Error(err)
@@ -41,10 +49,31 @@ func DB500(ctx *gin.Context, err error) {
 	ctx.Abort()
 }
 
-// Data404 表示数据不存在
-func Data404(ctx *gin.Context) {
-	ctx.JSON(http.StatusNotFound, &Error{
-		Phrase: "data not found",
+// Error500 表示服务错误
+func Error500(ctx *gin.Context, err error) {
+	log.Error(err)
+	ctx.JSON(http.StatusInternalServerError, &Error{
+		Phrase: "server error",
+	})
+	ctx.Abort()
+}
+
+// Error502 表示远程调用错误
+func Error502(ctx *gin.Context, err error) {
+	log.Error(err)
+	ctx.JSON(http.StatusBadGateway, &Error{
+		Phrase: "api call error",
+		Detail: err.Error(),
+	})
+	ctx.Abort()
+}
+
+// Error504 表示远程调用超时
+func Error504(ctx *gin.Context, err error) {
+	log.Error(err)
+	ctx.JSON(http.StatusGatewayTimeout, &Error{
+		Phrase: "api call timeout",
+		Detail: err.Error(),
 	})
 	ctx.Abort()
 }
