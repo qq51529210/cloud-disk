@@ -1,10 +1,10 @@
 package login
 
 import (
-	"auth/api/internal"
-	"auth/api/internal/middleware"
-	"auth/db"
 	"net/http"
+	"oauth2/api/internal"
+	"oauth2/api/internal/middleware"
+	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,7 +1,7 @@
 package oauth2
 
 import (
-	"auth/api/oauth2/authorize"
+	"oauth2/api/oauth2/authorize"
 
 	"github.com/gin-gonic/gin"
 )

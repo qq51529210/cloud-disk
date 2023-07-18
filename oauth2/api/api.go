@@ -1,16 +1,16 @@
 package api
 
 import (
-	"auth/api/apps"
-	"auth/api/internal/middleware"
-	"auth/api/login"
-	"auth/api/oauth2"
-	"auth/api/test"
-	"auth/api/users"
-	"auth/cfg"
 	"io"
 	"io/fs"
 	"net/http"
+	"oauth2/api/apps"
+	"oauth2/api/internal/middleware"
+	"oauth2/api/login"
+	"oauth2/api/oauth2"
+	"oauth2/api/test"
+	"oauth2/api/users"
+	"oauth2/cfg"
 	"strings"
 
 	"github.com/gin-gonic/gin"

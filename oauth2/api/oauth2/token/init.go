@@ -1,7 +1,7 @@
 package token
 
 import (
-	"auth/api/internal/middleware"
+	"oauth2/api/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,12 +1,12 @@
 package test
 
 import (
-	"auth/api/internal"
 	"context"
 	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
+	"oauth2/api/internal"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qq51529210/util"
@@ -24,7 +24,7 @@ type tokenRes struct {
 	// 它代表了客户端被授权的权限
 	AccessToken string `json:"AccessToken"`
 	// 该字段指示返回的令牌类型。
-	// 比如 Bearer 令牌，意味着客户端可以简单地在后续请求的 "Authorization" 头中附上该令牌
+	// 比如 Bearer 令牌，意味着客户端可以简单地在后续请求的 "oauth2orization" 头中附上该令牌
 	TokenType string `json:"token_type"`
 	// 该字段以秒为单位指定访问令牌的过期时间。
 	// 在此时间之后，访问令牌将不再有效，客户端需要获取新的访问令牌。
@@ -61,7 +61,7 @@ func getAccessToken(ctx *gin.Context, req *oauth2Req) *tokenRes {
 	token := new(tokenRes)
 	//
 	query := make(url.Values)
-	query.Set("grant_type", "authorization_code")
+	query.Set("grant_type", "oauth2orization_code")
 	query.Set("code", req.Code)
 	query.Set("client_id", app)
 	query.Set("client_secret", pwd)

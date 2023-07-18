@@ -1,9 +1,9 @@
 package test
 
 import (
-	"auth/cfg"
-	"auth/db"
 	"fmt"
+	"oauth2/cfg"
+	"oauth2/db"
 	"time"
 
 	"github.com/gin-gonic/gin"

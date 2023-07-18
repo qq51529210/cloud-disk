@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"auth/api/internal"
-	"auth/db"
 	"net/http"
 	"net/url"
+	"oauth2/api/internal"
+	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 )

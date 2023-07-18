@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"auth/api/internal"
 	"encoding/json"
 	"fmt"
+	"oauth2/api/internal"
 	"strings"
 	"time"
 

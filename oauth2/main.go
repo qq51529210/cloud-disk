@@ -1,10 +1,10 @@
 package main
 
 import (
-	"auth/api"
-	"auth/cfg"
-	"auth/db"
 	"embed"
+	"oauth2/api"
+	"oauth2/cfg"
+	"oauth2/db"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/util"

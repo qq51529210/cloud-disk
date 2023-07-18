@@ -1,9 +1,9 @@
 package users
 
 // import (
-// 	"auth/api/internal"
-// 	"auth/api/internal/middleware"
-// 	"auth/db"
+// 	"oauth2/api/internal"
+// 	"oauth2/api/internal/middleware"
+// 	"oauth2/db"
 // 	"net/http"
 
 // 	"github.com/gin-gonic/gin"
