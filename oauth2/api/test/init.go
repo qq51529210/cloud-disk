@@ -11,10 +11,11 @@ import (
 
 var (
 	//
-	app   = "test-app"
-	user  = "test-user"
-	pwd   = "123123"
-	state = "test-state"
+	app       = "test-app"
+	user      = "test-user"
+	developer = "test-developer"
+	pwd       = "123123"
+	state     = "test-state"
 	//
 	host       = "http://localhost"
 	oauth2Host = "http://localhost"
@@ -25,6 +26,7 @@ var (
 // Init 初始化路由
 func Init(g gin.IRouter) {
 	// 先加入模拟数据
+	testDeveloperData()
 	testUserData()
 	testAppData()
 	//
@@ -34,6 +36,26 @@ func Init(g gin.IRouter) {
 	g.GET("/", login)
 	g.GET("/oauth2", oauth2)
 	g.GET("/token", token)
+}
+
+func testDeveloperData() {
+	m, err := db.GetDeveloper(developer)
+	if err != nil {
+		panic(err)
+	}
+	if m != nil {
+		return
+	}
+	m = new(db.Developer)
+	m.ID = developer
+	m.Account = developer
+	password := util.SHA1String(pwd)
+	m.Password = &password
+	m.Enable = &db.True
+	_, err = db.AddDeveloper(m)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func testAppData() {
@@ -49,7 +71,7 @@ func testAppData() {
 	m.Name = &app
 	m.Secret = &pwd
 	m.Enable = &db.True
-	m.UserID = user
+	m.DeveloperID = developer
 	_, err = db.AddApp(m)
 	if err != nil {
 		panic(err)

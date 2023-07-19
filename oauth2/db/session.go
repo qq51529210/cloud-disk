@@ -6,6 +6,10 @@ import (
 	"github.com/qq51529210/uuid"
 )
 
+var (
+	sessions = make(map[string]*Session)
+)
+
 // Session 表示用户的会话
 type Session struct {
 	// 会话 ID
@@ -24,11 +28,13 @@ func NewSession(user *User) (*Session, error) {
 		Time: time.Now().Unix(),
 	}
 	// 保存
+	sessions[s.ID] = s
 	//
 	return s, nil
 }
 
 // GetSession 获取会话
 func GetSession(id string) (*Session, error) {
-	return nil, nil
+	s := sessions[id]
+	return s, nil
 }

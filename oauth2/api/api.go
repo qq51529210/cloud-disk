@@ -1,8 +1,6 @@
 package api
 
 import (
-	"io"
-	"io/fs"
 	"net/http"
 	"oauth2/api/apps"
 	"oauth2/api/internal/middleware"
@@ -11,8 +9,6 @@ import (
 	"oauth2/api/test"
 	"oauth2/api/users"
 	"oauth2/cfg"
-	"path"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +19,8 @@ var (
 )
 
 // Serve 开始服务
-func Serve(staticsRoot string, statics fs.FS) error {
+// func Serve(staticsRoot string, statics fs.FS) error {
+func Serve() error {
 	gin.SetMode(gin.DebugMode)
 	// 测试服务
 	if cfg.Cfg.Test != "" {
@@ -31,7 +28,7 @@ func Serve(staticsRoot string, statics fs.FS) error {
 		go testServer()
 	}
 	// 静态文件
-	initStatic("", staticsRoot, statics)
+	// initStatic("", staticsRoot, statics)
 	// 路由
 	initRouter()
 	// 监听
@@ -49,37 +46,37 @@ func initRouter() {
 	oauth2.Init(g)
 }
 
-const indexHTML = "/index.html"
+// const indexHTML = "/index.html"
 
-// 初始化静态文件
-func initStatic(relativeRoot, staticRoot string, statics fs.FS) (err error) {
-	return fs.WalkDir(statics, ".", func(p string, d fs.DirEntry, err error) error {
-		if d == nil || d.IsDir() {
-			return nil
-		}
-		rp := path.Join(relativeRoot, strings.TrimPrefix(p, staticRoot))
-		g.StaticFileFS(rp, p, http.FS(statics))
-		if strings.HasSuffix(p, indexHTML) {
-			initStaticIndex(statics, rp, p)
-		}
-		return nil
-	})
-}
+// // 初始化静态文件
+// func initStatic(relativeRoot, staticRoot string, statics fs.FS) (err error) {
+// 	return fs.WalkDir(statics, ".", func(p string, d fs.DirEntry, err error) error {
+// 		if d == nil || d.IsDir() {
+// 			return nil
+// 		}
+// 		rp := path.Join(relativeRoot, strings.TrimPrefix(p, staticRoot))
+// 		g.StaticFileFS(rp, p, http.FS(statics))
+// 		if strings.HasSuffix(p, indexHTML) {
+// 			initStaticIndex(statics, rp, p)
+// 		}
+// 		return nil
+// 	})
+// }
 
-// 以免 gin 内部对 index.html 一直重定向
-func initStaticIndex(statics fs.FS, path, filePath string) {
-	g.GET(path[:len(path)-len(indexHTML)], func(ctx *gin.Context) {
-		f, err := statics.Open(filePath)
-		if err != nil {
-			ctx.Status(http.StatusNotFound)
-			return
-		}
-		//
-		ctx.Writer.Header().Set("Content-Type", gin.MIMEHTML)
-		//
-		io.Copy(ctx.Writer, f)
-	})
-}
+// // 以免 gin 内部对 index.html 一直重定向
+// func initStaticIndex(statics fs.FS, path, filePath string) {
+// 	g.GET(path[:len(path)-len(indexHTML)], func(ctx *gin.Context) {
+// 		f, err := statics.Open(filePath)
+// 		if err != nil {
+// 			ctx.Status(http.StatusNotFound)
+// 			return
+// 		}
+// 		//
+// 		ctx.Writer.Header().Set("Content-Type", gin.MIMEHTML)
+// 		//
+// 		io.Copy(ctx.Writer, f)
+// 	})
+// }
 
 // 模拟第三方服务
 func testServer() {

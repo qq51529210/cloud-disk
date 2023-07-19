@@ -29,7 +29,7 @@ func login(ctx *gin.Context) {
 	query := make(url.Values)
 	query.Set("response_type", "code")
 	query.Set("client_id", app)
-	query.Set("scope", "readwrite")
+	query.Set("scope", "image name")
 	query.Set("state", state)
 	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", host))
 	redirectURL := fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())

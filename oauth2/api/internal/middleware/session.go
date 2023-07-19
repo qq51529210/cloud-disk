@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"net/url"
 	"oauth2/api/internal"
 	"oauth2/db"
 
@@ -15,8 +16,8 @@ const (
 	SessionContextKey = "sck"
 	// 登录 url
 	loginURL = "/login"
-	// QueryRedirectURL 重定向，查询参数名称
-	QueryRedirectURL = "redirect_url"
+	// QueryRedirectURI 重定向，查询参数名称
+	QueryRedirectURI = "redirect_uri"
 )
 
 // CheckSession 使用 cookie 检查用户登录
@@ -46,6 +47,8 @@ func CheckSession(ctx *gin.Context) {
 
 // redirectLogin 重定向到 /login
 func redirectLogin(ctx *gin.Context) {
-	redirectURL := loginURL + "?" + ctx.Request.URL.RawQuery
+	query := make(url.Values)
+	query.Set(QueryRedirectURI, ctx.Request.URL.String())
+	redirectURL := loginURL + "?" + query.Encode()
 	ctx.Redirect(http.StatusFound, redirectURL)
 }

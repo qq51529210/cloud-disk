@@ -30,7 +30,7 @@ func get(ctx *gin.Context) {
 		return
 	}
 	// 没有数据，或者不是自己的
-	if model == nil || model.UserID != sess.User.ID {
+	if model == nil || model.DeveloperID != sess.User.ID {
 		internal.Data404(ctx)
 		return
 	}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"oauth2/api"
 	"oauth2/cfg"
 	"oauth2/db"
@@ -10,8 +9,8 @@ import (
 	"github.com/qq51529210/util"
 )
 
-//go:embed html/dist
-var staticDir embed.FS
+////go:embed html/dist
+// var staticDir embed.FS
 
 // @Title   接口文档
 // @version 1.0.0
@@ -35,5 +34,6 @@ func main() {
 		panic(err)
 	}
 	// 服务
-	api.Serve("html/dist", staticDir)
+	// api.Serve("html/dist", staticDir)
+	api.Serve()
 }

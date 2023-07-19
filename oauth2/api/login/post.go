@@ -1,8 +1,8 @@
 package login
 
 import (
+	"html/template"
 	"net/http"
-	"oauth2/api/internal"
 	"oauth2/api/internal/middleware"
 	"oauth2/db"
 
@@ -22,33 +22,58 @@ func post(ctx *gin.Context) {
 	var req postReq
 	err := ctx.ShouldBind(&req)
 	if err != nil {
-		internal.Submit400(ctx, err.Error())
+		postError(ctx, "参数错误")
 		return
 	}
 	// 数据库
 	user, err := db.GetUserByAccount(req.Account)
 	if err != nil {
-		internal.DB500(ctx, err)
+		postError(ctx, "数据库错误")
 		return
 	}
-	if user == nil || *user.Enable != 1 {
-		internal.Data404(ctx)
-		return
-	}
-	if *user.Password != util.SHA1String(req.Password) {
-		ctx.JSON(http.StatusBadRequest, &internal.Error{
-			Phrase: "登录失败",
-			Detail: "账号或密码不正确",
-		})
+	if user == nil || *user.Enable != 1 ||
+		*user.Password != util.SHA1String(req.Password) {
+		postError(ctx, "账号或密码不正确")
 		return
 	}
 	// 会话
 	sess, err := db.NewSession(user)
 	if err != nil {
-		internal.DB500(ctx, err)
+		postError(ctx, "数据库错误")
 		return
 	}
 	// cookie
-	ctx.SetCookie(middleware.CookieName, sess.ID, -1, "/", "", true, true)
-	// 返回
+	ctx.SetCookie(middleware.CookieName, sess.ID, 3600, "/", "", true, true)
+	// 跳转
+	redirectURL := ctx.Query(middleware.QueryRedirectURI)
+	if redirectURL != "" {
+		ctx.Redirect(http.StatusSeeOther, redirectURL)
+	} else {
+		ctx.Redirect(http.StatusSeeOther, "/")
+	}
+}
+
+var (
+	loginErrorTP *template.Template
+)
+
+func init() {
+	loginErrorTP, _ = template.New("loginError").Parse(`
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登录</title>
+</head>
+<body>
+	<p>{{.}}</p>
+	<a href="javascript:history.back()">返回登录</a>
+</body>
+</html>
+`)
+}
+
+func postError(ctx *gin.Context, err string) {
+	loginErrorTP.Execute(ctx.Writer, err)
 }

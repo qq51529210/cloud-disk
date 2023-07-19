@@ -48,7 +48,7 @@ func post(ctx *gin.Context) {
 	var model db.App
 	util.CopyStructAll(&model, &req)
 	model.ID = uuid.LowerV1WithoutHyphen()
-	model.UserID = sess.User.ID
+	model.DeveloperID = sess.User.ID
 	_, err = db.AddApp(&model)
 	if err != nil {
 		internal.DB500(ctx, err)

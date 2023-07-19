@@ -19,9 +19,9 @@ type App struct {
 	Enable *int8 `gorm:"not null;default:0"`
 	// 重定向 url 列表，';' 隔开
 	URL *string `gorm:"type:text;"`
-	// User.ID
-	UserID string `json:"-" gorm:""`
-	User   *User  `json:"-" gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	// Developer.ID
+	DeveloperID string     `json:"-" gorm:""`
+	Developer   *Developer `json:"-" gorm:"foreignKey:DeveloperID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 // GetApp 查询单个
@@ -46,18 +46,18 @@ func AddApp(m *App) (int64, error) {
 }
 
 // UpdateApp 修改单个
-func UpdateApp(m *App, userID string) (int64, error) {
+func UpdateApp(m *App, DeveloperID string) (int64, error) {
 	db := _db.
 		Where("`ID` = ?", m.ID).
-		Where("`UserID` = ?", userID).
+		Where("`DeveloperID` = ?", DeveloperID).
 		Updates(m)
 	return db.RowsAffected, db.Error
 }
 
 // DeleteApp 删除单个
-func DeleteApp(id, userID string) (int64, error) {
+func DeleteApp(id, DeveloperID string) (int64, error) {
 	db := _db.
-		Where("`UserID` = ?", userID).
+		Where("`DeveloperID` = ?", DeveloperID).
 		Delete(&App{
 			ID: id,
 		})

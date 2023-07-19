@@ -6,8 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// User 表示用户
-type User struct {
+// Developer 表示用户
+type Developer struct {
 	ID string `gorm:"type:varchar(40);primayKey"`
 	// 账号
 	Account string `gorm:"type:varchar(40);uniqueIndex;not null"`
@@ -17,9 +17,9 @@ type User struct {
 	Enable *int8 `gorm:"not null;default:0"`
 }
 
-// GetUser 查询单个
-func GetUser(id string) (*User, error) {
-	m := new(User)
+// GetDeveloper 查询单个
+func GetDeveloper(id string) (*Developer, error) {
+	m := new(Developer)
 	err := _db.
 		Where("`ID` = ?", id).
 		First(m).Error
@@ -32,9 +32,9 @@ func GetUser(id string) (*User, error) {
 	return m, nil
 }
 
-// GetUserByAccount 查询单个
-func GetUserByAccount(account string) (*User, error) {
-	m := new(User)
+// GetDeveloperByAccount 查询单个
+func GetDeveloperByAccount(account string) (*Developer, error) {
+	m := new(Developer)
 	err := _db.
 		Where("`Account` = ?", account).
 		First(m).Error
@@ -47,22 +47,22 @@ func GetUserByAccount(account string) (*User, error) {
 	return m, nil
 }
 
-// AddUser 添加单个
-func AddUser(m *User) (int64, error) {
+// AddDeveloper 添加单个
+func AddDeveloper(m *Developer) (int64, error) {
 	db := _db.Create(m)
 	return db.RowsAffected, db.Error
 }
 
-// UpdateUser 修改单个
-func UpdateUser(m *User) (int64, error) {
+// UpdateDeveloper 修改单个
+func UpdateDeveloper(m *Developer) (int64, error) {
 	db := _db.
 		Where("`ID` = ?", m.ID).
 		Updates(m)
 	return db.RowsAffected, db.Error
 }
 
-// DeleteUser 删除单个
-func DeleteUser(id string) (int64, error) {
+// DeleteDeveloper 删除单个
+func DeleteDeveloper(id string) (int64, error) {
 	db := _db.
 		Delete(&App{
 			ID: id,
