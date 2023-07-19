@@ -1,6 +1,9 @@
 package authorize
 
 import (
+	"oauth2/db"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,6 +43,8 @@ type getReq struct {
 	State string `form:"state"`
 	// 指定授权服务器将用户重定向到的客户端应用程序的回调 URL
 	RedirectURI string `form:"redirect_uri" binding:"required,uri"`
+	//
+	client *db.Client
 }
 
 type getRes struct {
@@ -53,6 +58,22 @@ type getRes struct {
 	Action string
 }
 
+func (s *getRes) Init(q *getReq) {
+	image := ""
+	if q.client.Image != nil {
+		image = *q.client.Image
+	}
+	s.ClientImage = image
+	s.ClientName = *q.client.Name
+	s.Scope = make(map[string]string)
+	for _, scope := range strings.Fields(q.Scope) {
+		name, ok := authorizeName[scope]
+		if ok {
+			s.Scope[scope] = name
+		}
+	}
+}
+
 // get 处理第三方授权调用
 func get(ctx *gin.Context) {
 	// 参数
@@ -62,7 +83,17 @@ func get(ctx *gin.Context) {
 		errorTP.Execute(ctx.Writer, errQuery)
 		return
 	}
-	// 按类型处理
+	// 应用
+	req.client, err = db.GetClient(req.ClientID)
+	if err != nil {
+		errorTP.Execute(ctx.Writer, "数据库错误")
+		return
+	}
+	if req.client == nil || *req.client.Enable != db.True {
+		errorTP.Execute(ctx.Writer, "第三方应用不存在")
+		return
+	}
+	// 处理
 	hd, ok := responseTypeHandle[req.ResponseType]
 	if !ok {
 		errorTP.Execute(ctx.Writer, errQuery)

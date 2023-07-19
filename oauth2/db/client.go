@@ -19,6 +19,8 @@ type Client struct {
 	RedirectURI *string `gorm:"type:varchar(255)"`
 	// 名称
 	Name *string `gorm:"type:varchar(64);not null"`
+	// 图片
+	Image *string `gorm:"type:varchar(255);not null"`
 	// 描述
 	Description *string `gorm:"type:varchar(255);"`
 	// 是否启用，0/1
