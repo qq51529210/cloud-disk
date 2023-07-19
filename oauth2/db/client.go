@@ -3,14 +3,20 @@ package db
 import (
 	"errors"
 
+	"github.com/qq51529210/util"
 	"gorm.io/gorm"
 )
 
 // Client 表示第三方应用
 type Client struct {
 	ID string `gorm:"type:varchar(40);primayKey"`
+	// Developer.ID 表示这个应用属于哪一个开发者
+	DeveloperID string     `json:"-" gorm:""`
+	Developer   *Developer `json:"-" gorm:"foreignKey:DeveloperID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	// 密码，SHA1 格式
 	Secret *string `gorm:"type:varchar(40);not null"`
+	// 重定向，好像没有什么卵用，除了验证是否与请求中的一致
+	RedirectURI *string `gorm:"type:varchar(255)"`
 	// 名称
 	Name *string `gorm:"type:varchar(64);not null"`
 	// 描述
@@ -19,9 +25,7 @@ type Client struct {
 	Enable *int8 `gorm:"not null;default:0"`
 	// 重定向 url 列表，';' 隔开
 	URL *string `gorm:"type:text;"`
-	// Developer.ID 表示这个应用属于哪一个开发者
-	DeveloperID string     `json:"-" gorm:""`
-	Developer   *Developer `json:"-" gorm:"foreignKey:DeveloperID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	util.GORMTime
 }
 
 // GetClient 查询单个

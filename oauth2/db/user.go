@@ -3,6 +3,7 @@ package db
 import (
 	"errors"
 
+	"github.com/qq51529210/util"
 	"gorm.io/gorm"
 )
 
@@ -15,6 +16,7 @@ type User struct {
 	Password *string `gorm:"type:varchar(40);not null"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
+	util.GORMTime
 }
 
 // GetUser 查询单个

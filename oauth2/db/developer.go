@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// Developer 表示用户
+// Developer 表示第三方应用的开发者
 type Developer struct {
 	ID string `gorm:"type:varchar(40);primayKey"`
 	// 账号
@@ -15,6 +15,9 @@ type Developer struct {
 	Password *string `gorm:"type:varchar(40);not null"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
+	// Developer.ID 表示这个应用属于哪一个开发者
+	DeveloperID string     `json:"-" gorm:""`
+	Developer   *Developer `json:"-" gorm:"foreignKey:DeveloperID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 // GetDeveloper 查询单个
