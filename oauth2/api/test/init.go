@@ -35,7 +35,6 @@ func Init(g gin.IRouter) {
 	//
 	g.GET("/", login)
 	g.GET("/oauth2", oauth2)
-	g.GET("/token", token)
 }
 
 func testDeveloperData() {
