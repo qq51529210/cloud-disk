@@ -9,7 +9,7 @@
                             <v-hover v-slot="{ isHovering, props }">
                                 <v-card :elevation="isHovering ? 16 : 8"
                                         v-bind="props"
-                                        width="450">
+                                        width="400">
                                     <v-card-title class="mb-4 mt-4 text-center">
                                         用户登录
                                     </v-card-title>
@@ -17,6 +17,7 @@
                                         <v-form ref="form"
                                                 v-model="validateResult"
                                                 :disabled="requesting"
+                                                class="mb-4"
                                                 @submit.prevent="submit">
                                             <v-text-field v-model="formData.account"
                                                           class="mb-2"
@@ -35,7 +36,7 @@
                                             <v-btn block
                                                    variant="flat"
                                                    color="primary"
-                                                   size="large"
+                                                   size="x-large"
                                                    type="submit"
                                                    :loading="requesting">确定</v-btn>
                                         </v-form>
@@ -51,9 +52,12 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, inject } from 'vue'
 import { post as login, model as loginModel } from '@/api/login'
 import { VForm } from 'vuetify/lib/components/index.mjs';
+import { redirectURI } from '@/const'
+// 
+const showTip: any = inject('showTip')
 // 数据
 const formData: loginModel = reactive({
     account: 'test-user',
@@ -77,13 +81,20 @@ const submit = async () => {
     if (!validateResult.value) {
         return
     }
-    // 
+    // 请求
     requesting.value = true
-    // 
-    let ok = await login(formData)
-    console.log(ok)
-    // 
+    let err = await login(formData)
     requesting.value = false
+    if (err) {
+        showTip(err.phrase, err.detail)
+        return
+    }
+    // 重定向
+    let query = new URLSearchParams(window.location.search);
+    let redirect = query.get(redirectURI)
+    if (redirect) {
+        window.location.replace(redirect)
+    }
 }
 
 </script>

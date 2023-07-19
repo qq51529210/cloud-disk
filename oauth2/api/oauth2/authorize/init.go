@@ -14,10 +14,11 @@ func Init(g gin.IRouter) {
 	g.POST("", post)
 }
 
-type reqQuery struct {
+// Model 表示第三方跳转到 GET /authorize 的查询参数
+type Model struct {
 	// 指定用于授权流程的响应类型，常见的值包括
-	// code ，用于授权码授权流程
-	// token ，用于隐式授权流程
+	// code 用于授权码授权流程
+	// token 用于隐式授权流程
 	ResponseType string `form:"response_type" binding:"oneof=code token"`
 	// 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
 	ClientID string `form:"client_id" binding:"required,max=40"`

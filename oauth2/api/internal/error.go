@@ -24,7 +24,7 @@ func Submit400(ctx *gin.Context, err string) {
 	ctx.Abort()
 }
 
-// SubmitEmpty400 表示提交的数据错误
+// SubmitEmpty400 表示提交的数据为空
 func SubmitEmpty400(ctx *gin.Context) {
 	ctx.JSON(http.StatusBadRequest, &Error{
 		Phrase: "empty submit data",

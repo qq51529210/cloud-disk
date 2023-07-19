@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"net/http"
-	"net/url"
 	"oauth2/api/internal"
 	"oauth2/db"
 
@@ -47,8 +46,6 @@ func CheckSession(ctx *gin.Context) {
 
 // redirectLogin 重定向到 /login
 func redirectLogin(ctx *gin.Context) {
-	query := make(url.Values)
-	query.Set(QueryRedirectURL, ctx.Request.URL.RawQuery)
-	redirectURL := loginURL + "?" + query.Encode()
+	redirectURL := loginURL + "?" + ctx.Request.URL.RawQuery
 	ctx.Redirect(http.StatusFound, redirectURL)
 }

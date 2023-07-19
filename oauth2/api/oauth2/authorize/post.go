@@ -9,7 +9,7 @@ import (
 
 func post(ctx *gin.Context) {
 	// 参数
-	var req reqQuery
+	var req Model
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
