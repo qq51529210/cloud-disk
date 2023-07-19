@@ -6,9 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Path 是路径
+const Path = "/authorize"
+
 // Init 初始化路由
 func Init(g gin.IRouter) {
-	g = g.Group("/authorize", middleware.CheckSession)
+	g = g.Group(Path, middleware.CheckSession)
 	//
 	g.GET("", get)
 	g.POST("", post)

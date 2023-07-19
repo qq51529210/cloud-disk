@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// get 处理第三方授权调用
 func get(ctx *gin.Context) {
 	// 参数
 	var req Model
@@ -28,8 +29,10 @@ func get(ctx *gin.Context) {
 type getAuthorize struct {
 	AppName string
 	Scope   map[string]string
+	Action  string
 }
 
+// getResponseTypeCode 处理 response_type=code
 func getResponseTypeCode(ctx *gin.Context, req *Model) {
 	// 应用
 	app, err := db.GetApp(req.ClientID)
@@ -41,7 +44,7 @@ func getResponseTypeCode(ctx *gin.Context, req *Model) {
 		errorTP.Execute(ctx.Writer, "第三方应用不存在")
 		return
 	}
-	// 返回授权页面
+	// 返回
 	var res getAuthorize
 	res.AppName = *app.Name
 	res.Scope = make(map[string]string)
@@ -51,5 +54,7 @@ func getResponseTypeCode(ctx *gin.Context, req *Model) {
 			res.Scope[scope] = name
 		}
 	}
+	res.Action = ctx.Request.URL.String()
+	// 页面
 	authorizeTP.Execute(ctx.Writer, &res)
 }
