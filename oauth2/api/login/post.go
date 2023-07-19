@@ -1,7 +1,6 @@
 package login
 
 import (
-	"net/http"
 	"oauth2/api/internal"
 	"oauth2/api/internal/middleware"
 	"oauth2/db"
@@ -13,9 +12,7 @@ type postReq struct {
 	// 账号
 	Account string `form:"account" binding:"required,max=40"`
 	// 密码
-	Password string `form:"client_id" binding:"required,max=40"`
-	// 重定向
-	RedirectURI string `form:"redirect_uri" binding:"omitempty,uri"`
+	Password string `form:"password" binding:"required,max=40"`
 }
 
 func post(ctx *gin.Context) {
@@ -43,6 +40,4 @@ func post(ctx *gin.Context) {
 		return
 	}
 	ctx.SetCookie(middleware.CookieName, sess.ID, -1, "/", "", true, true)
-	// 跳转
-	ctx.Redirect(http.StatusSeeOther, req.RedirectURI)
 }

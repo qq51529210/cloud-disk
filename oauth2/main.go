@@ -35,5 +35,5 @@ func main() {
 		panic(err)
 	}
 	// 服务
-	api.Serve(staticDir)
+	api.Serve("html/dist", staticDir)
 }

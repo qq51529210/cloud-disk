@@ -1,7 +1,6 @@
 package test
 
 import (
-	"fmt"
 	"oauth2/cfg"
 	"oauth2/db"
 	"time"
@@ -32,34 +31,46 @@ func Init(g gin.IRouter) {
 	host += cfg.Cfg.Test
 	oauth2Host += cfg.Cfg.Addr
 	//
-	g = g.Group("/test")
-	g.GET("/login")
-	g.GET("/oauth2")
+	g.GET("/", login)
+	g.GET("/oauth2", oauth2)
+	g.GET("/token", token)
 }
 
 func testAppData() {
-	m := new(db.App)
+	m, err := db.GetApp(app)
+	if err != nil {
+		panic(err)
+	}
+	if m != nil {
+		return
+	}
+	m = new(db.App)
 	m.ID = app
 	m.Name = &app
 	m.Secret = &pwd
 	m.Enable = &db.True
-	url := fmt.Sprintf("%s/login", host)
-	m.URL = &url
 	m.UserID = user
-	_, err := db.AddApp(m)
+	_, err = db.AddApp(m)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func testUserData() {
-	m := new(db.User)
+	m, err := db.GetUser(user)
+	if err != nil {
+		panic(err)
+	}
+	if m != nil {
+		return
+	}
+	m = new(db.User)
 	m.ID = user
 	m.Account = user
 	password := util.SHA1String(pwd)
 	m.Password = &password
 	m.Enable = &db.True
-	_, err := db.AddUser(m)
+	_, err = db.AddUser(m)
 	if err != nil {
 		panic(err)
 	}

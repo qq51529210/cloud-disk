@@ -11,6 +11,7 @@ import (
 	"oauth2/api/test"
 	"oauth2/api/users"
 	"oauth2/cfg"
+	"path"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -22,15 +23,15 @@ var (
 )
 
 // Serve 开始服务
-func Serve(statics fs.FS) error {
-	gin.SetMode(gin.ReleaseMode)
+func Serve(staticsRoot string, statics fs.FS) error {
+	gin.SetMode(gin.DebugMode)
 	// 测试服务
 	if cfg.Cfg.Test != "" {
 		// 启动服务
 		go testServer()
 	}
 	// 静态文件
-	initStatic(statics)
+	initStatic("", staticsRoot, statics)
 	// 路由
 	initRouter()
 	// 监听
@@ -48,25 +49,27 @@ func initRouter() {
 	oauth2.Init(g)
 }
 
+const indexHTML = "/index.html"
+
 // 初始化静态文件
-func initStatic(statics fs.FS) (err error) {
-	index := "/index.html"
-	return fs.WalkDir(statics, ".", func(path string, d fs.DirEntry, err error) error {
+func initStatic(relativeRoot, staticRoot string, statics fs.FS) (err error) {
+	return fs.WalkDir(statics, ".", func(p string, d fs.DirEntry, err error) error {
 		if d == nil || d.IsDir() {
 			return nil
 		}
-		g.StaticFileFS(path, path, http.FS(statics))
-		if strings.HasSuffix(path, index) {
-			initStaticIndex(statics, path, index)
+		rp := path.Join(relativeRoot, strings.TrimPrefix(p, staticRoot))
+		g.StaticFileFS(rp, p, http.FS(statics))
+		if strings.HasSuffix(p, indexHTML) {
+			initStaticIndex(statics, rp, p)
 		}
 		return nil
 	})
 }
 
 // 以免 gin 内部对 index.html 一直重定向
-func initStaticIndex(statics fs.FS, path, index string) {
-	g.GET(path[:len(path)-len(index)], func(ctx *gin.Context) {
-		f, err := statics.Open(path)
+func initStaticIndex(statics fs.FS, path, filePath string) {
+	g.GET(path[:len(path)-len(indexHTML)], func(ctx *gin.Context) {
+		f, err := statics.Open(filePath)
 		if err != nil {
 			ctx.Status(http.StatusNotFound)
 			return
