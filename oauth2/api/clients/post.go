@@ -1,4 +1,4 @@
-package apps
+package clients
 
 import (
 	"net/http"
@@ -24,7 +24,7 @@ type postReq struct {
 	URLs []string `json:"urls" binding:"required,dive,url"`
 }
 
-// @Summary  第三方应用管理
+// @Summary  第三方应用
 // @Tags     添加
 // @Param    data body postReq true "添加的字段"
 // @Security ApiKeyAuth
@@ -33,7 +33,7 @@ type postReq struct {
 // @Failure  401
 // @Failure  403
 // @Failure  500 {object} internal.Error
-// @Router   /apps [post]
+// @Router   /clients [post]
 func post(ctx *gin.Context) {
 	// 参数
 	var req postReq
@@ -45,11 +45,11 @@ func post(ctx *gin.Context) {
 	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
 	// 数据库
-	var model db.App
+	var model db.Client
 	util.CopyStructAll(&model, &req)
 	model.ID = uuid.LowerV1WithoutHyphen()
 	model.DeveloperID = sess.User.ID
-	_, err = db.AddApp(&model)
+	_, err = db.AddClient(&model)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return

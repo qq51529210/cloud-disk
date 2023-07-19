@@ -48,12 +48,12 @@ func token(ctx *gin.Context) {
 		return
 	}
 	// 查询
-	app, err := db.GetApp(req.ClientID)
+	Client, err := db.GetClient(req.ClientID)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return
 	}
-	if app == nil || *app.Enable != db.True || *app.Secret != req.ClientSecret {
+	if Client == nil || *Client.Enable != db.True || *Client.Secret != req.ClientSecret {
 		internal.Data404(ctx)
 		return
 	}

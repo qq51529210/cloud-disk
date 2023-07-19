@@ -2,7 +2,7 @@ package api
 
 import (
 	"net/http"
-	"oauth2/api/apps"
+	"oauth2/api/clients"
 	"oauth2/api/internal/middleware"
 	"oauth2/api/login"
 	"oauth2/api/oauth2"
@@ -40,7 +40,7 @@ func initRouter() {
 	// 全局
 	g.Use(middleware.Log)
 	//
-	apps.Init(g)
+	clients.Init(g)
 	users.Init(g)
 	login.Init(g)
 	oauth2.Init(g)

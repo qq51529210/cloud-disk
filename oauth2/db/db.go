@@ -40,7 +40,7 @@ func Init() error {
 func initTable() error {
 	_db.AutoMigrate(
 		new(User),
-		new(App),
+		new(Client),
 	)
 	//
 	return nil

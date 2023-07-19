@@ -63,7 +63,7 @@ func getAccessToken(ctx *gin.Context, req *oauth2TokenReq) *oauth2TokenRes {
 	query := make(url.Values)
 	query.Set("grant_type", "authorization_code")
 	query.Set("code", req.Code)
-	query.Set("client_id", app)
+	query.Set("client_id", Client)
 	query.Set("client_secret", pwd)
 	//
 	url := fmt.Sprintf("%s/oauth2/token", oauth2Host)

@@ -64,7 +64,7 @@ func UpdateUser(m *User) (int64, error) {
 // DeleteUser 删除单个
 func DeleteUser(id string) (int64, error) {
 	db := _db.
-		Delete(&App{
+		Delete(&Client{
 			ID: id,
 		})
 	return db.RowsAffected, db.Error

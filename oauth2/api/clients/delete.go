@@ -1,4 +1,4 @@
-package apps
+package clients
 
 import (
 	"net/http"
@@ -9,22 +9,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary  第三方应用管理
+// @Summary  第三方应用
 // @Tags     删除
 // @Description 删除数据
-// @Param    id path string true "App.ID"
+// @Param    id path string true "Client.ID"
 // @Security ApiKeyAuth
 // @Success  204
 // @Failure  400 {object} internal.Error
 // @Failure  401
 // @Failure  403
 // @Failure  500 {object} internal.Error
-// @Router   /apps/{id} [delete]
+// @Router   /clients/{id} [delete]
 func delete(ctx *gin.Context) {
 	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
 	// 数据库
-	_, err := db.DeleteApp(ctx.Params[0].Value, sess.User.ID)
+	_, err := db.DeleteClient(ctx.Params[0].Value, sess.User.ID)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return

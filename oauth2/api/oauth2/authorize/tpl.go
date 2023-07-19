@@ -72,7 +72,7 @@ func init() {
 <body>
 	<div class="container">
 	<h2>访问授权</h2>
-	<p>应用<h4>[{{.AppName}}]</h4>请求访问以下的数据</p>
+	<p>应用<h4>[{{.ClientName}}]</h4>请求访问以下的数据</p>
 	<form method="post" action="{{.Action}}">
 	{{range $key, $value := .Scope}}
 		<label>

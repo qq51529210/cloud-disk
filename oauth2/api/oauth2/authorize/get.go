@@ -1,11 +1,31 @@
 package authorize
 
 import (
-	"oauth2/db"
-	"strings"
-
 	"github.com/gin-gonic/gin"
 )
+
+// 模式
+const (
+	ResponseTypeCode              = "code"
+	ResponseTypeToken             = "token"
+	ResponseTypePassword          = "password"
+	ResponseTypeClientCredentials = "client_credentials"
+)
+
+const (
+	errQuery = "参数错误"
+)
+
+var (
+	responseTypeHandle = make(map[string]func(*gin.Context, *getReq))
+)
+
+func init() {
+	responseTypeHandle[ResponseTypeCode] = code
+	responseTypeHandle[ResponseTypeToken] = token
+	responseTypeHandle[ResponseTypePassword] = password
+	responseTypeHandle[ResponseTypeClientCredentials] = clientCredentials
+}
 
 type getReq struct {
 	// 指定用于授权流程的响应类型，常见的值包括
@@ -22,54 +42,31 @@ type getReq struct {
 	RedirectURI string `form:"redirect_uri" binding:"required,uri"`
 }
 
+type getRes struct {
+	// 应用名称
+	ClientName string
+	// 应用图片
+	ClientImage string
+	// 访问权限
+	Scope map[string]string
+	// 表单地址
+	Action string
+}
+
 // get 处理第三方授权调用
 func get(ctx *gin.Context) {
 	// 参数
 	var req getReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
-		errorTP.Execute(ctx.Writer, "参数错误")
+		errorTP.Execute(ctx.Writer, errQuery)
 		return
 	}
-	// 类型
-	switch req.ResponseType {
-	case "code":
-		getResponseTypeCode(ctx, &req)
-	// case "token":
-	default:
-		errorTP.Execute(ctx.Writer, "参数错误")
-	}
-}
-
-type getAuthorize struct {
-	AppName string
-	Scope   map[string]string
-	Action  string
-}
-
-// getResponseTypeCode 处理 response_type=code
-func getResponseTypeCode(ctx *gin.Context, req *getReq) {
-	// 应用
-	app, err := db.GetApp(req.ClientID)
-	if err != nil {
-		errorTP.Execute(ctx.Writer, "数据库错误")
+	// 按类型处理
+	hd, ok := responseTypeHandle[req.ResponseType]
+	if !ok {
+		errorTP.Execute(ctx.Writer, errQuery)
 		return
 	}
-	if app == nil || *app.Enable != db.True {
-		errorTP.Execute(ctx.Writer, "第三方应用不存在")
-		return
-	}
-	// 返回
-	var res getAuthorize
-	res.AppName = *app.Name
-	res.Scope = make(map[string]string)
-	for _, scope := range strings.Fields(req.Scope) {
-		name, ok := authorizeName[scope]
-		if ok {
-			res.Scope[scope] = name
-		}
-	}
-	res.Action = ctx.Request.URL.String()
-	// 页面
-	authorizeTP.Execute(ctx.Writer, &res)
+	hd(ctx, &req)
 }

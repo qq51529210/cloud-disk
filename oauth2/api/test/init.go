@@ -11,7 +11,7 @@ import (
 
 var (
 	//
-	app       = "test-app"
+	Client    = "test-Client"
 	user      = "test-user"
 	developer = "test-developer"
 	pwd       = "123123"
@@ -28,7 +28,7 @@ func Init(g gin.IRouter) {
 	// 先加入模拟数据
 	testDeveloperData()
 	testUserData()
-	testAppData()
+	testClientData()
 	//
 	host += cfg.Cfg.Test
 	oauth2Host += cfg.Cfg.Addr
@@ -57,21 +57,21 @@ func testDeveloperData() {
 	}
 }
 
-func testAppData() {
-	m, err := db.GetApp(app)
+func testClientData() {
+	m, err := db.GetClient(Client)
 	if err != nil {
 		panic(err)
 	}
 	if m != nil {
 		return
 	}
-	m = new(db.App)
-	m.ID = app
-	m.Name = &app
+	m = new(db.Client)
+	m.ID = Client
+	m.Name = &Client
 	m.Secret = &pwd
 	m.Enable = &db.True
 	m.DeveloperID = developer
-	_, err = db.AddApp(m)
+	_, err = db.AddClient(m)
 	if err != nil {
 		panic(err)
 	}

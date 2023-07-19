@@ -1,4 +1,4 @@
-package apps
+package clients
 
 import (
 	"net/http"
@@ -23,10 +23,10 @@ type patchReq struct {
 	URLs []string `json:"urls" binding:"omitempty,dive,url"`
 }
 
-// @Summary  第三方应用管理
+// @Summary  第三方应用
 // @Tags     修改
 // @Description 修改数据
-// @Param    id path string true "App.ID"
+// @Param    id path string true "Client.ID"
 // @Param    data body patchReq true "修改的字段"
 // @Security ApiKeyAuth
 // @Success  201
@@ -34,7 +34,7 @@ type patchReq struct {
 // @Failure  401
 // @Failure  403
 // @Failure  500 {object} internal.Error
-// @Router   /apps/{id} [patch]
+// @Router   /clients/{id} [patch]
 func patch(ctx *gin.Context) {
 	// 参数
 	var req patchReq
@@ -50,10 +50,10 @@ func patch(ctx *gin.Context) {
 	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
 	// 数据库
-	var model db.App
+	var model db.Client
 	util.CopyStructAll(&model, &req)
 	model.ID = ctx.Params[0].Value
-	_, err = db.UpdateApp(&model, sess.User.ID)
+	_, err = db.UpdateClient(&model, sess.User.ID)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return

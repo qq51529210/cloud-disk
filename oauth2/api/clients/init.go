@@ -1,4 +1,4 @@
-package apps
+package clients
 
 import (
 	"oauth2/api/internal/middleware"
@@ -8,7 +8,7 @@ import (
 
 // Init 初始化路由
 func Init(g gin.IRouter) {
-	g = g.Group("/apps", middleware.CheckSession)
+	g = g.Group("/clients", middleware.CheckSession)
 	//
 	g.GET("", get)
 	g.POST("", post)
