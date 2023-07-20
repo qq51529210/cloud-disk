@@ -19,3 +19,7 @@ redis:
   cmdTimeout: 3
 session:
   expires: 120
+oauth2:
+  accessTokenExpires: 3600
+  accessTokenType: Bearer
+  refreshTokenExpires: 86400

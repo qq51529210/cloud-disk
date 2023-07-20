@@ -42,6 +42,12 @@ type Config struct {
 	Session struct {
 		Expires int64 `json:"expires" yaml:"expires" validate:"required,min=60"`
 	} `json:"session" yaml:"session"`
+	// oauth2
+	OAuth2 struct {
+		AccessTokenExpires  int64 `json:"accessTokenExpires" yaml:"accessTokenExpires" validate:"required,min=60"`
+		RefreshTokenExpires int64 `json:"refreshTokenExpires" yaml:"refreshTokenExpires" validate:"required,min=60"`
+		AccessTokenType     int64 `json:"accessTokenType" yaml:"accessTokenType" validate:"required,oneof=Bearer"`
+	} `json:"oauth2" yaml:"oauth2"`
 }
 
 // Load 加载配置

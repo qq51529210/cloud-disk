@@ -16,7 +16,7 @@ const (
 	DeveloperSessionPrefix = "developer_session_"
 )
 
-// Session 表示会话
+// Session 表示会话，使用 redis 来保存
 type Session[T any] struct {
 	// 会话 ID
 	ID string
