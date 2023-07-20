@@ -1,6 +1,6 @@
 package html
 
-var (
+const (
 	css = `
 body {
 	font-family: Arial, sans-serif;

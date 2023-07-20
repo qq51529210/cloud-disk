@@ -17,7 +17,15 @@ func init() {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>登录</title>
-	<style>` + css + `</style>
+	<style>` + css + `
+	input[type="text"],
+	input[type="password"] {
+		width: 378px;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+	}
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -46,5 +54,13 @@ type Login struct {
 
 // Exec 格式化
 func (m *Login) Exec(w io.Writer) {
-	error.Execute(w, m)
+	login.Execute(w, m)
+}
+
+// ExecLogin 用于格式化 login 模板
+func ExecLogin(w io.Writer, action string) {
+	m := &Login{
+		Action: action,
+	}
+	m.Exec(w)
 }

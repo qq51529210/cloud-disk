@@ -44,9 +44,9 @@ type Config struct {
 	} `json:"session" yaml:"session"`
 	// oauth2
 	OAuth2 struct {
-		AccessTokenExpires  int64 `json:"accessTokenExpires" yaml:"accessTokenExpires" validate:"required,min=60"`
-		RefreshTokenExpires int64 `json:"refreshTokenExpires" yaml:"refreshTokenExpires" validate:"required,min=60"`
-		AccessTokenType     int64 `json:"accessTokenType" yaml:"accessTokenType" validate:"required,oneof=Bearer"`
+		AccessTokenExpires  int64  `json:"accessTokenExpires" yaml:"accessTokenExpires" validate:"required,min=60"`
+		RefreshTokenExpires int64  `json:"refreshTokenExpires" yaml:"refreshTokenExpires" validate:"required,min=60"`
+		AccessTokenType     string `json:"accessTokenType" yaml:"accessTokenType" validate:"required,oneof=Bearer"`
 	} `json:"oauth2" yaml:"oauth2"`
 }
 
