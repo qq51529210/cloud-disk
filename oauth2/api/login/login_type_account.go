@@ -24,7 +24,7 @@ func account(ctx *gin.Context) {
 	var req postReq
 	err := ctx.ShouldBind(&req)
 	if err != nil {
-		html.ExecError(ctx.Writer, html.TitleLogin, html.ErrorQuery, "")
+		html.ExecError(ctx.Writer, html.TitleLogin, html.ErrorQuery, err.Error())
 		return
 	}
 	// 数据库

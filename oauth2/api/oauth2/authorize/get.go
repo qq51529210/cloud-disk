@@ -1,6 +1,7 @@
 package authorize
 
 import (
+	"oauth2/api/internal/html"
 	"oauth2/db"
 	"strings"
 
@@ -47,29 +48,21 @@ type getReq struct {
 	client *db.Client
 }
 
-type getRes struct {
-	// 应用名称
-	ClientName string
-	// 应用图片
-	ClientImage string
-	// 访问权限
-	Scope map[string]string
-	// 表单地址
-	Action string
-}
-
-func (s *getRes) Init(q *getReq) {
+func (q *getReq) InitTP(t *html.Authorize) {
 	image := ""
 	if q.client.Image != nil {
 		image = *q.client.Image
 	}
-	s.ClientImage = image
-	s.ClientName = *q.client.Name
-	s.Scope = make(map[string]string)
+	t.ClientImage = image
+	t.ClientName = *q.client.Name
+	t.ResponseType = q.ResponseType
+	t.State = q.State
+	t.RedirectURI = q.RedirectURI
+	t.Scope = make(map[string]string)
 	for _, scope := range strings.Fields(q.Scope) {
 		name, ok := authorizeName[scope]
 		if ok {
-			s.Scope[scope] = name
+			t.Scope[scope] = name
 		}
 	}
 }
@@ -80,23 +73,23 @@ func get(ctx *gin.Context) {
 	var req getReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
-		errorTP.Execute(ctx.Writer, errQuery)
+		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorQuery, err.Error())
 		return
 	}
 	// 应用
 	req.client, err = db.GetClient(req.ClientID)
 	if err != nil {
-		errorTP.Execute(ctx.Writer, "数据库错误")
+		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorDB, err.Error())
 		return
 	}
 	if req.client == nil || *req.client.Enable != db.True {
-		errorTP.Execute(ctx.Writer, "第三方应用不存在")
+		html.ExecError(ctx.Writer, html.TitleAuthorize, "第三方应用不存在", "")
 		return
 	}
 	// 处理
 	hd, ok := responseTypeHandle[req.ResponseType]
 	if !ok {
-		errorTP.Execute(ctx.Writer, errQuery)
+		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorQuery, "")
 		return
 	}
 	hd(ctx, &req)

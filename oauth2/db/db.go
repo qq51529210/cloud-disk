@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"oauth2/cfg"
+	"time"
 
 	"github.com/qq51529210/util"
 	"github.com/redis/go-redis/v9"
@@ -68,4 +69,8 @@ func initReids() error {
 		SentinelPassword: cfg.Cfg.Redis.SentinelPassword,
 	})
 	return rds.Ping(context.Background()).Err()
+}
+
+func newRedisTimeout() (context.Context, context.CancelFunc) {
+	return context.WithTimeout(context.Background(), time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
 }

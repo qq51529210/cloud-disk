@@ -73,7 +73,7 @@ func GetSession[T any](ctx context.Context, id string) (*Session[T], error) {
 // NewSessionTimeout 创建会话
 func NewSessionTimeout[T any](prefixKey string, data T) (*Session[T], error) {
 	// 超时
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
+	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	//
 	return NewSession[T](ctx, prefixKey, data)
@@ -82,7 +82,7 @@ func NewSessionTimeout[T any](prefixKey string, data T) (*Session[T], error) {
 // GetSessionTimeout 获取会话
 func GetSessionTimeout[T any](id string) (*Session[T], error) {
 	// 超时
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
+	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	//
 	return GetSession[T](ctx, id)

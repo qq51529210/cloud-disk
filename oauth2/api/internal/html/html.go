@@ -4,6 +4,7 @@ package html
 const (
 	ErrorQuery       = "参数错误"
 	ErrorDB          = "数据库错误"
-	TitleAccessToken = "访问令牌"
+	TitleAuthorize   = "授权"
+	TitleAccessToken = "令牌"
 	TitleLogin       = "登录"
 )

@@ -8,5 +8,5 @@ import (
 )
 
 func get(ctx *gin.Context) {
-	html.ExecLogin(ctx.Writer, Path, ctx.Query(middleware.QueryRedirectURI))
+	html.ExecLogin(ctx.Writer, ctx.Query(middleware.QueryRedirectURI))
 }

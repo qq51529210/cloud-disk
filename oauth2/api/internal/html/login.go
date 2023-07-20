@@ -30,7 +30,7 @@ func init() {
 <body>
 	<div class="container">
 	<h2>登录</h2>
-	<form method="post" action="{{.Action}}">
+	<form method="post" action="/login">
 		<div class="form-group">
 		<label for="username">用户名</label>
 		<input type="text" name="account" value="test-user" required>
@@ -50,7 +50,6 @@ func init() {
 
 // Login 用于格式化 login 模板
 type Login struct {
-	Action      string
 	RedirectURI string
 }
 
@@ -60,9 +59,8 @@ func (m *Login) Exec(w io.Writer) {
 }
 
 // ExecLogin 用于格式化 login 模板
-func ExecLogin(w io.Writer, action, redirectURI string) {
+func ExecLogin(w io.Writer, redirectURI string) {
 	m := &Login{
-		Action:      action,
 		RedirectURI: redirectURI,
 	}
 	m.Exec(w)

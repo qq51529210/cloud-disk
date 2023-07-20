@@ -23,12 +23,15 @@ func init() {
 	<div class="container">
 	<h2>访问授权</h2>
 	<p>应用<h4>[{{.ClientName}}]</h4>请求访问以下的数据</p>
-	<form method="post" action="{{.Action}}">
+	<form method="post" action="/oauth2/authorize">
 	{{range $key, $value := .Scope}}
 		<label>
 			<input type="checkbox" name="{{$key}}"> {{$value}}
 		</label>
 	{{end}}
+		<input type="hidden" name="response_type" value="{{.ResponseType}}">
+		<input type="hidden" name="state" value="{{.State}}">
+		<input type="hidden" name="redirect_uri" value="{{.RedirectURI}}">
 		<button type="submit">确定</button>
 	</form>
 	</div>
@@ -39,11 +42,15 @@ func init() {
 
 // Authorize 用于格式化 authorize 模板
 type Authorize struct {
-	Action string
-	Scope  map[string]string
+	ClientName   string
+	ClientImage  string
+	ResponseType string
+	State        string
+	RedirectURI  string
+	Scope        map[string]string
 }
 
 // Exec 格式化
 func (m *Authorize) Exec(w io.Writer) {
-	error.Execute(w, m)
+	authorize.Execute(w, m)
 }

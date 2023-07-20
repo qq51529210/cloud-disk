@@ -20,6 +20,7 @@ redis:
 session:
   expires: 120
 oauth2:
+  authorizationCodeExpires: 60
   accessTokenExpires: 3600
   accessTokenType: Bearer
   refreshTokenExpires: 86400
