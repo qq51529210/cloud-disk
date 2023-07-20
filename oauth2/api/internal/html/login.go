@@ -39,6 +39,7 @@ func init() {
 		<label for="password">密码</label>
 		<input type="password" name="password" value="123123" required>
 		</div>
+        <input type="hidden" name="redirect_uri" value="{{.RedirectURI}}">
 		<button type="submit">确定</button>
 	</form>
 	</div>
@@ -49,7 +50,8 @@ func init() {
 
 // Login 用于格式化 login 模板
 type Login struct {
-	Action string
+	Action      string
+	RedirectURI string
 }
 
 // Exec 格式化
@@ -58,9 +60,10 @@ func (m *Login) Exec(w io.Writer) {
 }
 
 // ExecLogin 用于格式化 login 模板
-func ExecLogin(w io.Writer, action string) {
+func ExecLogin(w io.Writer, action, redirectURI string) {
 	m := &Login{
-		Action: action,
+		Action:      action,
+		RedirectURI: redirectURI,
 	}
 	m.Exec(w)
 }
