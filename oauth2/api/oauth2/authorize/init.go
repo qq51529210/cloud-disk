@@ -11,7 +11,7 @@ const Path = "/authorize"
 
 // Init 初始化路由
 func Init(g gin.IRouter) {
-	g = g.Group(Path, middleware.CheckSession)
+	g = g.Group(Path, middleware.CheckUserSession)
 	//
 	g.GET("", get)
 	g.POST("", post)

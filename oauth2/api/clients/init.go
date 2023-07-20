@@ -8,7 +8,7 @@ import (
 
 // Init 初始化路由
 func Init(g gin.IRouter) {
-	g = g.Group("/clients", middleware.CheckSession)
+	g = g.Group("/clients", middleware.CheckDeveloperSession)
 	//
 	g.GET("", get)
 	g.POST("", post)

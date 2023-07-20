@@ -3,6 +3,7 @@ package db
 import (
 	"errors"
 
+	"github.com/qq51529210/util"
 	"gorm.io/gorm"
 )
 
@@ -15,9 +16,7 @@ type Developer struct {
 	Password *string `gorm:"type:varchar(40);not null"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
-	// Developer.ID 表示这个应用属于哪一个开发者
-	DeveloperID string     `json:"-" gorm:""`
-	Developer   *Developer `json:"-" gorm:"foreignKey:DeveloperID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	util.GORMTime
 }
 
 // GetDeveloper 查询单个

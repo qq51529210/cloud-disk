@@ -20,13 +20,11 @@ type Client struct {
 	// 名称
 	Name *string `gorm:"type:varchar(64);not null"`
 	// 图片
-	Image *string `gorm:"type:varchar(255);not null"`
+	Image *string `gorm:"type:varchar(255);not null;default:''"`
 	// 描述
 	Description *string `gorm:"type:varchar(255);"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
-	// 重定向 url 列表，';' 隔开
-	URL *string `gorm:"type:text;"`
 	util.GORMTime
 }
 

@@ -22,7 +22,7 @@ import (
 // @Router   /clients/{id} [get]
 func get(ctx *gin.Context) {
 	// 会话
-	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.Developer])
 	// 数据库
 	model, err := db.GetClient(ctx.Params[0].Value)
 	if err != nil {
@@ -30,7 +30,7 @@ func get(ctx *gin.Context) {
 		return
 	}
 	// 没有数据，或者不是自己的
-	if model == nil || model.DeveloperID != sess.User.ID {
+	if model == nil || model.DeveloperID != sess.Data.ID {
 		internal.Data404(ctx)
 		return
 	}

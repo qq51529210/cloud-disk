@@ -1,10 +1,13 @@
 package middleware
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 	"oauth2/api/internal"
+	"oauth2/cfg"
 	"oauth2/db"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,8 +23,8 @@ const (
 	QueryRedirectURI = "redirect_uri"
 )
 
-// CheckSession 使用 cookie 检查用户登录
-func CheckSession(ctx *gin.Context) {
+// CheckUserSession 使用 cookie 检查用户登录
+func CheckUserSession(ctx *gin.Context) {
 	// 提取 cookie
 	sid, err := ctx.Cookie(CookieName)
 	if err == http.ErrNoCookie {
@@ -29,7 +32,7 @@ func CheckSession(ctx *gin.Context) {
 		return
 	}
 	// 查询 session
-	sess, err := db.GetSession(sid)
+	sess, err := db.GetUserSession(sid)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return
@@ -51,4 +54,31 @@ func redirectLogin(ctx *gin.Context) {
 	query.Set(QueryRedirectURI, ctx.Request.URL.String())
 	redirectURL := loginURL + "?" + query.Encode()
 	ctx.Redirect(http.StatusFound, redirectURL)
+}
+
+// CheckDeveloperSession 使用 cookie 检查用户登录
+func CheckDeveloperSession(ctx *gin.Context) {
+	// 提取 cookie
+	sid, err := ctx.Cookie(CookieName)
+	if err == http.ErrNoCookie {
+		redirectLogin(ctx)
+		return
+	}
+	// 查询 session
+	toCtx, cancel := context.WithTimeout(ctx, time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
+	defer cancel()
+	sess, err := db.GetSession[*db.Developer](toCtx, sid)
+	if err != nil {
+		internal.DB500(ctx, err)
+		return
+	}
+	// 没有
+	if sess == nil {
+		redirectLogin(ctx)
+		return
+	}
+	// 设置上下文
+	ctx.Set(SessionContextKey, sess)
+	//
+	ctx.Next()
 }

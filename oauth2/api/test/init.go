@@ -11,7 +11,7 @@ import (
 
 var (
 	//
-	Client    = "test-Client"
+	client    = "test-Client"
 	user      = "test-user"
 	developer = "test-developer"
 	pwd       = "123123"
@@ -58,7 +58,7 @@ func testDeveloperData() {
 }
 
 func testClientData() {
-	m, err := db.GetClient(Client)
+	m, err := db.GetClient(client)
 	if err != nil {
 		panic(err)
 	}
@@ -66,8 +66,8 @@ func testClientData() {
 		return
 	}
 	m = new(db.Client)
-	m.ID = Client
-	m.Name = &Client
+	m.ID = client
+	m.Name = &client
 	m.Secret = &pwd
 	m.Enable = &db.True
 	m.DeveloperID = developer

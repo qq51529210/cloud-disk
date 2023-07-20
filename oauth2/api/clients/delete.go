@@ -22,9 +22,9 @@ import (
 // @Router   /clients/{id} [delete]
 func delete(ctx *gin.Context) {
 	// 会话
-	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.Developer])
 	// 数据库
-	_, err := db.DeleteClient(ctx.Params[0].Value, sess.User.ID)
+	_, err := db.DeleteClient(ctx.Params[0].Value, sess.Data.ID)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return

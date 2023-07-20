@@ -37,13 +37,13 @@ func post(ctx *gin.Context) {
 		return
 	}
 	// 会话
-	sess, err := db.NewSession(user)
+	sess, err := db.NewUserSession(user)
 	if err != nil {
 		postError(ctx, "数据库错误")
 		return
 	}
 	// cookie
-	ctx.SetCookie(middleware.CookieName, sess.ID, 3600, "/", "", true, true)
+	ctx.SetCookie(middleware.CookieName, sess.ID, int(sess.Expires), "/", "", true, true)
 	// 跳转
 	redirectURL := ctx.Query(middleware.QueryRedirectURI)
 	if redirectURL != "" {

@@ -26,9 +26,13 @@ func init() {
 }
 
 func login(ctx *gin.Context) {
+	responseType := ctx.Query("response_type")
+	if responseType == "" {
+		responseType = "code"
+	}
 	query := make(url.Values)
-	query.Set("response_type", "code")
-	query.Set("client_id", Client)
+	query.Set("response_type", responseType)
+	query.Set("client_id", client)
 	query.Set("scope", "image name")
 	query.Set("state", state)
 	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", host))

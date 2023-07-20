@@ -43,12 +43,12 @@ func post(ctx *gin.Context) {
 		return
 	}
 	// 会话
-	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.Developer])
 	// 数据库
 	var model db.Client
 	util.CopyStructAll(&model, &req)
 	model.ID = uuid.LowerV1WithoutHyphen()
-	model.DeveloperID = sess.User.ID
+	model.DeveloperID = sess.Data.ID
 	_, err = db.AddClient(&model)
 	if err != nil {
 		internal.DB500(ctx, err)

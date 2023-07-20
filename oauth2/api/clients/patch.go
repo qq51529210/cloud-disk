@@ -48,12 +48,12 @@ func patch(ctx *gin.Context) {
 		return
 	}
 	// 会话
-	sess := ctx.Value(middleware.SessionContextKey).(*db.Session)
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.Developer])
 	// 数据库
 	var model db.Client
 	util.CopyStructAll(&model, &req)
 	model.ID = ctx.Params[0].Value
-	_, err = db.UpdateClient(&model, sess.User.ID)
+	_, err = db.UpdateClient(&model, sess.Data.ID)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return
