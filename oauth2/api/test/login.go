@@ -38,7 +38,7 @@ func login(ctx *gin.Context) {
 	query.Set("client_id", client)
 	query.Set("scope", "avatar name friends")
 	query.Set("state", state)
-	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", cfg.Cfg.Test))
+	query.Set("redirect_uri", fmt.Sprintf("http://%s/oauth2", cfg.Cfg.Test))
 	//
 	var t loginTP
 	query.Set("response_type", "code")

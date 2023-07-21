@@ -50,3 +50,13 @@ func GetAuthorizationCodeWithContext(ctx context.Context, code string) (*Authori
 func GetAuthorizationCode(code string) (*AuthorizationCode, error) {
 	return Get[AuthorizationCode](AuthorizationCodePrefix + code)
 }
+
+// DelAuthorizationCodeWithContext 查询授权码
+func DelAuthorizationCodeWithContext(ctx context.Context, code string) error {
+	return rds.Del(ctx, AuthorizationCodePrefix+code).Err()
+}
+
+// DelAuthorizationCode 查询授权码
+func DelAuthorizationCode(code string) error {
+	return Del(AuthorizationCodePrefix + code)
+}

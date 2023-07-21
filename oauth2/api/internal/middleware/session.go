@@ -51,6 +51,7 @@ func redirectLogin(ctx *gin.Context) {
 	query.Set(QueryRedirectURI, ctx.Request.URL.String())
 	redirectURL := loginURL + "?" + query.Encode()
 	ctx.Redirect(http.StatusFound, redirectURL)
+	ctx.Abort()
 }
 
 // CheckDeveloperSession 使用 cookie 检查用户登录

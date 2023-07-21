@@ -8,6 +8,7 @@ import (
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
+	"github.com/qq51529210/log"
 	"github.com/qq51529210/util"
 )
 
@@ -21,7 +22,6 @@ type authorizationCodeReq struct {
 }
 
 // authorizationCode 处理 grant_type=authorization_code
-// todo 在返回 access_token 后是否删除 authorization_code
 func authorizationCode(ctx *gin.Context) {
 	// 参数
 	var req authorizationCodeReq
@@ -75,8 +75,18 @@ func authorizationCode(ctx *gin.Context) {
 		_u.RawQuery = util.HTTPQuery(token, _u.Query()).Encode()
 		// 跳转
 		ctx.Redirect(http.StatusSeeOther, _u.String())
+		// 删除授权码
+		err = db.DelAuthorizationCode(code.ID)
+		if err != nil {
+			log.Errorf("del authorization code error: %s", err.Error())
+		}
 		return
 	}
 	// 没有重定向，返回 JSON
 	ctx.JSON(http.StatusOK, token)
+	// 删除授权码
+	err = db.DelAuthorizationCode(code.ID)
+	if err != nil {
+		log.Errorf("del authorization code error: %s", err.Error())
+	}
 }

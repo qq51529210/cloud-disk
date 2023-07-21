@@ -70,4 +70,5 @@ func postAccount(ctx *gin.Context) {
 	} else {
 		ctx.Redirect(http.StatusSeeOther, "/")
 	}
+	ctx.Abort()
 }
