@@ -20,8 +20,6 @@ type AuthorizationCode struct {
 	Scope string
 	// 客户端 ID
 	ClientID string
-	// 客户端密钥
-	ClientSecret string
 	// 重定向
 	RedirectURI string
 }

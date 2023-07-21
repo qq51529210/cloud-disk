@@ -20,7 +20,7 @@ type Client struct {
 	// 名称
 	Name *string `gorm:"type:varchar(64);not null"`
 	// 图片
-	Image *string `gorm:"type:varchar(255);not null;default:''"`
+	Image *string `gorm:"type:text"`
 	// 描述
 	Description *string `gorm:"type:varchar(255);"`
 	// 是否启用，0/1

@@ -22,19 +22,16 @@ func init() {
 <body>
 	<div class="container">
 	<h2>访问授权</h2>
-	<p>应用<h4>[{{.ClientName}}]</h4>
-	<img src="{{.ClientImage}}" width="16" height="16">
-	请求访问以下的数据</p>
-	<form method="post" action="/oauth2/authorize">
+	<h4>[{{.ClientName}}]</h4>
+	<img src="{{.ClientImage}}" width="48" height="48">
+	<p>请求访问以下的数据</p>
+	<form method="post" action="{{.Action}}">
 	{{range .Scope}}
 		<label>
 			<input type="checkbox" name="{{.Key}}" {{if .Check}}checked{{end}}> {{.Name}}
 		</label>
 	{{end}}
-		<input type="hidden" name="response_type" value="{{.ResponseType}}">
-		<input type="hidden" name="client_id" value="{{.ClientID}}">
-		<input type="hidden" name="state" value="{{.State}}">
-		<input type="hidden" name="redirect_uri" value="{{.RedirectURI}}">
+		</br>
 		<button type="submit">确定</button>
 	</form>
 	</div>
@@ -55,6 +52,7 @@ type AuthorizeScope struct {
 
 // Authorize 用于格式化 authorize 模板
 type Authorize struct {
+	Action       string
 	ClientName   string
 	ClientImage  string
 	ResponseType string

@@ -1,6 +1,7 @@
 package authorize
 
 import (
+	"fmt"
 	"oauth2/api/internal/html"
 	"oauth2/db"
 	"strings"
@@ -34,7 +35,8 @@ type getReq struct {
 	client *db.Client
 }
 
-func (q *getReq) InitTP(t *html.Authorize) {
+func (q *getReq) InitTP(t *html.Authorize, rq string) {
+	t.Action = fmt.Sprintf("/oauth2%s?%s", Path, rq)
 	t.ClientName = *q.client.Name
 	if q.client.Image != nil {
 		t.ClientImage = *q.client.Image
@@ -92,13 +94,13 @@ func get(ctx *gin.Context) {
 // getCode response_type=code
 func getCode(ctx *gin.Context, req *getReq) {
 	var tp html.Authorize
-	req.InitTP(&tp)
+	req.InitTP(&tp, ctx.Request.URL.RawQuery)
 	tp.Exec(ctx.Writer)
 }
 
 // getToken response_type=token
 func getToken(ctx *gin.Context, req *getReq) {
-	var tp html.Authorize
-	req.InitTP(&tp)
-	tp.Exec(ctx.Writer)
+	// var tp html.Authorize
+	// req.InitTP(&tp)
+	// tp.Exec(ctx.Writer)
 }

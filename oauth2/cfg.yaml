@@ -18,9 +18,9 @@ redis:
   password: redis_123
   cmdTimeout: 3
 session:
-  expires: 120
+  expires: 1200
 oauth2:
-  authorizationCodeExpires: 60
+  authorizationCodeExpires: 300
   accessTokenExpires: 3600
   accessTokenType: Bearer
   refreshTokenExpires: 86400

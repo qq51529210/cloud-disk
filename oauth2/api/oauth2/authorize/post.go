@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/qq51529210/util"
 )
 
 const (
@@ -19,19 +20,21 @@ type postReq struct {
 	Name         string `form:"name"`
 	Image        string `form:"image"`
 	ResponseType string `form:"response_type" binding:"required,oneof=code token"`
+	ClientID     string `form:"client_id" binding:"required,max=40"`
 	State        string `form:"state"`
 	RedirectURI  string `form:"redirect_uri" binding:"uri"`
 }
 
 func parsePostScope(ctx *gin.Context) string {
 	var scope strings.Builder
-	// for k := range authorizeName {
-	// 	s := ctx.PostForm(k)
-	// 	if s != "" {
-	// 		scope.WriteString(s)
-	// 		scope.WriteByte(' ')
-	// 	}
-	// }
+	for k := range ctx.Request.PostForm {
+		switch k {
+		case "response_type", "client_id", "state", "redirect_uri":
+		default:
+			scope.WriteString(k)
+			scope.WriteByte(' ')
+		}
+	}
 	return scope.String()
 }
 
@@ -57,6 +60,7 @@ func postCode(ctx *gin.Context, req *postReq) {
 	// 授权码
 	code := new(db.AuthorizationCode)
 	code.Scope = parsePostScope(ctx)
+	util.CopyStruct(code, req)
 	err := db.NewAuthorizationCode(code)
 	if err != nil {
 		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorDB, err.Error())
