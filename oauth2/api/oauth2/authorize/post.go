@@ -36,7 +36,12 @@ func parsePostScope(ctx *gin.Context) string {
 			scope.WriteByte(' ')
 		}
 	}
-	return scope.String()
+	str := scope.String()
+	if str != "" {
+		// 去掉后面的空格
+		str = str[:len(str)-1]
+	}
+	return str
 }
 
 func post(ctx *gin.Context) {

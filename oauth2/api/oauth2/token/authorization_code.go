@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"oauth2/api/internal"
+	"oauth2/api/internal/middleware"
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
@@ -17,8 +18,6 @@ type authorizationCodeReq struct {
 	ClientID string `form:"client_id" binding:"required,max=40"`
 	// 表示客户端应用程序的密钥，由授权服务器分配给客户端
 	ClientSecret string `form:"client_secret" binding:"required,max=40"`
-	// 重定向 URL
-	RedirectURI string `form:"redirect_uri" binding:"uri"`
 }
 
 // authorizationCode 处理 grant_type=authorization_code
@@ -37,7 +36,7 @@ func authorizationCode(ctx *gin.Context) {
 		return
 	}
 	if code == nil || req.ClientID != code.ClientID {
-		internal.Submit400(ctx, err.Error())
+		internal.Submit400(ctx, "授权码错误")
 		return
 	}
 	// 应用
@@ -47,9 +46,9 @@ func authorizationCode(ctx *gin.Context) {
 		return
 	}
 	if client == nil ||
-		*client.Enable == db.True ||
-		*client.Secret == util.SHA1String(req.ClientSecret) {
-		internal.Submit400(ctx, err.Error())
+		*client.Enable != db.True ||
+		*client.Secret != req.ClientSecret {
+		internal.Submit400(ctx, "应用不存在")
 		return
 	}
 	// 令牌
@@ -64,9 +63,10 @@ func authorizationCode(ctx *gin.Context) {
 		return
 	}
 	// 重定向
-	if req.RedirectURI != "" {
+	redirectURI := ctx.Query(middleware.QueryRedirectURI)
+	if redirectURI != "" {
 		// 重定向地址
-		_u, err := url.Parse(req.RedirectURI)
+		_u, err := url.Parse(redirectURI)
 		if err != nil {
 			internal.Submit400(ctx, err.Error())
 			return

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"oauth2/api/internal"
+	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qq51529210/util"
@@ -37,7 +38,7 @@ func oauth2(ctx *gin.Context) {
 		return
 	}
 	// 成功
-	ctx.JSON(http.StatusOK, "登录成功")
+	ctx.JSON(http.StatusOK, token)
 }
 
 type oauth2TokenReq struct {
@@ -47,14 +48,7 @@ type oauth2TokenReq struct {
 	ClientSecret string `query:"client_secret"`
 }
 
-type oauth2TokenRes struct {
-	AccessToken  string `json:"AccessToken"`
-	TokenType    string `json:"token_type"`
-	Expires      int64  `json:"expires_in"`
-	RefreshToken string `json:"refresh_token"`
-}
-
-func getAccessToken(ctx *gin.Context, code string) *oauth2TokenRes {
+func getAccessToken(ctx *gin.Context, code string) *db.AccessToken {
 	// 查询参数
 	var req oauth2TokenReq
 	req.GrantTpe = "authorization_code"
@@ -63,9 +57,11 @@ func getAccessToken(ctx *gin.Context, code string) *oauth2TokenRes {
 	req.ClientSecret = pwd
 	q := util.HTTPQuery(&req, nil)
 	// 请求
-	var res oauth2TokenRes
+	res := new(db.AccessToken)
 	url := fmt.Sprintf("%s/oauth2/token", oauth2Host)
-	err := util.HTTP[int](http.MethodPost, url, q, nil, &res, http.StatusOK, apiCallTimeout)
+	err := util.HTTP[int](http.MethodPost, url, q, nil, res, func(res *http.Response) error {
+		return util.HTTPStatusErrorHandle(res, http.StatusOK)
+	}, apiCallTimeout)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			internal.Error504(ctx, err)
@@ -74,5 +70,5 @@ func getAccessToken(ctx *gin.Context, code string) *oauth2TokenRes {
 		}
 		return nil
 	}
-	return &res
+	return res
 }
