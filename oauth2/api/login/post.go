@@ -50,7 +50,9 @@ func postAccount(ctx *gin.Context) {
 		html.ExecError(ctx.Writer, html.TitleLogin, html.ErrorDB, err.Error())
 		return
 	}
-	if user == nil || *user.Enable != 1 || *user.Password != util.SHA1String(req.Password) {
+	if user == nil ||
+		*user.Enable != db.True ||
+		*user.Password != util.SHA1String(req.Password) {
 		html.ExecError(ctx.Writer, html.TitleLogin, "账号或密码不正确", "")
 		return
 	}

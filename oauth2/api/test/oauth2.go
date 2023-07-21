@@ -48,18 +48,9 @@ type oauth2TokenReq struct {
 }
 
 type oauth2TokenRes struct {
-	// 应用程序在请求访问受保护资源时使用的令牌。
-	// 它代表了客户端被授权的权限
-	AccessToken string `json:"AccessToken"`
-	// 该字段指示返回的令牌类型。
-	// 比如 Bearer 令牌，意味着客户端可以简单地在后续请求的 "oauth2orization" 头中附上该令牌
-	TokenType string `json:"token_type"`
-	// 该字段以秒为单位指定访问令牌的过期时间。
-	// 在此时间之后，访问令牌将不再有效，客户端需要获取新的访问令牌。
-	Expires int64 `json:"expires_in"`
-	// 该令牌可由客户端用于在当前访问令牌过期时获取新的访问令牌。
-	// 通常在OAuth2的刷新令牌流程中使用，
-	// 以便在不需要用户重新认证的情况下获取新的访问令牌
+	AccessToken  string `json:"AccessToken"`
+	TokenType    string `json:"token_type"`
+	Expires      int64  `json:"expires_in"`
 	RefreshToken string `json:"refresh_token"`
 }
 
@@ -70,7 +61,7 @@ func getAccessToken(ctx *gin.Context, code string) *oauth2TokenRes {
 	req.Code = code
 	req.ClientID = client
 	req.ClientSecret = pwd
-	q := util.HTTPQuery(&req)
+	q := util.HTTPQuery(&req, nil)
 	// 请求
 	var res oauth2TokenRes
 	url := fmt.Sprintf("%s/oauth2/token", oauth2Host)

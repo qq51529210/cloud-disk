@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"oauth2/api/internal/html"
+	"oauth2/api/internal/middleware"
 	"oauth2/db"
 	"strings"
 
@@ -57,11 +58,13 @@ func post(ctx *gin.Context) {
 
 // postCode 处理用户确认授权后的 code 流程
 func postCode(ctx *gin.Context, req *postReq) {
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.User])
 	// 授权码
 	code := new(db.AuthorizationCode)
 	code.Scope = parsePostScope(ctx)
+	code.UserID = sess.Data.ID
 	util.CopyStruct(code, req)
-	err := db.NewAuthorizationCode(code)
+	err := db.PutAuthorizationCode(code)
 	if err != nil {
 		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorDB, err.Error())
 		return
@@ -74,9 +77,9 @@ func postCode(ctx *gin.Context, req *postReq) {
 	}
 	q := _u.Query()
 	q.Set(queryNameState, req.State)
-	q.Set(queryNameCode, code.Code)
-	// 跳转
+	q.Set(queryNameCode, code.ID)
 	_u.RawQuery = q.Encode()
+	// 跳转
 	ctx.Redirect(http.StatusSeeOther, _u.String())
 }
 

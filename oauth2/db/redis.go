@@ -31,11 +31,14 @@ func newRedisTimeout() (context.Context, context.CancelFunc) {
 // PutWithContext 保存缓存
 func PutWithContext(ctx context.Context, k string, v any, t int64) error {
 	data, _ := json.Marshal(v)
-	return rds.Set(ctx, k, data, time.Duration(t)*time.Second).Err()
+	if t > 0 {
+		return rds.Set(ctx, k, data, time.Duration(t)*time.Second).Err()
+	}
+	return rds.Set(ctx, k, data, -1).Err()
 }
 
 // Put 保存缓存
-func Put(ctx context.Context, k string, v any, t int64) error {
+func Put(k string, v any, t int64) error {
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	return PutWithContext(ctx, k, v, t)
@@ -62,4 +65,16 @@ func Get[T any](k string) (*T, error) {
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	return GetWithContext[T](ctx, k)
+}
+
+// DelWithContext 删除缓存
+func DelWithContext(ctx context.Context, k string) error {
+	return rds.Del(ctx, k).Err()
+}
+
+// Del 删除缓存
+func Del(k string) error {
+	ctx, cancel := newRedisTimeout()
+	defer cancel()
+	return rds.Del(ctx, k).Err()
 }

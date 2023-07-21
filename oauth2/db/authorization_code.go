@@ -15,28 +15,30 @@ const (
 // AuthorizationCode 表示授权码，使用 redis 来保存
 type AuthorizationCode struct {
 	// 码
-	Code string
+	ID string
 	// 范围
 	Scope string
-	// 客户端 ID
-	ClientID string
 	// 重定向
 	RedirectURI string
+	// 应用
+	ClientID string
+	// 用户
+	UserID string
 }
 
-// NewAuthorizationCodeWithContext 创建授权码
-func NewAuthorizationCodeWithContext(ctx context.Context, code *AuthorizationCode) error {
-	code.Code = uuid.LowerV1WithoutHyphen()
-	return Put(ctx, AuthorizationCodePrefix+code.Code, code, cfg.Cfg.OAuth2.AuthorizationCodeExpires)
+// PutAuthorizationCodeWithContext 创建授权码
+func PutAuthorizationCodeWithContext(ctx context.Context, code *AuthorizationCode) error {
+	code.ID = uuid.LowerV1WithoutHyphen()
+	return PutWithContext(ctx, AuthorizationCodePrefix+code.ID, code, cfg.Cfg.OAuth2.AuthorizationCodeExpires)
 }
 
-// NewAuthorizationCode 创建授权码
-func NewAuthorizationCode(code *AuthorizationCode) error {
+// PutAuthorizationCode 创建授权码
+func PutAuthorizationCode(code *AuthorizationCode) error {
 	// 超时
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	//
-	return NewAuthorizationCodeWithContext(ctx, code)
+	return PutAuthorizationCodeWithContext(ctx, code)
 }
 
 // GetAuthorizationCodeWithContext 查询授权码

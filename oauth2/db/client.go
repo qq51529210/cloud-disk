@@ -7,6 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
+// redis key 的前缀
+const (
+	ClientPrefix = "client:"
+)
+
 // Client 表示第三方应用
 type Client struct {
 	ID string `gorm:"type:varchar(40);primayKey"`
@@ -25,6 +30,8 @@ type Client struct {
 	Description *string `gorm:"type:varchar(255);"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
+	// 令牌类型
+	TokenType *string `gorm:"type:varchar(32);not null;default:Bearer"`
 	// 授权，value1:name1 value2:name2 ... 多个用空格分开
 	Scope *string `gorm:"type:varchar(255);"`
 	util.GORMTime
@@ -32,7 +39,7 @@ type Client struct {
 
 // GetClient 查询单个
 func GetClient(id string) (*Client, error) {
-	// todo 做缓存
+	// 数据库
 	m := new(Client)
 	err := _db.
 		Where("`ID` = ?", id).
@@ -43,6 +50,7 @@ func GetClient(id string) (*Client, error) {
 		}
 		return nil, err
 	}
+	//
 	return m, nil
 }
 
