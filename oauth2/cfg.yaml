@@ -1,26 +1,58 @@
+# 服务名称
 name: oauth2-service-1
+# 监听地址
 addr: localhost:10000
+# 测试用的
 test: localhost:20000
 log:
+  # 日志目录
   rootDir: ./log/
+  # 日志文件最大字节，k/m/g/t
   maxFileSize: 10M
+  # 最大保存天数
   maxKeepDay: 2
+  # 保存到文件的间隔
   syncInterval: 3000
+  # 输出到控制台，out/err 
   std: out
+  # 禁止输出的级别，debug/info/warn/error
   disableLevel: []
 db:
+  # mysql / sqlite3
   url: mysql://root:mysql123_aa@tcp(192.168.31.177:3306)/oauth2?charset=utf8mb4&parseTime=True&loc=Local
 redis:
+  # 客户端名称
+  name:
+  # 服务地址
   addrs:
     - 192.168.31.177:6379
+  # 数据库
   db: 0
+  # 用户名 6.0 以上
   username:
+  # 密码
   password: redis_123
+  # 哨兵用户名
+  sentinelUsername:
+  # 哨兵密码
+  sentinelPassword:
+  # 执行一次命令的超时时间，单位秒
   cmdTimeout: 3
 session:
+  # 过期时间，单位秒
   expires: 1200
 oauth2:
+  # 是否启用 Implicit 授权模式
+  enableImplicitGrant: true
+  # 是否启用 Password 授权模式
+  enablePasswordGrant: true
+  # 是否启用 Client 授权模式
+  enableClientGrant: true
+  # 授权码过期时间
   authorizationCodeExpires: 300
+  # 访问令牌过期时间
   accessTokenExpires: 3600
-  accessTokenType: Bearer
+  # 刷新令牌过期时间
   refreshTokenExpires: 86400
+  # 访问令牌的类型
+  accessTokenType: Bearer

@@ -28,11 +28,6 @@ func oauth2(ctx *gin.Context) {
 		internal.Submit400(ctx, err.Error())
 		return
 	}
-	// 验证
-	if req.State != state {
-		internal.Submit400(ctx, "[state]不正确")
-		return
-	}
 	// 获取 access_token
 	token := getAccessToken(ctx, req.Code)
 	if token == nil {

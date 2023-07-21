@@ -3,6 +3,7 @@ package authorize
 import (
 	"net/http"
 	"net/url"
+	"oauth2/api/internal"
 	"oauth2/api/internal/html"
 	"oauth2/api/internal/middleware"
 	"oauth2/db"
@@ -18,12 +19,7 @@ const (
 )
 
 type postReq struct {
-	Name         string `form:"name"`
-	Image        string `form:"image"`
-	ResponseType string `form:"response_type" binding:"required,oneof=code token"`
-	ClientID     string `form:"client_id" binding:"required,max=40"`
-	State        string `form:"state"`
-	RedirectURI  string `form:"redirect_uri" binding:"uri"`
+	baseQuery
 }
 
 func parsePostScope(ctx *gin.Context) string {
@@ -63,6 +59,7 @@ func post(ctx *gin.Context) {
 
 // postCode 处理用户确认授权后的 code 流程
 func postCode(ctx *gin.Context, req *postReq) {
+	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.User])
 	// 授权码
 	code := new(db.AuthorizationCode)
@@ -90,19 +87,42 @@ func postCode(ctx *gin.Context, req *postReq) {
 
 // postToken 处理用户确认授权后的 token 流程
 func postToken(ctx *gin.Context, req *postReq) {
-	//
-	// // 跳转
-	// redirectURL := ctx.Query(middleware.QueryRedirectURI)
-	// if redirectURL != "" {
-	// 	_u, err := url.Parse(redirectURL)
-	// 	if err != nil {
-	// 		errorTP.Execute(ctx.Writer, "第三方应用数据错误，无法完成跳转")
-	// 		return
-	// 	}
-	// 	q := _u.Query()
-	// 	q.Set(stateQueryName, ctx.Query(stateQueryName))
-	// 	q.Set(codeQueryName, uuid.SnowflakeIDString())
-	// 	_u.RawQuery = q.Encode()
-	// 	ctx.Redirect(http.StatusSeeOther, _u.String())
-	// }
+	// 会话
+	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.User])
+	// 应用
+	client, err := db.GetClient(req.ClientID)
+	if err != nil {
+		internal.DB500(ctx, err)
+		return
+	}
+	if client == nil || *client.Enable != db.True {
+		internal.Submit400(ctx, "应用不存在")
+		return
+	}
+	// 令牌
+	token := new(db.AccessToken)
+	token.Type = *client.TokenType
+	token.Scope = req.Scope
+	token.ClientID = req.ClientID
+	token.UserID = sess.Data.ID
+	err = db.PutAccessToken(token)
+	if err != nil {
+		internal.DB500(ctx, err)
+		return
+	}
+	// 重定向
+	if req.RedirectURI != "" {
+		// 重定向地址
+		_u, err := url.Parse(req.RedirectURI)
+		if err != nil {
+			internal.Submit400(ctx, err.Error())
+			return
+		}
+		_u.RawQuery = util.HTTPQuery(token, _u.Query()).Encode()
+		// 跳转
+		ctx.Redirect(http.StatusSeeOther, _u.String())
+		return
+	}
+	// 没有重定向，返回 JSON
+	ctx.JSON(http.StatusOK, token)
 }

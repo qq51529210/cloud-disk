@@ -16,3 +16,11 @@ func Init(g gin.IRouter) {
 	g.GET("", get)
 	g.POST("", post)
 }
+
+type baseQuery struct {
+	ResponseType string `form:"response_type" binding:"required,oneof=code token"`
+	ClientID     string `form:"client_id" binding:"required,max=40"`
+	Scope        string `form:"scope" binding:"required"`
+	State        string `form:"state"`
+	RedirectURI  string `form:"redirect_uri" binding:"required,uri"`
+}

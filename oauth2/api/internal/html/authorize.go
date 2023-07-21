@@ -52,14 +52,10 @@ type AuthorizeScope struct {
 
 // Authorize 用于格式化 authorize 模板
 type Authorize struct {
-	Action       string
-	ClientName   string
-	ClientImage  string
-	ResponseType string
-	ClientID     string
-	State        string
-	RedirectURI  string
-	Scope        []*AuthorizeScope
+	Action      string
+	ClientName  string
+	ClientImage string
+	Scope       []*AuthorizeScope
 }
 
 // Exec 格式化
