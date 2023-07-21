@@ -38,12 +38,13 @@ func login(ctx *gin.Context) {
 	query.Set("client_id", client)
 	query.Set("scope", "avatar name friends")
 	query.Set("state", state)
-	query.Set("redirect_uri", fmt.Sprintf("http://%s/oauth2", cfg.Cfg.Test))
 	//
 	var t loginTP
 	query.Set("response_type", "code")
+	query.Set("redirect_uri", fmt.Sprintf("http://%s/oauth2?response_type=code", cfg.Cfg.Test))
 	t.Code = fmt.Sprintf("http://%s/oauth2/authorize?%s", cfg.Cfg.Addr, query.Encode())
 	query.Set("response_type", "token")
+	query.Set("redirect_uri", fmt.Sprintf("http://%s/oauth2?response_type=token", cfg.Cfg.Test))
 	t.Token = fmt.Sprintf("http://%s/oauth2/authorize?%s", cfg.Cfg.Addr, query.Encode())
 	tp.Execute(ctx.Writer, &t)
 }

@@ -19,8 +19,8 @@ type AccessToken struct {
 	Expires  int64  `json:"expires_in" query:"expires_in"`
 	Refresh  string `json:"refresh_token" query:"refresh_token"`
 	Scope    string `json:"scope" query:"scope"`
+	UserID   string `json:"user_id" query:"user_id"`
 	ClientID string `json:"-"`
-	UserID   string `json:"-"`
 }
 
 // PutAccessTokenWithContext 创建授权码

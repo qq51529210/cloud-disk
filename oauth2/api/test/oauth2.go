@@ -21,6 +21,35 @@ type oauth2AuthorizeReq struct {
 }
 
 func oauth2(ctx *gin.Context) {
+	switch ctx.Query("response_type") {
+	case "code":
+		oauth2Code(ctx)
+	case "token":
+		oauth2Token(ctx)
+	}
+}
+
+type oauth2TokenReq struct {
+	ID      string `form:"access_token" json:"access_token"`
+	Type    string `form:"token_type" json:"token_type"`
+	Expires int64  `form:"expires_in" json:"expires_in"`
+	Scope   string `form:"scope" json:"scope"`
+	UserID  string `form:"user_id" json:"user_id"`
+}
+
+func oauth2Token(ctx *gin.Context) {
+	// 参数
+	var req oauth2TokenReq
+	err := ctx.ShouldBindQuery(&req)
+	if err != nil {
+		internal.Submit400(ctx, err.Error())
+		return
+	}
+	// 成功
+	ctx.JSON(http.StatusOK, &req)
+}
+
+func oauth2Code(ctx *gin.Context) {
 	// 参数
 	var req oauth2AuthorizeReq
 	err := ctx.ShouldBindQuery(&req)
@@ -37,7 +66,7 @@ func oauth2(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, token)
 }
 
-type oauth2TokenReq struct {
+type oauth2AccessTokenReq struct {
 	GrantTpe     string `query:"grant_type"`
 	Code         string `query:"code"`
 	ClientID     string `query:"client_id"`
@@ -46,7 +75,7 @@ type oauth2TokenReq struct {
 
 func getAccessToken(ctx *gin.Context, code string) *db.AccessToken {
 	// 查询参数
-	var req oauth2TokenReq
+	var req oauth2AccessTokenReq
 	req.GrantTpe = "authorization_code"
 	req.Code = code
 	req.ClientID = client
