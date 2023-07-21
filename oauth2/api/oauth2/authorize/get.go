@@ -6,30 +6,16 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/qq51529210/util"
 )
 
 // 模式
 const (
-	ResponseTypeCode              = "code"
-	ResponseTypeToken             = "token"
-	ResponseTypePassword          = "password"
-	ResponseTypeClientCredentials = "client_credentials"
+	ResponseTypeCode  = "code"
+	ResponseTypeToken = "token"
+	// ResponseTypePassword          = "password"
+	// ResponseTypeClientCredentials = "client_credentials"
 )
-
-const (
-	errQuery = "参数错误"
-)
-
-var (
-	responseTypeHandle = make(map[string]func(*gin.Context, *getReq))
-)
-
-func init() {
-	responseTypeHandle[ResponseTypeCode] = code
-	responseTypeHandle[ResponseTypeToken] = token
-	responseTypeHandle[ResponseTypePassword] = password
-	responseTypeHandle[ResponseTypeClientCredentials] = clientCredentials
-}
 
 type getReq struct {
 	// 指定用于授权流程的响应类型，常见的值包括
@@ -39,7 +25,7 @@ type getReq struct {
 	// 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
 	ClientID string `form:"client_id" binding:"required,max=40"`
 	// 表示客户端请求的访问权限范围
-	Scope string `form:"scope" binding:"required,contains=image name"`
+	Scope string `form:"scope" binding:"required"`
 	// 用于在授权请求和授权响应之间传递状态，以防止 CSRF 攻击
 	State string `form:"state"`
 	// 指定授权服务器将用户重定向到的客户端应用程序的回调 URL
@@ -49,20 +35,28 @@ type getReq struct {
 }
 
 func (q *getReq) InitTP(t *html.Authorize) {
-	image := ""
-	if q.client.Image != nil {
-		image = *q.client.Image
-	}
-	t.ClientImage = image
 	t.ClientName = *q.client.Name
-	t.ResponseType = q.ResponseType
-	t.State = q.State
-	t.RedirectURI = q.RedirectURI
-	t.Scope = make(map[string]string)
-	for _, scope := range strings.Fields(q.Scope) {
-		name, ok := authorizeName[scope]
-		if ok {
-			t.Scope[scope] = name
+	if q.client.Image != nil {
+		t.ClientImage = *q.client.Image
+	}
+	util.CopyStruct(t, q)
+	//
+	if q.client.Scope == nil {
+		return
+	}
+	scope := strings.Fields(q.Scope)
+	for _, s := range strings.Fields(*q.client.Scope) {
+		// 在管理接口那里已经确保是 k:v 的格式
+		p := strings.Split(s, ":")
+		for _, ss := range scope {
+			if p[0] == ss {
+				t.Scope = append(t.Scope, &html.AuthorizeScope{
+					Key:   p[0],
+					Name:  p[1],
+					Check: true,
+				})
+				break
+			}
 		}
 	}
 }
@@ -87,10 +81,24 @@ func get(ctx *gin.Context) {
 		return
 	}
 	// 处理
-	hd, ok := responseTypeHandle[req.ResponseType]
-	if !ok {
-		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorQuery, "")
-		return
+	switch req.ResponseType {
+	case ResponseTypeCode:
+		getCode(ctx, &req)
+	case ResponseTypeToken:
+		getToken(ctx, &req)
 	}
-	hd(ctx, &req)
+}
+
+// getCode response_type=code
+func getCode(ctx *gin.Context, req *getReq) {
+	var tp html.Authorize
+	req.InitTP(&tp)
+	tp.Exec(ctx.Writer)
+}
+
+// getToken response_type=token
+func getToken(ctx *gin.Context, req *getReq) {
+	var tp html.Authorize
+	req.InitTP(&tp)
+	tp.Exec(ctx.Writer)
 }

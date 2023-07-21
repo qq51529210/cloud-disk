@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"oauth2/api/internal/html"
 	"oauth2/db"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +21,18 @@ type postReq struct {
 	ResponseType string `form:"response_type" binding:"required,oneof=code token"`
 	State        string `form:"state"`
 	RedirectURI  string `form:"redirect_uri" binding:"uri"`
+}
+
+func parsePostScope(ctx *gin.Context) string {
+	var scope strings.Builder
+	// for k := range authorizeName {
+	// 	s := ctx.PostForm(k)
+	// 	if s != "" {
+	// 		scope.WriteString(s)
+	// 		scope.WriteByte(' ')
+	// 	}
+	// }
+	return scope.String()
 }
 
 func post(ctx *gin.Context) {
@@ -42,7 +55,9 @@ func post(ctx *gin.Context) {
 // postCode 处理用户确认授权后的 code 流程
 func postCode(ctx *gin.Context, req *postReq) {
 	// 授权码
-	code, err := db.NewAuthorizationCodeTimeout()
+	code := new(db.AuthorizationCode)
+	code.Scope = parsePostScope(ctx)
+	err := db.NewAuthorizationCode(code)
 	if err != nil {
 		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorDB, err.Error())
 		return
@@ -55,7 +70,7 @@ func postCode(ctx *gin.Context, req *postReq) {
 	}
 	q := _u.Query()
 	q.Set(queryNameState, req.State)
-	q.Set(queryNameCode, code)
+	q.Set(queryNameCode, code.Code)
 	// 跳转
 	_u.RawQuery = q.Encode()
 	ctx.Redirect(http.StatusSeeOther, _u.String())

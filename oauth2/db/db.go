@@ -1,9 +1,7 @@
 package db
 
 import (
-	"context"
 	"oauth2/cfg"
-	"time"
 
 	"github.com/qq51529210/util"
 	"github.com/redis/go-redis/v9"
@@ -54,23 +52,4 @@ func initTable() error {
 	)
 	//
 	return nil
-}
-
-// initReids 初始化缓存
-func initReids() error {
-	rds = redis.NewUniversalClient(&redis.UniversalOptions{
-		ClientName:       cfg.Cfg.Redis.Name,
-		Addrs:            cfg.Cfg.Redis.Addrs,
-		DB:               cfg.Cfg.Redis.DB,
-		Username:         cfg.Cfg.Redis.Username,
-		Password:         cfg.Cfg.Redis.Password,
-		MasterName:       cfg.Cfg.Redis.Master,
-		SentinelUsername: cfg.Cfg.Redis.SentinelUsername,
-		SentinelPassword: cfg.Cfg.Redis.SentinelPassword,
-	})
-	return rds.Ping(context.Background()).Err()
-}
-
-func newRedisTimeout() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
 }

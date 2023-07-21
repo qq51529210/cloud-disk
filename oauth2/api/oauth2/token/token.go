@@ -1,9 +1,7 @@
 package token
 
 import (
-	"oauth2/api/internal"
 	"oauth2/api/internal/html"
-	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,31 +16,31 @@ const (
 )
 
 var (
-	grantTypeHandle = make(map[string]func(*gin.Context, *tokenReq))
+	grantTypeHandle = make(map[string]func(*gin.Context))
 )
 
 func init() {
 	grantTypeHandle[GrantTypeAuthorizationCode] = authorizationCode
-	grantTypeHandle[GrantTypePassword] = password
-	grantTypeHandle[GrantTypeClientCredentials] = clientCredentials
-	grantTypeHandle[GrantTypeImplicit] = implicit
-	grantTypeHandle[GrantTypeRefreshToken] = refreshToken
+	// grantTypeHandle[GrantTypePassword] = password
+	// grantTypeHandle[GrantTypeClientCredentials] = clientCredentials
+	// grantTypeHandle[GrantTypeImplicit] = implicit
+	// grantTypeHandle[GrantTypeRefreshToken] = refreshToken
 }
 
-type tokenReq struct {
-	// 指定用于获取令牌的授权类型
-	GrantType string `form:"grant_type" binding:"oneof=authorization_code password client_credentials implicit refresh_token"`
-	// 在授权码模式中使用，表示从授权服务器获取的授权码
-	Code string `form:"code" binding:""`
-	// 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
-	ClientID string `form:"client_id" binding:"required,max=40"`
-	// 表示客户端应用程序的密钥，由授权服务器分配给客户端
-	ClientSecret string `form:"client_secret" binding:"required,max=40"`
-	// 用户名，密码模式中使用，表示资源所有者的用户名和密码，用于直接获取令牌
-	Username string `form:"username" binding:"required,max=40"`
-	// 密码，密码模式中使用，表示资源所有者的用户名和密码，用于直接获取令牌
-	Password string `form:"password" binding:""`
-}
+// type tokenReq struct {
+// 	// 指定用于获取令牌的授权类型
+// 	GrantType string `form:"grant_type" binding:"oneof=authorization_code password client_credentials implicit refresh_token"`
+// 	// 在授权码模式中使用，表示从授权服务器获取的授权码
+// 	Code string `form:"code" binding:""`
+// // 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
+// ClientID string `form:"client_id" binding:"required,max=40"`
+// // 表示客户端应用程序的密钥，由授权服务器分配给客户端
+// ClientSecret string `form:"client_secret" binding:"required,max=40"`
+// // 用户名，密码模式中使用，表示资源所有者的用户名和密码，用于直接获取令牌
+// Username string `form:"username" binding:""`
+// // 密码，密码模式中使用，表示资源所有者的用户名和密码，用于直接获取令牌
+// Password string `form:"password" binding:""`
+// }
 
 type tokenRes struct {
 	// 应用程序在请求访问受保护资源时使用的令牌。
@@ -62,29 +60,54 @@ type tokenRes struct {
 
 // token 处理获取访问令牌
 func token(ctx *gin.Context) {
-	// 参数
-	var req tokenReq
-	err := ctx.ShouldBindQuery(&req)
-	if err != nil {
-		internal.Submit400(ctx, err.Error())
-		return
-	}
-	// 查询
-	Client, err := db.GetClient(req.ClientID)
-	if err != nil {
-		internal.DB500(ctx, err)
-		return
-	}
-	// 验证应用
-	if Client == nil || *Client.Enable != db.True || *Client.Secret != req.ClientSecret {
-		internal.Data404(ctx)
-		return
-	}
 	// 处理
-	hd, ok := grantTypeHandle[req.GrantType]
+	hd, ok := grantTypeHandle[ctx.Query("grant_type")]
 	if !ok {
 		html.ExecError(ctx.Writer, html.TitleAccessToken, html.ErrorQuery, "")
 		return
 	}
-	hd(ctx, &req)
+	hd(ctx)
+}
+
+type authorizationCodeReq struct {
+	// 在授权码模式中使用，表示从授权服务器获取的授权码
+	Code string `form:"code" binding:"required"`
+	// 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
+	ClientID string `form:"client_id" binding:"required,max=40"`
+	// 表示客户端应用程序的密钥，由授权服务器分配给客户端
+	ClientSecret string `form:"client_secret" binding:"required,max=40"`
+	// 重定向 URL
+	RedirectURI string `form:"redirect_uri" binding:"uri"`
+}
+
+// authorizationCode 处理 grant_type=authorization_code
+func authorizationCode(ctx *gin.Context) {
+	// // 参数
+	// var req authorizationCodeReq
+	// err := ctx.ShouldBindQuery(&req)
+	// if err != nil {
+	// 	internal.Submit400(ctx, err.Error())
+	// 	return
+	// }
+	// // 验证
+	// ok, err := db.GetAuthorizationCode(req.Code)
+	// if err != nil {
+	// 	internal.DB500(ctx, err)
+	// 	return
+	// }
+	// if !ok {
+	// 	internal.Data404(ctx)
+	// }
+	// // 查询
+	// Client, err := db.GetClient(req.ClientID)
+	// if err != nil {
+	// 	internal.DB500(ctx, err)
+	// 	return
+	// }
+	// // 应用
+	// if Client == nil || *Client.Enable != db.True || *Client.Secret != req.ClientSecret {
+	// 	internal.Data404(ctx)
+	// 	return
+	// }
+	// // 颁发
 }

@@ -11,11 +11,11 @@ import (
 
 var (
 	//
-	client    = "test-Client"
-	user      = "test-user"
-	developer = "test-developer"
+	client    = "testclient"
+	user      = "testuser"
+	developer = "testdeveloper"
 	pwd       = "123123"
-	state     = "test-state"
+	state     = "teststate"
 	//
 	host       = "http://localhost"
 	oauth2Host = "http://localhost"
@@ -71,6 +71,8 @@ func testClientData() {
 	m.Secret = &pwd
 	m.Enable = &db.True
 	m.DeveloperID = developer
+	scope := "avatar:头像 name:名称 friends:好友"
+	m.Scope = &scope
 	_, err = db.AddClient(m)
 	if err != nil {
 		panic(err)

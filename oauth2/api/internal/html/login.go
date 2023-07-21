@@ -33,7 +33,7 @@ func init() {
 	<form method="post" action="/login">
 		<div class="form-group">
 		<label for="username">用户名</label>
-		<input type="text" name="account" value="test-user" required>
+		<input type="text" name="account" value="testuser" required>
 		</div>
 		<div class="form-group">
 		<label for="password">密码</label>

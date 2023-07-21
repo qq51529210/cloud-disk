@@ -20,22 +20,29 @@ func init() {
 <title>测试 oauth2 登录</title>
 </head>
 <body>
-<a href="{{.}}">oauth2登录</a>
+<a href="{{.Code}}">oauth2-授权码登录</a>
+</br>
+<a href="{{.Token}}">oauth2-隐式登录</a>
 </body>
 </html>`)
 }
 
+type loginTP struct {
+	Code  string
+	Token string
+}
+
 func login(ctx *gin.Context) {
-	responseType := ctx.Query("response_type")
-	if responseType == "" {
-		responseType = "code"
-	}
 	query := make(url.Values)
-	query.Set("response_type", responseType)
 	query.Set("client_id", client)
-	query.Set("scope", "image name")
+	query.Set("scope", "avatar name friends")
 	query.Set("state", state)
 	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", host))
-	redirectURL := fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())
-	tp.Execute(ctx.Writer, redirectURL)
+	//
+	var t loginTP
+	query.Set("response_type", "code")
+	t.Code = fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())
+	query.Set("response_type", "token")
+	t.Token = fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())
+	tp.Execute(ctx.Writer, &t)
 }

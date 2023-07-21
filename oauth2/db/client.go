@@ -25,11 +25,14 @@ type Client struct {
 	Description *string `gorm:"type:varchar(255);"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
+	// 授权，value1:name1 value2:name2 ... 多个用空格分开
+	Scope *string `gorm:"type:varchar(255);"`
 	util.GORMTime
 }
 
 // GetClient 查询单个
 func GetClient(id string) (*Client, error) {
+	// todo 做缓存
 	m := new(Client)
 	err := _db.
 		Where("`ID` = ?", id).

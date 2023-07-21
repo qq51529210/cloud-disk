@@ -22,14 +22,17 @@ func init() {
 <body>
 	<div class="container">
 	<h2>访问授权</h2>
-	<p>应用<h4>[{{.ClientName}}]</h4>请求访问以下的数据</p>
+	<p>应用<h4>[{{.ClientName}}]</h4>
+	<img src="{{.ClientImage}}" width="16" height="16">
+	请求访问以下的数据</p>
 	<form method="post" action="/oauth2/authorize">
-	{{range $key, $value := .Scope}}
+	{{range .Scope}}
 		<label>
-			<input type="checkbox" name="{{$key}}"> {{$value}}
+			<input type="checkbox" name="{{.Key}}" {{if .Check}}checked{{end}}> {{.Name}}
 		</label>
 	{{end}}
 		<input type="hidden" name="response_type" value="{{.ResponseType}}">
+		<input type="hidden" name="client_id" value="{{.ClientID}}">
 		<input type="hidden" name="state" value="{{.State}}">
 		<input type="hidden" name="redirect_uri" value="{{.RedirectURI}}">
 		<button type="submit">确定</button>
@@ -40,14 +43,25 @@ func init() {
 `)
 }
 
+// AuthorizeScope 表示 Authorize 的 Scope 字段
+type AuthorizeScope struct {
+	// name="key"
+	Key string
+	// label
+	Name string
+	// 是否选中
+	Check bool
+}
+
 // Authorize 用于格式化 authorize 模板
 type Authorize struct {
 	ClientName   string
 	ClientImage  string
 	ResponseType string
+	ClientID     string
 	State        string
 	RedirectURI  string
-	Scope        map[string]string
+	Scope        []*AuthorizeScope
 }
 
 // Exec 格式化

@@ -5,14 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
 	"oauth2/api/internal"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qq51529210/util"
 )
 
-type oauth2TokenReq struct {
+type oauth2AuthorizeReq struct {
 	// 用于在授权请求和授权响应之间传递状态，以防止 CSRF 攻击
 	State string `form:"state"`
 	// 授权码，用于获取 access_token
@@ -21,7 +20,7 @@ type oauth2TokenReq struct {
 
 func oauth2(ctx *gin.Context) {
 	// 参数
-	var req oauth2TokenReq
+	var req oauth2AuthorizeReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
@@ -33,12 +32,19 @@ func oauth2(ctx *gin.Context) {
 		return
 	}
 	// 获取 access_token
-	token := getAccessToken(ctx, &req)
+	token := getAccessToken(ctx, req.Code)
 	if token == nil {
 		return
 	}
 	// 成功
 	ctx.JSON(http.StatusOK, "登录成功")
+}
+
+type oauth2TokenReq struct {
+	GrantTpe     string `query:"grant_type"`
+	Code         string `query:"code"`
+	ClientID     string `query:"client_id"`
+	ClientSecret string `query:"client_secret"`
 }
 
 type oauth2TokenRes struct {
@@ -57,17 +63,18 @@ type oauth2TokenRes struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func getAccessToken(ctx *gin.Context, req *oauth2TokenReq) *oauth2TokenRes {
-	t := new(oauth2TokenRes)
-	//
-	query := make(url.Values)
-	query.Set("grant_type", "authorization_code")
-	query.Set("code", req.Code)
-	query.Set("client_id", client)
-	query.Set("client_secret", pwd)
-	//
+func getAccessToken(ctx *gin.Context, code string) *oauth2TokenRes {
+	// 查询参数
+	var req oauth2TokenReq
+	req.GrantTpe = "authorization_code"
+	req.Code = code
+	req.ClientID = client
+	req.ClientSecret = pwd
+	q := util.HTTPQuery(&req)
+	// 请求
+	var res oauth2TokenRes
 	url := fmt.Sprintf("%s/oauth2/token", oauth2Host)
-	err := util.HTTP[int](http.MethodPost, url, query, nil, t, http.StatusOK, apiCallTimeout)
+	err := util.HTTP[int](http.MethodPost, url, q, nil, &res, http.StatusOK, apiCallTimeout)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			internal.Error504(ctx, err)
@@ -76,5 +83,5 @@ func getAccessToken(ctx *gin.Context, req *oauth2TokenReq) *oauth2TokenRes {
 		}
 		return nil
 	}
-	return t
+	return &res
 }

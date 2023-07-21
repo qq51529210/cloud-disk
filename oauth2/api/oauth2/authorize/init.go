@@ -16,12 +16,3 @@ func Init(g gin.IRouter) {
 	g.GET("", get)
 	g.POST("", post)
 }
-
-var (
-	authorizeName = make(map[string]string)
-)
-
-func init() {
-	authorizeName["image"] = "图像"
-	authorizeName["name"] = "名称"
-}

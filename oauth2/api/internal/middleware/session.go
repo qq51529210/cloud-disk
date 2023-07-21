@@ -1,13 +1,10 @@
 package middleware
 
 import (
-	"context"
 	"net/http"
 	"net/url"
 	"oauth2/api/internal"
-	"oauth2/cfg"
 	"oauth2/db"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -58,27 +55,5 @@ func redirectLogin(ctx *gin.Context) {
 
 // CheckDeveloperSession 使用 cookie 检查用户登录
 func CheckDeveloperSession(ctx *gin.Context) {
-	// 提取 cookie
-	sid, err := ctx.Cookie(CookieName)
-	if err == http.ErrNoCookie {
-		redirectLogin(ctx)
-		return
-	}
-	// 查询 session
-	toCtx, cancel := context.WithTimeout(ctx, time.Duration(cfg.Cfg.Redis.CmdTimeout)*time.Second)
-	defer cancel()
-	sess, err := db.GetSession[*db.Developer](toCtx, sid)
-	if err != nil {
-		internal.DB500(ctx, err)
-		return
-	}
-	// 没有
-	if sess == nil {
-		redirectLogin(ctx)
-		return
-	}
-	// 设置上下文
-	ctx.Set(SessionContextKey, sess)
-	//
-	ctx.Next()
+
 }

@@ -12,8 +12,8 @@ import (
 
 // redis key 的前缀
 const (
-	UserSessionPrefix      = "user_session_"
-	DeveloperSessionPrefix = "developer_session_"
+	UserSessionPrefix      = "user_session:"
+	DeveloperSessionPrefix = "developer_session:"
 )
 
 // Session 表示会话，使用 redis 来保存
@@ -28,8 +28,8 @@ type Session[T any] struct {
 	Expires int64
 }
 
-// NewSession 创建会话
-func NewSession[T any](ctx context.Context, prefixKey string, data T) (*Session[T], error) {
+// NewSessionWithContext 创建会话
+func NewSessionWithContext[T any](ctx context.Context, prefixKey string, data T) (*Session[T], error) {
 	s := &Session[T]{
 		ID:      prefixKey + uuid.LowerV1WithoutHyphen(),
 		Data:    data,
@@ -50,8 +50,8 @@ func NewSession[T any](ctx context.Context, prefixKey string, data T) (*Session[
 	return s, nil
 }
 
-// GetSession 获取会话
-func GetSession[T any](ctx context.Context, id string) (*Session[T], error) {
+// GetSessionWithContext 获取会话
+func GetSessionWithContext[T any](ctx context.Context, id string) (*Session[T], error) {
 	// 获取
 	d, err := rds.Get(ctx, id).Bytes()
 	if err != nil {
@@ -70,40 +70,40 @@ func GetSession[T any](ctx context.Context, id string) (*Session[T], error) {
 	return s, nil
 }
 
-// NewSessionTimeout 创建会话
-func NewSessionTimeout[T any](prefixKey string, data T) (*Session[T], error) {
+// NewSession 创建会话
+func NewSession[T any](prefixKey string, data T) (*Session[T], error) {
 	// 超时
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	//
-	return NewSession[T](ctx, prefixKey, data)
+	return NewSessionWithContext[T](ctx, prefixKey, data)
 }
 
-// GetSessionTimeout 获取会话
-func GetSessionTimeout[T any](id string) (*Session[T], error) {
+// GetSession 获取会话
+func GetSession[T any](id string) (*Session[T], error) {
 	// 超时
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
 	//
-	return GetSession[T](ctx, id)
+	return GetSessionWithContext[T](ctx, id)
 }
 
 // GetUserSession 获取用户会话
 func GetUserSession(sessionID string) (*Session[*User], error) {
-	return GetSessionTimeout[*User](sessionID)
+	return GetSession[*User](sessionID)
 }
 
 // NewUserSession 创建用户会话
 func NewUserSession(user *User) (*Session[*User], error) {
-	return NewSessionTimeout[*User](UserSessionPrefix, user)
+	return NewSession[*User](UserSessionPrefix, user)
 }
 
 // GetDeveloperSession 获取开发者会话
 func GetDeveloperSession(sessionID string) (*Session[*Developer], error) {
-	return GetSessionTimeout[*Developer](sessionID)
+	return GetSession[*Developer](sessionID)
 }
 
 // NewDeveloperSession 创建用户会话
 func NewDeveloperSession(developer *Developer) (*Session[*Developer], error) {
-	return NewSessionTimeout[*Developer](DeveloperSessionPrefix, developer)
+	return NewSession[*Developer](DeveloperSessionPrefix, developer)
 }
