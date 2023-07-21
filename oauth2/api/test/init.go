@@ -1,7 +1,6 @@
 package test
 
 import (
-	"oauth2/cfg"
 	"oauth2/db"
 	"time"
 
@@ -17,9 +16,6 @@ var (
 	pwd       = "123123"
 	state     = "teststate"
 	//
-	host       = "http://localhost"
-	oauth2Host = "http://localhost"
-	//
 	apiCallTimeout = time.Second * 5
 )
 
@@ -29,9 +25,6 @@ func Init(g gin.IRouter) {
 	testDeveloperData()
 	testUserData()
 	testClientData()
-	//
-	host += cfg.Cfg.Test
-	oauth2Host += cfg.Cfg.Addr
 	//
 	g.GET("/", login)
 	g.GET("/oauth2", oauth2)

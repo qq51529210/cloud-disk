@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/url"
+	"oauth2/cfg"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,12 +38,12 @@ func login(ctx *gin.Context) {
 	query.Set("client_id", client)
 	query.Set("scope", "avatar name friends")
 	query.Set("state", state)
-	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", host))
+	query.Set("redirect_uri", fmt.Sprintf("%s/oauth2", cfg.Cfg.Test))
 	//
 	var t loginTP
 	query.Set("response_type", "code")
-	t.Code = fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())
+	t.Code = fmt.Sprintf("http://%s/oauth2/authorize?%s", cfg.Cfg.Addr, query.Encode())
 	query.Set("response_type", "token")
-	t.Token = fmt.Sprintf("%s/oauth2/authorize?%s", oauth2Host, query.Encode())
+	t.Token = fmt.Sprintf("http://%s/oauth2/authorize?%s", cfg.Cfg.Addr, query.Encode())
 	tp.Execute(ctx.Writer, &t)
 }

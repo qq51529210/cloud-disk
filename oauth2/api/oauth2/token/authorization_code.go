@@ -21,6 +21,7 @@ type authorizationCodeReq struct {
 }
 
 // authorizationCode 处理 grant_type=authorization_code
+// todo 在返回 access_token 后是否删除 authorization_code
 func authorizationCode(ctx *gin.Context) {
 	// 参数
 	var req authorizationCodeReq

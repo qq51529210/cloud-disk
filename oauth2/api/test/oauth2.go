@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"oauth2/api/internal"
+	"oauth2/cfg"
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
@@ -58,7 +59,7 @@ func getAccessToken(ctx *gin.Context, code string) *db.AccessToken {
 	q := util.HTTPQuery(&req, nil)
 	// 请求
 	res := new(db.AccessToken)
-	url := fmt.Sprintf("%s/oauth2/token", oauth2Host)
+	url := fmt.Sprintf("%s/oauth2/token", cfg.Cfg.Addr)
 	err := util.HTTP[int](http.MethodPost, url, q, nil, res, func(res *http.Response) error {
 		return util.HTTPStatusErrorHandle(res, http.StatusOK)
 	}, apiCallTimeout)

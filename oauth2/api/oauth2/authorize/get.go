@@ -100,7 +100,7 @@ func getCode(ctx *gin.Context, req *getReq) {
 
 // getToken response_type=token
 func getToken(ctx *gin.Context, req *getReq) {
-	// var tp html.Authorize
-	// req.InitTP(&tp)
-	// tp.Exec(ctx.Writer)
+	var tp html.Authorize
+	req.InitTP(&tp, ctx.Request.URL.RawQuery)
+	tp.Exec(ctx.Writer)
 }

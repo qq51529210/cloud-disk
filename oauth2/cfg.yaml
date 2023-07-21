@@ -1,6 +1,6 @@
 name: oauth2-service-1
-addr: :10001
-test: :10002
+addr: localhost:10000
+test: localhost:20000
 log:
   rootDir: ./log/
   maxFileSize: 10M
