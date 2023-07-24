@@ -21,7 +21,7 @@ type AuthorizationCode struct {
 	// 重定向
 	RedirectURI string
 	// 应用
-	ClientID string
+	Client *Client
 	// 用户
 	UserID string
 }

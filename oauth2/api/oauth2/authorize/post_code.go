@@ -18,6 +18,7 @@ func postCode(ctx *gin.Context, req *postReq) {
 	// 授权码
 	code := new(db.AuthorizationCode)
 	code.Scope = parsePostScope(ctx, req.form.Client)
+	code.Client = req.form.Client
 	code.UserID = sess.Data.ID
 	util.CopyStruct(code, req)
 	err := db.PutAuthorizationCode(code)

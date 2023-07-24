@@ -36,27 +36,19 @@ func authorizationCode(ctx *gin.Context) {
 		internal.DB500(ctx, err)
 		return
 	}
-	if code == nil || req.ClientID != code.ClientID {
+	if code == nil || req.ClientID != code.Client.ID {
 		internal.Submit400(ctx, "授权码错误")
 		return
 	}
-	// 应用
-	client, err := db.GetClient(req.ClientID)
-	if err != nil {
-		internal.DB500(ctx, err)
-		return
-	}
-	if client == nil ||
-		*client.Enable != db.True ||
-		*client.Secret != req.ClientSecret {
-		internal.Submit400(ctx, "应用不存在")
+	if *code.Client.Secret != req.ClientSecret {
+		internal.Submit400(ctx, "应用密钥不正确")
 		return
 	}
 	// 令牌
 	token := new(db.AccessToken)
-	token.Type = *client.TokenType
+	token.Type = *code.Client.TokenType
 	token.Scope = code.Scope
-	token.ClientID = code.ClientID
+	token.ClientID = code.Client.ID
 	token.UserID = code.UserID
 	err = db.PutAccessToken(token)
 	if err != nil {

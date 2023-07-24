@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/qq51529210/log"
 )
 
 const (
@@ -62,5 +63,10 @@ func post(ctx *gin.Context) {
 		postCode(ctx, &req)
 	case ResponseTypeToken:
 		postToken(ctx, &req)
+	}
+	// 删除表单
+	err = db.DelAuthorizationForm(req.form.ID)
+	if err != nil {
+		log.Error(err)
 	}
 }
