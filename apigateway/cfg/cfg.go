@@ -1,6 +1,7 @@
 package cfg
 
 import (
+	"net"
 	"os"
 
 	"github.com/go-playground/validator/v10"
@@ -16,10 +17,10 @@ var (
 type Config struct {
 	// 服务名称，日志使用
 	Name string `json:"name" yaml:"name" validate:"required,max=32"`
-	// 监听地址
-	Addr string `json:"addr" yaml:"addr" validate:"required"`
-	// 测试地址
-	Test string `json:"test" yaml:"test"`
+	// 管理地址
+	AdminAddr string `json:"adminAddr" yaml:"adminAddr" validate:"required,ipAddr"`
+	// 代理地址
+	ProxyAddr string `json:"proxyAddr" yaml:"proxyAddr" validate:"required,ipAddr"`
 	// 日志配置
 	Log util.LogCfg `json:"log" yaml:"log"`
 	// 数据库配置
@@ -52,25 +53,6 @@ type Config struct {
 		// 过期时间
 		Expires int64 `json:"expires" yaml:"expires" validate:"required,min=60"`
 	} `json:"session" yaml:"session"`
-	// oauth2
-	OAuth2 struct {
-		// 是否启用隐密授权模式
-		EnableImplicitGrant bool `json:"enableImplicitGrant" yaml:"enableImplicitGrant"`
-		// 是否启用密码授权模式
-		EnablePasswordGrant bool `json:"enablePasswordGrant" yaml:"enablePasswordGrant"`
-		// 是否启用客户端凭证授权模式
-		EnableClientCredentialsGrant bool `json:"enableClientCredentialsGrant" yaml:"enableClientCredentialsGrant"`
-		// 授权码过期时间
-		AuthorizationCodeExpires int64 `json:"authorizationCodeExpires" yaml:"authorizationCodeExpires" validate:"required,min=1"`
-		// 授权码确认页面过期时间
-		AuthorizationFormExpires int64 `json:"authorizationFormExpires" yaml:"authorizationFormExpires" validate:"required,min=1"`
-		// 访问令牌过期时间
-		AccessTokenExpires int64 `json:"accessTokenExpires" yaml:"accessTokenExpires" validate:"required,min=60"`
-		// 刷新令牌过期时间
-		RefreshTokenExpires int64 `json:"refreshTokenExpires" yaml:"refreshTokenExpires" validate:"required,min=60"`
-		// 访问令牌的类型
-		AccessTokenType string `json:"accessTokenType" yaml:"accessTokenType" validate:"required,oneof=Bearer"`
-	} `json:"apigateway" yaml:"apigateway"`
 }
 
 // Load 加载配置
@@ -87,10 +69,23 @@ func Load() error {
 	}
 	// 检查字段
 	val := validator.New()
+	err = val.RegisterValidation("ipAddr", validateIPAddr)
+	if err != nil {
+		return err
+	}
 	err = val.Struct(&Cfg)
 	if err != nil {
 		return err
 	}
 	//
 	return nil
+}
+
+func validateIPAddr(fl validator.FieldLevel) bool {
+	a, ok := fl.Field().Interface().(string)
+	if !ok {
+		return false
+	}
+	_, err := net.ResolveTCPAddr("tcp", a)
+	return err == nil
 }

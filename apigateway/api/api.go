@@ -2,6 +2,7 @@ package api
 
 import (
 	"apigateway/api/internal/middleware"
+	"apigateway/api/services"
 	"apigateway/cfg"
 	"io/fs"
 	"net/http"
@@ -26,7 +27,7 @@ func Serve(staticsDir fs.FS) error {
 	// 路由
 	initRouter()
 	// 监听
-	return http.ListenAndServe(cfg.Cfg.Addr, g)
+	return http.ListenAndServe(cfg.Cfg.AdminAddr, g)
 }
 
 // 初始化路由
@@ -34,4 +35,5 @@ func initRouter() {
 	// 全局
 	g.Use(middleware.Log)
 	//
+	services.Init(g)
 }

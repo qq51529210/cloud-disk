@@ -4,13 +4,11 @@ import (
 	"apigateway/cfg"
 
 	"github.com/qq51529210/util"
-	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 
 var (
 	_db *gorm.DB
-	rds redis.UniversalClient
 )
 
 // 用于取地址
@@ -34,11 +32,6 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	// 缓存
-	err = initReids()
-	if err != nil {
-		return err
-	}
 	//
 	return nil
 }
@@ -46,9 +39,9 @@ func Init() error {
 // initTable 初始化数据表
 func initTable() error {
 	_db.AutoMigrate(
-		// new(User),
-		// new(Developer),
-		// new(Client),
+	// new(User),
+	// new(Developer),
+	// new(Client),
 	)
 	//
 	return nil

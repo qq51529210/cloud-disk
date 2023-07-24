@@ -1,16 +1,20 @@
-package db
+package cache
 
 import (
+	"apigateway/cfg"
 	"context"
 	"encoding/json"
-	"apigateway/cfg"
 	"time"
 
 	"github.com/redis/go-redis/v9"
 )
 
-// initReids 初始化缓存
-func initReids() error {
+var (
+	rds redis.UniversalClient
+)
+
+// Init 初始化缓存
+func Init() error {
 	rds = redis.NewUniversalClient(&redis.UniversalOptions{
 		ClientName:       cfg.Cfg.Redis.Name,
 		Addrs:            cfg.Cfg.Redis.Addrs,
