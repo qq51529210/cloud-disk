@@ -1,18 +1,14 @@
 package token
 
 import (
-	"net/http"
-	"net/url"
 	"oauth2/api/internal"
-	"oauth2/api/internal/middleware"
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qq51529210/log"
-	"github.com/qq51529210/util"
 )
 
-type authorizationCodeReq struct {
+type tokenAuthorizationCodeReq struct {
 	// 在授权码模式中使用，表示从授权服务器获取的授权码
 	Code string `form:"code" binding:"required"`
 	// 表示客户端应用程序的唯一标识符，由授权服务器分配给客户端
@@ -21,10 +17,10 @@ type authorizationCodeReq struct {
 	ClientSecret string `form:"client_secret" binding:"required,max=40"`
 }
 
-// authorizationCode 处理 grant_type=authorization_code
-func authorizationCode(ctx *gin.Context) {
+// tokenAuthorizationCode 处理 grant_type=authorization_code
+func tokenAuthorizationCode(ctx *gin.Context) {
 	// 参数
-	var req authorizationCodeReq
+	var req tokenAuthorizationCodeReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
@@ -55,27 +51,8 @@ func authorizationCode(ctx *gin.Context) {
 		internal.DB500(ctx, err)
 		return
 	}
-	// 重定向
-	redirectURI := ctx.Query(middleware.QueryRedirectURI)
-	if redirectURI != "" {
-		// 重定向地址
-		_u, err := url.Parse(redirectURI)
-		if err != nil {
-			internal.Submit400(ctx, err.Error())
-			return
-		}
-		_u.RawQuery = util.HTTPQuery(token, _u.Query()).Encode()
-		// 跳转
-		ctx.Redirect(http.StatusSeeOther, _u.String())
-		// 删除授权码
-		err = db.DelAuthorizationCode(code.ID)
-		if err != nil {
-			log.Errorf("del authorization code error: %s", err.Error())
-		}
-		return
-	}
-	// 没有重定向，返回 JSON
-	ctx.JSON(http.StatusOK, token)
+	// 继续处理
+	onOK(ctx, token)
 	// 删除授权码
 	err = db.DelAuthorizationCode(code.ID)
 	if err != nil {

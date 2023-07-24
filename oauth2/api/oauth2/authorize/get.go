@@ -68,7 +68,7 @@ func get(ctx *gin.Context) {
 		return
 	}
 	if req.client == nil || *req.client.Enable != db.True {
-		html.ExecError(ctx.Writer, html.TitleAuthorize, "第三方应用不存在", "")
+		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorClientNotFound, "")
 		return
 	}
 	// 处理
