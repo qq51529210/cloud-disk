@@ -17,11 +17,11 @@ const (
 
 // 请求的类型
 const (
-	GenTypeToken       = "token"
-	GenTypeCode        = "code"
-	GenTypePassword    = "password"
-	GenTypeRefresh     = "refresh"
-	GenTypeCredentials = "credentials"
+	GrantTypeAuthorizationCode = "authorization_code"
+	GrantTypeImplicit          = "implicit"
+	GrantTypePassword          = "password"
+	GrantTypeClientCredentials = "client_credentials"
+	GrantTypeRefreshToken      = "refresh_token"
 )
 
 // Token 表示访问令牌，使用 redis 来保存

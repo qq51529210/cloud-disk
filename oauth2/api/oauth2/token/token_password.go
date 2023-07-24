@@ -50,11 +50,15 @@ func tokenPassword(ctx *gin.Context) {
 		internal.Submit400(ctx, html.ErrorClientNotFound)
 		return
 	}
+	if *client.Secret != req.ClientSecret {
+		internal.Submit400(ctx, html.ErrorClientSecret)
+		return
+	}
 	// 令牌
 	token := new(db.Token)
 	token.TokenType = *client.TokenType
 	token.Scope = req.Scope
-	token.GrantType = db.GenTypePassword
+	token.GrantType = db.GrantTypePassword
 	token.UserID = user.ID
 	token.ClientID = client.ID
 	err = db.PutAccessToken(token)

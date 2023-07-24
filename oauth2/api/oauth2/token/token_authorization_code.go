@@ -2,6 +2,7 @@ package token
 
 import (
 	"oauth2/api/internal"
+	"oauth2/api/internal/html"
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
@@ -37,14 +38,14 @@ func tokenAuthorizationCode(ctx *gin.Context) {
 		return
 	}
 	if *code.Client.Secret != req.ClientSecret {
-		internal.Submit400(ctx, "应用密钥不正确")
+		internal.Submit400(ctx, html.ErrorClientSecret)
 		return
 	}
 	// 令牌
 	token := new(db.Token)
 	token.TokenType = *code.Client.TokenType
 	token.Scope = code.Scope
-	token.GrantType = db.GenTypeCode
+	token.GrantType = db.GrantTypeAuthorizationCode
 	token.ClientID = code.Client.ID
 	token.UserID = code.UserID
 	err = db.PutAccessToken(token)

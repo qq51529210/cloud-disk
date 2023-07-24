@@ -7,6 +7,7 @@ const (
 	ErrorUserNotFound       = "用户不存在"
 	ErrorUsernameOrPassword = "用户名或密码不正确"
 	ErrorClientNotFound     = "应用不存在"
+	ErrorClientSecret       = "应用密钥不正确"
 )
 
 // 页面标题

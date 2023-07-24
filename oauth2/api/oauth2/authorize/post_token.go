@@ -19,7 +19,7 @@ func postToken(ctx *gin.Context, req *postReq) {
 	token := new(db.Token)
 	token.TokenType = *req.form.Client.TokenType
 	token.Scope = parsePostScope(ctx, req.form.Client)
-	token.GrantType = db.GenTypeToken
+	token.GrantType = db.GrantTypeImplicit
 	token.UserID = sess.Data.ID
 	token.ClientID = req.ClientID
 	err := db.PutAccessToken(token)

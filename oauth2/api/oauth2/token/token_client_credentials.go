@@ -17,7 +17,7 @@ type tokenClientCredentialsReq struct {
 // tokenPassword 处理 grant_type=client_credentials
 func tokenClientCredentials(ctx *gin.Context) {
 	// 参数
-	var req tokenPasswordReq
+	var req tokenClientCredentialsReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
@@ -33,11 +33,15 @@ func tokenClientCredentials(ctx *gin.Context) {
 		internal.Submit400(ctx, html.ErrorClientNotFound)
 		return
 	}
+	if *client.Secret != req.ClientSecret {
+		internal.Submit400(ctx, html.ErrorClientSecret)
+		return
+	}
 	// 令牌
 	token := new(db.Token)
 	token.TokenType = *client.TokenType
 	token.Scope = req.Scope
-	token.GrantType = db.GenTypeCredentials
+	token.GrantType = db.GrantTypeClientCredentials
 	token.ClientID = client.ID
 	err = db.PutAccessToken(token)
 	if err != nil {

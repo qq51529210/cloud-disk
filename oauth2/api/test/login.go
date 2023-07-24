@@ -76,7 +76,7 @@ func (tp *loginTP) initCredentials() {
 	query.Set("client_id", client)
 	query.Set("client_secret", pwd)
 	query.Set("scope", "avatar name")
-	tp.Password = fmt.Sprintf("http://%s/oauth2/token?%s", cfg.Cfg.Addr, query.Encode())
+	tp.Credentials = fmt.Sprintf("http://%s/oauth2/token?%s", cfg.Cfg.Addr, query.Encode())
 }
 
 func login(ctx *gin.Context) {

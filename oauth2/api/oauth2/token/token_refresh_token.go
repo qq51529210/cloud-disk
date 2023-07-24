@@ -44,11 +44,15 @@ func tokenRefreshToken(ctx *gin.Context) {
 		internal.Submit400(ctx, html.ErrorClientNotFound)
 		return
 	}
+	if *client.Secret != req.ClientSecret {
+		internal.Submit400(ctx, html.ErrorClientSecret)
+		return
+	}
 	// 访问令牌
 	accessToken := new(db.Token)
 	accessToken.TokenType = *client.TokenType
 	accessToken.Scope = refreshToken.Scope
-	accessToken.GrantType = db.GenTypeRefresh
+	accessToken.GrantType = db.GrantTypeRefreshToken
 	accessToken.UserID = refreshToken.UserID
 	accessToken.ClientID = client.ID
 	err = db.PutAccessToken(accessToken)

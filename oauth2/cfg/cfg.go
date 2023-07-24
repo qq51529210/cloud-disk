@@ -54,12 +54,12 @@ type Config struct {
 	} `json:"session" yaml:"session"`
 	// oauth2
 	OAuth2 struct {
-		// 是否启用 Implicit 授权模式
+		// 是否启用隐密授权模式
 		EnableImplicitGrant bool `json:"enableImplicitGrant" yaml:"enableImplicitGrant"`
-		// 是否启用 Password 授权模式
+		// 是否启用密码授权模式
 		EnablePasswordGrant bool `json:"enablePasswordGrant" yaml:"enablePasswordGrant"`
-		// 是否启用 Client 授权模式
-		EnableClientGrant bool `json:"enableClientGrant" yaml:"enableClientGrant"`
+		// 是否启用客户端凭证授权模式
+		EnableClientCredentialsGrant bool `json:"enableClientCredentialsGrant" yaml:"enableClientCredentialsGrant"`
 		// 授权码过期时间
 		AuthorizationCodeExpires int64 `json:"authorizationCodeExpires" yaml:"authorizationCodeExpires" validate:"required,min=1"`
 		// 授权码确认页面过期时间

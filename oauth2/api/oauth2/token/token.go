@@ -1,36 +1,36 @@
 package token
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"oauth2/api/internal"
 	"oauth2/api/internal/middleware"
+	"oauth2/cfg"
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qq51529210/util"
 )
 
-// 模式
-const (
-	GrantType                  = "grant_type"
-	GrantTypeAuthorizationCode = "authorization_code"
-	GrantTypePassword          = "password"
-	GrantTypeClientCredentials = "client_credentials"
-	GrantTypeRefreshToken      = "refresh_token"
-)
-
 // token 处理获取访问令牌
 func token(ctx *gin.Context) {
-	switch ctx.Query(GrantType) {
-	case GrantTypeAuthorizationCode:
+	grantType := ctx.Query("grant_type")
+	switch grantType {
+	case db.GrantTypeAuthorizationCode:
 		tokenAuthorizationCode(ctx)
-	case GrantTypePassword:
-		tokenPassword(ctx)
-	case GrantTypeClientCredentials:
-		tokenClientCredentials(ctx)
-	case GrantTypeRefreshToken:
+	case db.GrantTypePassword:
+		if cfg.Cfg.OAuth2.EnablePasswordGrant {
+			tokenPassword(ctx)
+		}
+	case db.GrantTypeClientCredentials:
+		if cfg.Cfg.OAuth2.EnableClientCredentialsGrant {
+			tokenClientCredentials(ctx)
+		}
+	case db.GrantTypeRefreshToken:
+		tokenRefreshToken(ctx)
 	}
+	internal.Submit400(ctx, fmt.Sprintf("[grant_type]不支持[%s]", grantType))
 }
 
 func onOK(ctx *gin.Context, token *db.Token) {
