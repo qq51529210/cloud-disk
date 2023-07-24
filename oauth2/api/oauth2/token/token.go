@@ -19,16 +19,20 @@ func token(ctx *gin.Context) {
 	switch grantType {
 	case db.GrantTypeAuthorizationCode:
 		tokenAuthorizationCode(ctx)
+		return
 	case db.GrantTypePassword:
 		if cfg.Cfg.OAuth2.EnablePasswordGrant {
 			tokenPassword(ctx)
+			return
 		}
 	case db.GrantTypeClientCredentials:
 		if cfg.Cfg.OAuth2.EnableClientCredentialsGrant {
 			tokenClientCredentials(ctx)
+			return
 		}
 	case db.GrantTypeRefreshToken:
 		tokenRefreshToken(ctx)
+		return
 	}
 	internal.Submit400(ctx, fmt.Sprintf("[grant_type]不支持[%s]", grantType))
 }
