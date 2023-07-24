@@ -53,7 +53,7 @@ func PutAccessTokenWithContext(ctx context.Context, token *AccessToken) error {
 	refreshToken.AccessToken.ID = token.Refresh
 	refreshToken.AccessToken.Refresh = uuid.LowerV1WithoutHyphen()
 	refreshToken.OldAccessToken = token.ID
-	data, _ = json.Marshal(token)
+	data, _ = json.Marshal(refreshToken)
 	err = pip.Set(ctx, RefreshTokenPrefix+refreshToken.AccessToken.ID, data, time.Duration(cfg.Cfg.OAuth2.RefreshTokenExpires)*time.Second).Err()
 	if err != nil {
 		return nil

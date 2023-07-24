@@ -33,7 +33,7 @@ func DelRefreshTokenWithContext(ctx context.Context, code *RefreshToken) error {
 	if err != nil {
 		return nil
 	}
-	err = pip.Del(ctx, RefreshTokenPrefix+code.OldAccessToken).Err()
+	err = pip.Del(ctx, AccessTokenPrefix+code.OldAccessToken).Err()
 	if err != nil {
 		return nil
 	}
