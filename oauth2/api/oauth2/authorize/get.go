@@ -15,8 +15,6 @@ import (
 const (
 	ResponseTypeCode  = "code"
 	ResponseTypeToken = "token"
-	// ResponseTypePassword          = "password"
-	// ResponseTypeClientCredentials = "client_credentials"
 )
 
 type getReq struct {

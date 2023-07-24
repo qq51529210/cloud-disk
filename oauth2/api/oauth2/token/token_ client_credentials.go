@@ -34,10 +34,10 @@ func tokenClientCredentials(ctx *gin.Context) {
 		return
 	}
 	// 令牌
-	token := new(db.AccessToken)
-	token.Type = *client.TokenType
+	token := new(db.Token)
+	token.TokenType = *client.TokenType
 	token.Scope = req.Scope
-	token.GenType = db.GenTypeCredentials
+	token.GrantType = db.GenTypeCredentials
 	token.ClientID = client.ID
 	err = db.PutAccessToken(token)
 	if err != nil {

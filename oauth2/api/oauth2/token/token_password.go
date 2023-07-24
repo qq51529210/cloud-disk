@@ -51,12 +51,12 @@ func tokenPassword(ctx *gin.Context) {
 		return
 	}
 	// 令牌
-	token := new(db.AccessToken)
-	token.Type = *client.TokenType
+	token := new(db.Token)
+	token.TokenType = *client.TokenType
 	token.Scope = req.Scope
-	token.GenType = db.GenTypePassword
-	token.ClientID = client.ID
+	token.GrantType = db.GenTypePassword
 	token.UserID = user.ID
+	token.ClientID = client.ID
 	err = db.PutAccessToken(token)
 	if err != nil {
 		internal.DB500(ctx, err)

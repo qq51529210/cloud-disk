@@ -13,6 +13,7 @@ import (
 
 // 模式
 const (
+	GrantType                  = "grant_type"
 	GrantTypeAuthorizationCode = "authorization_code"
 	GrantTypePassword          = "password"
 	GrantTypeClientCredentials = "client_credentials"
@@ -21,7 +22,7 @@ const (
 
 // token 处理获取访问令牌
 func token(ctx *gin.Context) {
-	switch ctx.Query("grant_type") {
+	switch ctx.Query(GrantType) {
 	case GrantTypeAuthorizationCode:
 		tokenAuthorizationCode(ctx)
 	case GrantTypePassword:
@@ -32,7 +33,7 @@ func token(ctx *gin.Context) {
 	}
 }
 
-func onOK(ctx *gin.Context, token *db.AccessToken) {
+func onOK(ctx *gin.Context, token *db.Token) {
 	// 重定向
 	redirectURI := ctx.Query(middleware.QueryRedirectURI)
 	if redirectURI != "" {

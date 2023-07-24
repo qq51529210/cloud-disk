@@ -45,12 +45,12 @@ func tokenRefreshToken(ctx *gin.Context) {
 		return
 	}
 	// 访问令牌
-	accessToken := new(db.AccessToken)
-	accessToken.Type = *client.TokenType
+	accessToken := new(db.Token)
+	accessToken.TokenType = *client.TokenType
 	accessToken.Scope = refreshToken.Scope
-	accessToken.GenType = db.GenTypeRefresh
-	accessToken.ClientID = client.ID
+	accessToken.GrantType = db.GenTypeRefresh
 	accessToken.UserID = refreshToken.UserID
+	accessToken.ClientID = client.ID
 	err = db.PutAccessToken(accessToken)
 	if err != nil {
 		internal.DB500(ctx, err)
@@ -59,8 +59,8 @@ func tokenRefreshToken(ctx *gin.Context) {
 	// 返回
 	onOK(ctx, accessToken)
 	// 删除旧的刷新令牌
-	err = db.DelAuthorizationCode(refreshToken.ID)
+	err = db.DelRefreshToken(refreshToken.AccessToken)
 	if err != nil {
-		log.Errorf("del refresh token %s error: %s", refreshToken.ID, err.Error())
+		log.Errorf("del refresh token %s error: %s", refreshToken.AccessToken, err.Error())
 	}
 }

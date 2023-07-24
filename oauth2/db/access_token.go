@@ -24,36 +24,36 @@ const (
 	GenTypeCredentials = "credentials"
 )
 
-// AccessToken 表示访问令牌，使用 redis 来保存
-type AccessToken struct {
-	ID       string
-	Type     string
-	Expires  int64
-	Refresh  string
-	Scope    string
-	GenType  string
-	UserID   string
-	ClientID string
+// Token 表示访问令牌，使用 redis 来保存
+type Token struct {
+	AccessToken  string `json:"access_token" query:"access_token"`
+	TokenType    string `json:"token_type" query:"token_type"`
+	ExpiresIN    int64  `json:"expires_in" query:"expires_in"`
+	RefreshToken string `json:"refresh_token" query:"refresh_token"`
+	Scope        string `json:"scope" query:"scope"`
+	GrantType    string `json:"grant_type" query:"grant_type"`
+	UserID       string `json:"user_id" query:"user_id"`
+	ClientID     string `json:"client_id" query:"client_id"`
 }
 
 // PutAccessTokenWithContext 创建访问令牌
-func PutAccessTokenWithContext(ctx context.Context, token *AccessToken) error {
-	token.ID = uuid.LowerV1WithoutHyphen()
-	token.Refresh = uuid.LowerV1WithoutHyphen()
-	token.Expires = cfg.Cfg.OAuth2.AccessTokenExpires
+func PutAccessTokenWithContext(ctx context.Context, token *Token) error {
+	token.AccessToken = uuid.LowerV1WithoutHyphen()
+	token.ExpiresIN = cfg.Cfg.OAuth2.AccessTokenExpires
+	token.RefreshToken = uuid.LowerV1WithoutHyphen()
 	pip := rds.Pipeline()
 	data, _ := json.Marshal(token)
-	err := pip.Set(ctx, AccessTokenPrefix+token.ID, data, time.Duration(cfg.Cfg.OAuth2.AccessTokenExpires)*time.Second).Err()
+	err := pip.Set(ctx, AccessTokenPrefix+token.AccessToken, data, time.Duration(cfg.Cfg.OAuth2.AccessTokenExpires)*time.Second).Err()
 	if err != nil {
 		return nil
 	}
 	//
-	refreshToken := new(AccessToken)
+	refreshToken := new(Token)
 	*refreshToken = *token
-	refreshToken.ID = token.Refresh
-	refreshToken.Refresh = uuid.LowerV1WithoutHyphen()
+	refreshToken.AccessToken = token.RefreshToken
+	refreshToken.RefreshToken = uuid.LowerV1WithoutHyphen()
 	data, _ = json.Marshal(token)
-	err = pip.Set(ctx, RefreshTokenPrefix+token.ID, data, time.Duration(cfg.Cfg.OAuth2.RefreshTokenExpires)*time.Second).Err()
+	err = pip.Set(ctx, RefreshTokenPrefix+token.AccessToken, data, time.Duration(cfg.Cfg.OAuth2.RefreshTokenExpires)*time.Second).Err()
 	if err != nil {
 		return nil
 	}
@@ -64,7 +64,7 @@ func PutAccessTokenWithContext(ctx context.Context, token *AccessToken) error {
 }
 
 // PutAccessToken 创建访问令牌
-func PutAccessToken(token *AccessToken) error {
+func PutAccessToken(token *Token) error {
 	// 超时
 	ctx, cancel := newRedisTimeout()
 	defer cancel()
@@ -73,21 +73,31 @@ func PutAccessToken(token *AccessToken) error {
 }
 
 // GetAccessTokenWithContext 查询访问令牌
-func GetAccessTokenWithContext(ctx context.Context, token string) (*AccessToken, error) {
-	return GetWithContext[AccessToken](ctx, AccessTokenPrefix+token)
+func GetAccessTokenWithContext(ctx context.Context, token string) (*Token, error) {
+	return GetWithContext[Token](ctx, AccessTokenPrefix+token)
 }
 
 // GetAccessToken 查询访问令牌
-func GetAccessToken(token string) (*AccessToken, error) {
-	return Get[AccessToken](AccessTokenPrefix + token)
+func GetAccessToken(token string) (*Token, error) {
+	return Get[Token](AccessTokenPrefix + token)
 }
 
 // GetRefreshTokenWithContext 查询刷新令牌
-func GetRefreshTokenWithContext(ctx context.Context, token string) (*AccessToken, error) {
-	return GetWithContext[AccessToken](ctx, RefreshTokenPrefix+token)
+func GetRefreshTokenWithContext(ctx context.Context, token string) (*Token, error) {
+	return GetWithContext[Token](ctx, RefreshTokenPrefix+token)
 }
 
 // GetRefreshToken 查询刷新令牌
-func GetRefreshToken(token string) (*AccessToken, error) {
-	return Get[AccessToken](RefreshTokenPrefix + token)
+func GetRefreshToken(token string) (*Token, error) {
+	return Get[Token](RefreshTokenPrefix + token)
+}
+
+// DelRefreshTokenWithContext 查询授权码
+func DelRefreshTokenWithContext(ctx context.Context, code string) error {
+	return rds.Del(ctx, RefreshTokenPrefix+code).Err()
+}
+
+// DelRefreshToken 查询授权码
+func DelRefreshToken(code string) error {
+	return Del(RefreshTokenPrefix + code)
 }

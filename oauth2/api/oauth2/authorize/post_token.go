@@ -16,12 +16,12 @@ func postToken(ctx *gin.Context, req *postReq) {
 	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.User])
 	// 令牌
-	token := new(db.AccessToken)
-	token.Type = *req.form.Client.TokenType
+	token := new(db.Token)
+	token.TokenType = *req.form.Client.TokenType
 	token.Scope = parsePostScope(ctx, req.form.Client)
-	token.GenType = db.GenTypeToken
-	token.ClientID = req.ClientID
+	token.GrantType = db.GenTypeToken
 	token.UserID = sess.Data.ID
+	token.ClientID = req.ClientID
 	err := db.PutAccessToken(token)
 	if err != nil {
 		internal.DB500(ctx, err)
@@ -29,7 +29,7 @@ func postToken(ctx *gin.Context, req *postReq) {
 	}
 	// 重定向
 	if req.RedirectURI != "" {
-		// 重定向地址
+		// 地址
 		_u, err := url.Parse(req.RedirectURI)
 		if err != nil {
 			internal.Submit400(ctx, err.Error())
