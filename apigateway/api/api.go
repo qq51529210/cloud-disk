@@ -1,0 +1,37 @@
+package api
+
+import (
+	"apigateway/api/internal/middleware"
+	"apigateway/cfg"
+	"io/fs"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/qq51529210/util"
+)
+
+var (
+	// gin
+	g = gin.New()
+)
+
+// Serve 开始服务
+func Serve(staticsDir fs.FS) error {
+	gin.SetMode(gin.DebugMode)
+	// 静态文件
+	err := util.GinStaticDir(g, "", "", staticsDir)
+	if err != nil {
+		return err
+	}
+	// 路由
+	initRouter()
+	// 监听
+	return http.ListenAndServe(cfg.Cfg.Addr, g)
+}
+
+// 初始化路由
+func initRouter() {
+	// 全局
+	g.Use(middleware.Log)
+	//
+}
