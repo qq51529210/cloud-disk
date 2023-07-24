@@ -44,6 +44,7 @@ func tokenAuthorizationCode(ctx *gin.Context) {
 	token := new(db.AccessToken)
 	token.Type = *code.Client.TokenType
 	token.Scope = code.Scope
+	token.GenType = db.GenTypeCode
 	token.ClientID = code.Client.ID
 	token.UserID = code.UserID
 	err = db.PutAccessToken(token)
@@ -51,11 +52,11 @@ func tokenAuthorizationCode(ctx *gin.Context) {
 		internal.DB500(ctx, err)
 		return
 	}
-	// 继续处理
+	// 返回
 	onOK(ctx, token)
 	// 删除授权码
 	err = db.DelAuthorizationCode(code.ID)
 	if err != nil {
-		log.Errorf("del authorization code error: %s", err.Error())
+		log.Errorf("del authorization code %s error: %s", code.ID, err.Error())
 	}
 }

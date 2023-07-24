@@ -16,7 +16,6 @@ const (
 	GrantTypeAuthorizationCode = "authorization_code"
 	GrantTypePassword          = "password"
 	GrantTypeClientCredentials = "client_credentials"
-	GrantTypeImplicit          = "implicit"
 	GrantTypeRefreshToken      = "refresh_token"
 )
 
@@ -25,10 +24,10 @@ func token(ctx *gin.Context) {
 	switch ctx.Query("grant_type") {
 	case GrantTypeAuthorizationCode:
 		tokenAuthorizationCode(ctx)
-	case GrantTypeImplicit:
 	case GrantTypePassword:
 		tokenPassword(ctx)
 	case GrantTypeClientCredentials:
+		tokenClientCredentials(ctx)
 	case GrantTypeRefreshToken:
 	}
 }

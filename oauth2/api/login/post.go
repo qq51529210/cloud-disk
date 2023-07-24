@@ -53,7 +53,7 @@ func postAccount(ctx *gin.Context) {
 	if user == nil ||
 		*user.Enable != db.True ||
 		*user.Password != util.SHA1String(req.Password) {
-		html.ExecError(ctx.Writer, html.TitleLogin, "账号或密码不正确", "")
+		html.ExecError(ctx.Writer, html.TitleLogin, html.ErrorUsernameOrPassword, "")
 		return
 	}
 	// 会话

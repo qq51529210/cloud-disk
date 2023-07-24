@@ -6,38 +6,21 @@ import (
 	"oauth2/db"
 
 	"github.com/gin-gonic/gin"
-	"github.com/qq51529210/util"
 )
 
-type tokenPasswordReq struct {
+type tokenClientCredentialsReq struct {
 	ClientID     string `form:"client_id" binding:"required,max=40"`
 	ClientSecret string `form:"client_secret" binding:"required,max=40"`
-	Username     string `form:"username" binding:"required,max=40"`
-	Password     string `form:"password" binding:"required,max=40"`
 	Scope        string `form:"scope" binding:"required"`
 }
 
-// tokenPassword 处理 grant_type=password
-func tokenPassword(ctx *gin.Context) {
+// tokenPassword 处理 grant_type=client_credentials
+func tokenClientCredentials(ctx *gin.Context) {
 	// 参数
 	var req tokenPasswordReq
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
-		return
-	}
-	// 用户
-	user, err := db.GetUserByAccount(req.Username)
-	if err != nil {
-		internal.DB500(ctx, err)
-		return
-	}
-	if user == nil || *user.Enable != db.True {
-		internal.Submit400(ctx, html.ErrorUserNotFound)
-		return
-	}
-	if *user.Password != util.SHA1String(req.Password) {
-		internal.Submit400(ctx, html.ErrorUsernameOrPassword)
 		return
 	}
 	// 应用
@@ -54,9 +37,8 @@ func tokenPassword(ctx *gin.Context) {
 	token := new(db.AccessToken)
 	token.Type = *client.TokenType
 	token.Scope = req.Scope
-	token.GenType = db.GenTypePassword
+	token.GenType = db.GenTypeCredentials
 	token.ClientID = client.ID
-	token.UserID = user.ID
 	err = db.PutAccessToken(token)
 	if err != nil {
 		internal.DB500(ctx, err)
