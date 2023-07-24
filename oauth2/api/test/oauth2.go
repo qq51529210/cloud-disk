@@ -73,7 +73,7 @@ type oauth2AccessTokenReq struct {
 	ClientSecret string `query:"client_secret"`
 }
 
-func getAccessToken(ctx *gin.Context, code string) *db.Token {
+func getAccessToken(ctx *gin.Context, code string) *db.AccessToken {
 	// 查询参数
 	var req oauth2AccessTokenReq
 	req.GrantTpe = "authorization_code"
@@ -82,7 +82,7 @@ func getAccessToken(ctx *gin.Context, code string) *db.Token {
 	req.ClientSecret = pwd
 	q := util.HTTPQuery(&req, nil)
 	// 请求
-	res := new(db.Token)
+	res := new(db.AccessToken)
 	url := fmt.Sprintf("http://%s/oauth2/token", cfg.Cfg.Addr)
 	err := util.HTTP[int](http.MethodPost, url, q, nil, res, func(res *http.Response) error {
 		return util.HTTPStatusErrorHandle(res, http.StatusOK)

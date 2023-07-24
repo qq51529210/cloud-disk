@@ -33,7 +33,7 @@ func token(ctx *gin.Context) {
 	internal.Submit400(ctx, fmt.Sprintf("[grant_type]不支持[%s]", grantType))
 }
 
-func onOK(ctx *gin.Context, token *db.Token) {
+func onOK(ctx *gin.Context, token *db.AccessToken) {
 	// 重定向
 	redirectURI := ctx.Query(middleware.QueryRedirectURI)
 	if redirectURI != "" {

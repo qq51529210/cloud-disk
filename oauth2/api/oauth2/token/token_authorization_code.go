@@ -42,10 +42,10 @@ func tokenAuthorizationCode(ctx *gin.Context) {
 		return
 	}
 	// 令牌
-	token := new(db.Token)
-	token.TokenType = *code.Client.TokenType
+	token := new(db.AccessToken)
+	token.Type = *code.Client.TokenType
 	token.Scope = code.Scope
-	token.GrantType = db.GrantTypeAuthorizationCode
+	token.Grant = db.GrantTypeAuthorizationCode
 	token.ClientID = code.Client.ID
 	token.UserID = code.UserID
 	err = db.PutAccessToken(token)

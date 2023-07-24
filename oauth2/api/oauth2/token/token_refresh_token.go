@@ -30,7 +30,7 @@ func tokenRefreshToken(ctx *gin.Context) {
 		internal.DB500(ctx, err)
 		return
 	}
-	if refreshToken == nil {
+	if refreshToken == nil || req.ClientID != refreshToken.ClientID {
 		internal.Submit400(ctx, "无效刷新令牌")
 		return
 	}
@@ -40,7 +40,7 @@ func tokenRefreshToken(ctx *gin.Context) {
 		internal.DB500(ctx, err)
 		return
 	}
-	if client == nil || client.ID != refreshToken.ClientID || *client.Enable != db.True {
+	if client == nil || *client.Enable != db.True {
 		internal.Submit400(ctx, html.ErrorClientNotFound)
 		return
 	}
@@ -49,10 +49,10 @@ func tokenRefreshToken(ctx *gin.Context) {
 		return
 	}
 	// 访问令牌
-	accessToken := new(db.Token)
-	accessToken.TokenType = *client.TokenType
+	accessToken := new(db.AccessToken)
+	accessToken.Type = *client.TokenType
 	accessToken.Scope = refreshToken.Scope
-	accessToken.GrantType = db.GrantTypeRefreshToken
+	accessToken.Grant = db.GrantTypeRefreshToken
 	accessToken.UserID = refreshToken.UserID
 	accessToken.ClientID = client.ID
 	err = db.PutAccessToken(accessToken)
@@ -62,8 +62,8 @@ func tokenRefreshToken(ctx *gin.Context) {
 	}
 	// 返回
 	onOK(ctx, accessToken)
-	// 删除旧的刷新令牌
-	err = db.DelRefreshToken(refreshToken.AccessToken)
+	// 删除旧的刷新和访问令牌
+	err = db.DelRefreshToken(refreshToken)
 	if err != nil {
 		log.Errorf("del refresh token %s error: %s", refreshToken.AccessToken, err.Error())
 	}

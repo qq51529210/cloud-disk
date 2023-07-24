@@ -16,10 +16,10 @@ func postToken(ctx *gin.Context, req *postReq) {
 	// 会话
 	sess := ctx.Value(middleware.SessionContextKey).(*db.Session[*db.User])
 	// 令牌
-	token := new(db.Token)
-	token.TokenType = *req.form.Client.TokenType
+	token := new(db.AccessToken)
+	token.Type = *req.form.Client.TokenType
 	token.Scope = parsePostScope(ctx, req.form.Client)
-	token.GrantType = db.GrantTypeImplicit
+	token.Grant = db.GrantTypeImplicit
 	token.UserID = sess.Data.ID
 	token.ClientID = req.ClientID
 	err := db.PutAccessToken(token)
