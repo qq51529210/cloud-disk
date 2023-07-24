@@ -52,7 +52,7 @@ func (q *getReq) InitTP(t *html.Authorize, rq string) {
 	}
 }
 
-// get 处理第三方授权调用
+// get 处理第三方授权调用，返回授权确认页面
 func get(ctx *gin.Context) {
 	// 参数
 	var req getReq
@@ -84,16 +84,19 @@ func get(ctx *gin.Context) {
 	}
 }
 
-// getCode response_type=code
-func getCode(ctx *gin.Context, req *getReq) {
+// getHTML 返回页面
+func getHTML(ctx *gin.Context, req *getReq) {
+	// 表单
+	form := new(db.AuthorizationForm)
+	form.Client = req.client
+	err := db.PutAuthorizationForm(form)
+	if err != nil {
+		html.ExecError(ctx.Writer, html.TitleAuthorize, html.ErrorDB, err.Error())
+		return
+	}
+	//
 	var tp html.Authorize
-	req.InitTP(&tp, ctx.Request.URL.RawQuery)
-	tp.Exec(ctx.Writer)
-}
-
-// getToken response_type=token
-func getToken(ctx *gin.Context, req *getReq) {
-	var tp html.Authorize
+	tp.FormID = form.ID
 	req.InitTP(&tp, ctx.Request.URL.RawQuery)
 	tp.Exec(ctx.Writer)
 }

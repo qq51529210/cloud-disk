@@ -50,6 +50,8 @@ oauth2:
   enableClientGrant: true
   # 授权码过期时间
   authorizationCodeExpires: 300
+  # 授权码确认页面过期时间
+  authorizationFormExpires: 180
   # 访问令牌过期时间
   accessTokenExpires: 3600
   # 刷新令牌过期时间

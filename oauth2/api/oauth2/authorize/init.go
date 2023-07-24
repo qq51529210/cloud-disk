@@ -6,8 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Path 是路径
-const Path = "/authorize"
+const (
+	// Path 是路径
+	Path = "/authorize"
+)
 
 // Init 初始化路由
 func Init(g gin.IRouter) {

@@ -31,6 +31,7 @@ func init() {
 			<input type="checkbox" name="{{.Key}}" {{if .Check}}checked{{end}}> {{.Name}}
 		</label>
 	{{end}}
+		<input type="hidden" name="form_id" value="{{.FormID}}">
 		</br>
 		<button type="submit">确定</button>
 	</form>
@@ -56,6 +57,7 @@ type Authorize struct {
 	ClientName  string
 	ClientImage string
 	Scope       []*AuthorizeScope
+	FormID      string
 }
 
 // Exec 格式化

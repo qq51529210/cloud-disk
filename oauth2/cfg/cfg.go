@@ -61,7 +61,9 @@ type Config struct {
 		// 是否启用 Client 授权模式
 		EnableClientGrant bool `json:"enableClientGrant" yaml:"enableClientGrant"`
 		// 授权码过期时间
-		AuthorizationCodeExpires int64 `json:"authorizationCodeExpires" yaml:"authorizationCodeExpires" validate:"required,min=3"`
+		AuthorizationCodeExpires int64 `json:"authorizationCodeExpires" yaml:"authorizationCodeExpires" validate:"required,min=1"`
+		// 授权码确认页面过期时间
+		AuthorizationFormExpires int64 `json:"authorizationFormExpires" yaml:"authorizationFormExpires" validate:"required,min=1"`
 		// 访问令牌过期时间
 		AccessTokenExpires int64 `json:"accessTokenExpires" yaml:"accessTokenExpires" validate:"required,min=60"`
 		// 刷新令牌过期时间
