@@ -48,11 +48,12 @@ func GetMinLoadServer(service string) *Server {
 }
 
 // AddServer 添加一个服务
-func AddServer(service, serKey, serBaseURL string) {
+func AddServer(service, serKey, serBaseURL string, auth bool) {
 	ss := _services.add(service)
 	ss.add(&Server{
 		k:       serKey,
 		BaseURL: serBaseURL,
+		Auth:    auth,
 	})
 }
 

@@ -49,6 +49,7 @@ func reload() error {
 			_ss.add(&Server{
 				k:       serverModel.ID,
 				BaseURL: serverModel.BaseURL,
+				Auth:    *serverModel.Authorization == db.True,
 			})
 		}
 	}

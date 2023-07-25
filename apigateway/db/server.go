@@ -26,6 +26,8 @@ type Server struct {
 	Enable *int8 `gorm:"not null;default:0"`
 	// 在线状态，0/1
 	Online *int8 `gorm:"not null;default:0"`
+	// 开启认证，0/1
+	Authorization *int8 `gorm:"not null;default:0"`
 	util.GORMTime
 }
 
@@ -41,6 +43,8 @@ type ServerQuery struct {
 	Enable *int8 `form:"enable" binding:"omitempty,oneof=0 1" gq:"eq"`
 	// 在线状态，精确
 	Online *int8 `form:"online" binding:"omitempty,oneof=0 1" gq:"eq"`
+	// 开启认证，精确
+	Authorization *int8 `form:"online" binding:"omitempty,oneof=0 1" gq:"eq"`
 }
 
 // Init 实现接口
