@@ -22,6 +22,8 @@ type Server struct {
 	BaseURL string `gorm:"type:varchar(128);not null;uniqueIndex:ServerUnique"`
 	// 名称，好记
 	Name *string `gorm:"type:varchar(40);not null;uniqueIndex"`
+	// 访问控制，单位，次/每秒
+	Limite *int32 `gorm:"not null;default:0"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
 	// 在线状态，0/1

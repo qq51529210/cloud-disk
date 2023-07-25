@@ -32,19 +32,18 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer ser.Minus()
+	// 访问控制
+	if ser.Limite > 0 && !limite(w, r, ser.Limite) {
+		return
+	}
 	// 身份验证
-	if ser.Auth && !authorization(w, r) {
+	if ser.Auth && !authorize(w, r) {
 		return
 	}
 	// 设置头
 	setHeaders(r)
 	// 转发
 	ser.ServeHTTP(w, r)
-}
-
-// authorization 身份验证
-func authorization(w http.ResponseWriter, r *http.Request) bool {
-	return true
 }
 
 // getServer 返回代理的服务

@@ -1,9 +1,11 @@
 package cache
 
 import (
+	"apigateway/db"
 	"net/http/httputil"
 	"net/url"
 	"sync"
+	"time"
 )
 
 var (
@@ -32,7 +34,13 @@ type service struct {
 	s map[string]*Server
 }
 
-func (s *service) add(ser *Server) {
+func (s *service) add(m *db.Server) {
+	ser := &Server{
+		k:       m.ID,
+		BaseURL: m.BaseURL,
+		Auth:    *m.Authorization == db.True,
+		Limite:  time.Second / time.Duration(*m.Limite),
+	}
 	_u, _ := url.Parse(ser.BaseURL)
 	ser.ReverseProxy = httputil.NewSingleHostReverseProxy(_u)
 	// 上锁

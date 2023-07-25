@@ -34,6 +34,8 @@ func Serve(staticsDir fs.FS) error {
 func initRouter() {
 	// 全局
 	g.Use(middleware.Log)
+	// 测试，充当代理的认证服务
+	g.GET("/token", func(ctx *gin.Context) {})
 	//
 	services.Init(g)
 }

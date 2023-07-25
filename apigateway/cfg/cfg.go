@@ -58,6 +58,10 @@ type Config struct {
 		TraceHeader  string `json:"traceHeader" yaml:"traceHeader"`
 		IPAddrHeader string `json:"ipAddrHeader" yaml:"ipAddrHeader"`
 	} `json:"proxy" yaml:"proxy"`
+	// 身份认证服务
+	AuthService struct {
+		TokenURL string `json:"tokenURL" yaml:"tokenURL"  validate:"url"`
+	} `json:"authService" yaml:"authService"`
 }
 
 // Load 加载配置

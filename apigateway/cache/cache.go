@@ -46,11 +46,7 @@ func reload() error {
 			if serverModel.ServiceID != serviceModel.ID {
 				continue
 			}
-			_ss.add(&Server{
-				k:       serverModel.ID,
-				BaseURL: serverModel.BaseURL,
-				Auth:    *serverModel.Authorization == db.True,
-			})
+			_ss.add(serverModel)
 		}
 	}
 	_services = ss

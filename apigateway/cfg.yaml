@@ -4,6 +4,7 @@ name: apigateway-service-1
 adminAddr: :10001
 # 代理地址
 proxyAddr: :10002
+# 文件日志
 log:
   # 日志目录
   rootDir: ./log/
@@ -17,21 +18,23 @@ log:
   std: out
   # 禁止输出的级别，debug/info/warn/error
   disableLevel: []
+# 数据库
 db:
   # mysql / sqlite3
   url: mysql://root:mysql123_aa@tcp(192.168.31.177:3306)/apigateway?charset=utf8mb4&parseTime=True&loc=Local
-redis:
-  # 客户端名称
-  name:
-  # 服务地址
-  addrs:
-    - 192.168.31.177:6379
-  # 数据库
-  db: 1
-  # 密码
-  password: redis_123
-  # 执行一次命令的超时时间，单位秒
-  cmdTimeout: 3
+# 会话
 session:
   # 过期时间，单位秒
   expires: 1200
+# 代理
+proxy:
+  # 追踪日志头
+  traceHeader: X-Trace-ID
+  # 追踪地址头
+  ipAddrHeader: X-IP-Addr
+# 身份认证服务
+authService:
+  # token 认证 url ，需实现 ?token=xxx
+  # 只要返回 200 认为认证通过
+  # 不配置则认为不需要认证
+  tokenURL: http://localost:10001/token

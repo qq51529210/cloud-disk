@@ -1,9 +1,11 @@
 package cache
 
 import (
+	"apigateway/db"
 	"errors"
 	"net/http/httputil"
 	"sync/atomic"
+	"time"
 )
 
 var (
@@ -17,12 +19,14 @@ var (
 type Server struct {
 	// key
 	k string
-	// 地址
-	BaseURL string
-	// 是否需要身份验证
-	Auth bool
 	// 负载
 	load int64
+	// 地址
+	BaseURL string
+	// 访问控制
+	Limite time.Duration
+	// 是否需要身份验证
+	Auth bool
 	// 代理
 	*httputil.ReverseProxy
 }
@@ -48,13 +52,9 @@ func GetMinLoadServer(service string) *Server {
 }
 
 // AddServer 添加一个服务
-func AddServer(service, serKey, serBaseURL string, auth bool) {
-	ss := _services.add(service)
-	ss.add(&Server{
-		k:       serKey,
-		BaseURL: serBaseURL,
-		Auth:    auth,
-	})
+func AddServer(ser *db.Server) {
+	ss := _services.add(ser.ServiceID)
+	ss.add(ser)
 }
 
 // DelServer 删除指定服务
