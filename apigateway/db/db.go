@@ -39,9 +39,9 @@ func Init() error {
 // initTable 初始化数据表
 func initTable() error {
 	_db.AutoMigrate(
-	// new(User),
-	// new(Developer),
-	// new(Client),
+		new(Service),
+		new(Server),
+		new(Admin),
 	)
 	//
 	return nil

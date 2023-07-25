@@ -2,6 +2,7 @@ package main
 
 import (
 	"apigateway/api"
+	"apigateway/cache"
 	"apigateway/cfg"
 	"apigateway/db"
 	"embed"
@@ -31,6 +32,11 @@ func main() {
 	}
 	// 数据库
 	err = db.Init()
+	if err != nil {
+		panic(err)
+	}
+	// 缓存
+	err = cache.Init()
 	if err != nil {
 		panic(err)
 	}

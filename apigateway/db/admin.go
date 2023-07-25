@@ -1,6 +1,9 @@
 package db
 
-import "github.com/qq51529210/util"
+import (
+	"github.com/qq51529210/util"
+	"gorm.io/gorm"
+)
 
 // Admin 表示管理员
 type Admin struct {
@@ -11,4 +14,17 @@ type Admin struct {
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
 	util.GORMTime
+}
+
+// AdminQuery 是 Admin 查询参数
+type AdminQuery struct {
+	// 账号，模糊
+	Account *string `form:"baseURL" binding:"omitempty,max=40" gq:"like"`
+	// 是否启用，精确
+	Enable *int8 `form:"enable" binding:"omitempty,oneof=0 1" gq:"eq"`
+}
+
+// Init 实现接口
+func (m *AdminQuery) Init(db *gorm.DB) *gorm.DB {
+	return util.GORMInitQuery(db, m)
 }

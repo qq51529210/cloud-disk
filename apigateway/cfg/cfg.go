@@ -53,6 +53,11 @@ type Config struct {
 		// 过期时间
 		Expires int64 `json:"expires" yaml:"expires" validate:"required,min=60"`
 	} `json:"session" yaml:"session"`
+	// 代理
+	Proxy struct {
+		TraceHeader  string `json:"traceHeader" yaml:"traceHeader"`
+		IPAddrHeader string `json:"ipAddrHeader" yaml:"ipAddrHeader"`
+	} `json:"proxy" yaml:"proxy"`
 }
 
 // Load 加载配置
