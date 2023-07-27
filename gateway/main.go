@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"gateway/api"
-	"gateway/cache"
 	"gateway/cfg"
 	"gateway/db"
 
@@ -32,11 +31,6 @@ func main() {
 	}
 	// 数据库
 	err = db.Init()
-	if err != nil {
-		panic(err)
-	}
-	// 缓存
-	err = cache.Init()
 	if err != nil {
 		panic(err)
 	}

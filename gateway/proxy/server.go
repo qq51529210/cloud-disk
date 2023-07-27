@@ -1,4 +1,4 @@
-package cache
+package proxy
 
 import (
 	"errors"
@@ -15,8 +15,8 @@ var (
 	ErrServerNotFound = errors.New("server not found")
 )
 
-// Server 表示一个服务器
-type Server struct {
+// server 表示一个服务器
+type server struct {
 	// key
 	k string
 	// 负载
@@ -32,13 +32,13 @@ type Server struct {
 }
 
 // Minus 减小负载
-func (s *Server) Minus() {
+func (s *server) Minus() {
 	atomic.AddInt64(&s.load, -1)
 }
 
-// GetMinLoadServer 获取最小负载的服务
+// getMinLoadServer 获取最小负载的服务
 // 内部自动增加负载，完事后需要调用 Minus 恢复
-func GetMinLoadServer(service string) *Server {
+func getMinLoadServer(service string) *server {
 	ss := _services.get(service)
 	if ss == nil {
 		return nil

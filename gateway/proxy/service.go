@@ -1,4 +1,4 @@
-package cache
+package proxy
 
 import (
 	"gateway/db"
@@ -31,11 +31,11 @@ type service struct {
 	// key
 	k string
 	// 列表
-	s map[string]*Server
+	s map[string]*server
 }
 
 func (s *service) add(m *db.Server) {
-	ser := &Server{
+	ser := &server{
 		k:       m.ID,
 		BaseURL: m.BaseURL,
 		Auth:    *m.Authorization == db.True,
@@ -59,12 +59,12 @@ func (s *service) del(key string) {
 }
 
 // getMinLoadServer 获取最小负载服务
-func (s *service) getMinLoadServer() *Server {
+func (s *service) getMinLoadServer() *server {
 	// 上锁
 	s.RLock()
 	defer s.RUnlock()
 	// 查询
-	var min *Server
+	var min *server
 	for _, s := range s.s {
 		if min == nil {
 			min = s
@@ -100,7 +100,7 @@ func (ss *services) add(key string) *service {
 	if s == nil {
 		s = new(service)
 		s.k = key
-		s.s = make(map[string]*Server)
+		s.s = make(map[string]*server)
 		ss.s[key] = s
 	}
 	//
