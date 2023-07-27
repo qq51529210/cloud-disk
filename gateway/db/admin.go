@@ -17,7 +17,7 @@ type Admin struct {
 	// 账号
 	Account string `gorm:"type:varchar(40);not null;uniqueIndex"`
 	// 密码，SHA1 格式
-	Password *string `gorm:"type:varchar(40);not null"`
+	Password string `gorm:"type:varchar(40);not null"`
 	// 是否启用，0/1
 	Enable *int8 `gorm:"not null;default:0"`
 	util.GORMTime
