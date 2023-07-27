@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"apigateway/db"
+	"gateway/db"
 	"net/http/httputil"
 	"net/url"
 	"sync"

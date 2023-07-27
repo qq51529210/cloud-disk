@@ -1,8 +1,8 @@
 package middleware
 
 // import (
-// 	"apigateway/api/internal"
-// 	"apigateway/db"
+// 	"gateway/api/internal"
+// 	"gateway/db"
 // 	"net/http"
 // 	"net/url"
 

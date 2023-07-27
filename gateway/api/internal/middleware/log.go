@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"apigateway/api/internal"
 	"encoding/json"
 	"fmt"
+	"gateway/api/internal"
 	"strings"
 	"time"
 

@@ -1,9 +1,9 @@
 package api
 
 import (
-	"apigateway/api/internal/middleware"
-	"apigateway/api/services"
-	"apigateway/cfg"
+	"gateway/api/internal/middleware"
+	"gateway/api/services"
+	"gateway/cfg"
 	"io/fs"
 	"net/http"
 

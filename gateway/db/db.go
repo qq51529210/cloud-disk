@@ -1,7 +1,7 @@
 package db
 
 import (
-	"apigateway/cfg"
+	"gateway/cfg"
 
 	"github.com/qq51529210/util"
 	"gorm.io/gorm"

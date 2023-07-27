@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"apigateway/db"
+	"gateway/db"
 	"time"
 
 	"github.com/qq51529210/log"

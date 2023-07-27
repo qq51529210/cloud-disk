@@ -1,8 +1,8 @@
 package proxy
 
 import (
-	"apigateway/cache"
-	"apigateway/cfg"
+	"gateway/cache"
+	"gateway/cfg"
 	"net/http"
 	"time"
 

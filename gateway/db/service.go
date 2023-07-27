@@ -25,6 +25,7 @@ type Service struct {
 
 // ServiceQuery 是 Service 查询参数
 type ServiceQuery struct {
+	util.GORMPage
 	// 代理路径，精确
 	Path *string `form:"path" binding:"omitempty,path,max=40" gq:"eq"`
 	// 名称，模糊

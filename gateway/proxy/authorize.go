@@ -1,7 +1,7 @@
 package proxy
 
 import (
-	"apigateway/cfg"
+	"gateway/cfg"
 	"net/http"
 	"net/url"
 )

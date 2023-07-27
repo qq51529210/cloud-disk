@@ -1,11 +1,11 @@
 package main
 
 import (
-	"apigateway/api"
-	"apigateway/cache"
-	"apigateway/cfg"
-	"apigateway/db"
 	"embed"
+	"gateway/api"
+	"gateway/cache"
+	"gateway/cfg"
+	"gateway/db"
 
 	"github.com/qq51529210/log"
 	"github.com/qq51529210/util"
