@@ -19,22 +19,23 @@ type Server struct {
 	// 所属的服务组
 	Service *Service `json:"-" gorm:"foreignKey:ServiceID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	// 基本路径，http(https)://hostname:port/
-	BaseURL string `gorm:"type:varchar(128);not null;uniqueIndex:ServerUnique"`
+	BaseURL string `json:"baseURL" gorm:"type:varchar(128);not null;uniqueIndex:ServerUnique"`
 	// 名称，好记
-	Name *string `gorm:"type:varchar(40);not null;uniqueIndex"`
-	// 访问控制，单位，次/每秒
-	Limite *int32 `gorm:"not null;default:0"`
+	Name *string `json:"name" gorm:"type:varchar(40);not null;uniqueIndex"`
 	// 是否启用，0/1
-	Enable *int8 `gorm:"not null;default:0"`
+	Enable *int8 `json:"enable" gorm:"not null;default:0"`
 	// 在线状态，0/1
-	Online *int8 `gorm:"not null;default:0"`
-	// 开启认证，0/1
-	Authorization *int8 `gorm:"not null;default:0"`
+	Online *int8 `json:"online" gorm:"not null;default:0"`
+	// 开启身份认证，0/1
+	Authorization *int8 `json:"authorization" gorm:"not null;default:0"`
+	// 访问控制，单位，次/每秒
+	Limite *int32 `json:"limite" gorm:"not null;default:0"`
 	util.GORMTime
 }
 
 // ServerQuery 是 Server 查询参数
 type ServerQuery struct {
+	util.GORMPage
 	// 所属的服务组，精确
 	ServiceID *string `form:"enable" binding:"omitempty,max=40" gq:"eq"`
 	// 基本路径，模糊

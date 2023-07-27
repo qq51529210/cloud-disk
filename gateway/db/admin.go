@@ -5,10 +5,17 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	// AdminDA 数据访问
+	AdminDA *util.GORMDB[string, *Admin]
+)
+
 // Admin 表示管理员
 type Admin struct {
+	// 主键
+	ID string `gorm:"type:varchar(40);primayKey"`
 	// 账号
-	Account string `gorm:"type:varchar(40);primayKey"`
+	Account string `gorm:"type:varchar(40);not null;uniqueIndex"`
 	// 密码，SHA1 格式
 	Password *string `gorm:"type:varchar(40);not null"`
 	// 是否启用，0/1

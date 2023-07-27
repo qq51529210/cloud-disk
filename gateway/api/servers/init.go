@@ -1,4 +1,4 @@
-package services
+package servers
 
 import (
 	"gateway/api/internal/middleware"
@@ -8,7 +8,7 @@ import (
 
 // Init 初始化路由
 func Init(router gin.IRouter) {
-	router = router.Group("/services", middleware.Authorization)
+	router = router.Group("/servers", middleware.Authorization)
 	//
 	router.GET("", list)
 	router.POST("", post)

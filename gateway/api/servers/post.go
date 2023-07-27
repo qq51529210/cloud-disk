@@ -1,4 +1,4 @@
-package services
+package servers
 
 import (
 	"gateway/api/internal"
@@ -12,16 +12,22 @@ import (
 )
 
 type postReq struct {
+	// 服务数据库 id
+	ServiceID string `json:"serviceID" binding:"required,max=40"`
+	// 基本路径，http(https)://hostname:port/
+	BaseURL string `json:"baseURL" binding:"required,max=128,url"`
 	// 名称，好记
 	Name *string `json:"name" binding:"required,max=40"`
-	// 代理路径，/order 这样的
-	Path *string `json:"path" binding:"required,max=40"`
 	// 是否启用，0/1
 	Enable *int8 `json:"enable" binding:"omitempty,oneof=0 1"`
+	// 开启身份认证，0/1
+	Authorization *int8 `json:"authorization" binding:"omitempty,oneof=0 1"`
+	// 访问控制，单位，次/每秒
+	Limite *int32 `json:"limite" binding:"omitempty,min=0"`
 }
 
 // @Summary  添加
-// @Tags     服务
+// @Tags     服务器
 // @Param    data body postReq true "添加的数据"
 // @Security ApiKeyAuth
 // @Accept   json
@@ -29,7 +35,7 @@ type postReq struct {
 // @Failure  400 {object} internal.Error
 // @Failure  401
 // @Failure  500 {object} internal.Error
-// @Router   /services [post]
+// @Router   /servers [post]
 func post(ctx *gin.Context) {
 	// 参数
 	var req postReq
@@ -40,10 +46,10 @@ func post(ctx *gin.Context) {
 	}
 	ctx.Set(middleware.LogDataContextKey, &req)
 	// 数据库
-	var model db.Service
+	var model db.Server
 	util.CopyStruct(&model, &req)
 	model.ID = uuid.LowerV1WithoutHyphen()
-	_, err = db.ServiceDA.Add(&model)
+	_, err = db.ServerDA.Add(&model)
 	if err != nil {
 		internal.DB500(ctx, err)
 		return
