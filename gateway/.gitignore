@@ -3,3 +3,4 @@
 go.sum
 log
 __debug_bin
+html/node_modules
