@@ -1,4 +1,4 @@
-package services
+package admins
 
 import (
 	"gateway/api/internal"
@@ -12,7 +12,7 @@ import (
 
 // @Summary  列表
 // @Tags     管理员
-// @Param    query query db.ServiceQuery false "条件"
+// @Param    query query db.AdminQuery false "条件"
 // @Security ApiKeyAuth
 // @Produce  json
 // @Success  200 {object} util.GORMList[db.Admin]
@@ -22,7 +22,7 @@ import (
 // @Router   /admins [get]
 func list(ctx *gin.Context) {
 	// 参数
-	var req db.ServiceQuery
+	var req db.AdminQuery
 	err := ctx.ShouldBindQuery(&req)
 	if err != nil {
 		internal.Submit400(ctx, err.Error())
