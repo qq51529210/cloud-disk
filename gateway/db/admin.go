@@ -25,6 +25,7 @@ type Admin struct {
 
 // AdminQuery 是 Admin 查询参数
 type AdminQuery struct {
+	util.GORMPage
 	// 账号，模糊
 	Account *string `form:"baseURL" binding:"omitempty,max=40" gq:"like"`
 	// 是否启用，精确
